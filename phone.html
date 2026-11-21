@@ -1,0 +1,176 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CHAKRA V2 — Phone Capture</title>
+<style>
+:root{
+  --bg:#F6F8FC;--panel:#FFFFFF;--panel-elevated:#F0F4F9;--line:#E0E3EB;--text:#1F1F1F;--muted:#5E5E5E;
+  --accent:#0B57D0;--accent-subtle:#EAF1FB;--ok:#059669;--warn:#D97706;--code-bg:#F8FAFC;--code-border:#D3E3FD;
+  --code-text:#0B57D0;--btn-bg:#1F1F1F;--btn-text:#FFFFFF;
+}
+html.dark{
+  --bg:#1F1F1F;--panel:#292A2D;--panel-elevated:#35363A;--line:#3C4043;--text:#E8EAED;--muted:#9AA0A6;
+  --accent:#A8C7FA;--accent-subtle:#004A77;--ok:#10B981;--warn:#F59E0B;--code-bg:#202124;--code-border:#5F6368;
+  --code-text:#A8C7FA;--btn-bg:#A8C7FA;--btn-text:#041E49;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Google Sans",Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);padding:18px;max-width:480px;margin:0 auto;transition:background .2s,color .2s}
+.hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:16px;letter-spacing:.02em;color:var(--text)}
+.pill{font-size:11.5px;padding:5px 12px;border-radius:100px;background:var(--accent-subtle);border:1px solid var(--line);color:var(--text);display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-weight:500}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+h2{margin:0 0 6px;font-size:19px;font-weight:700;letter-spacing:-.01em} p{color:var(--muted);font-size:13px;margin:0 0 14px;line-height:1.45}
+input[type=text]{width:100%;font-family:ui-monospace,SFMono-Regular,monospace;font-size:28px;letter-spacing:.2em;text-align:center;padding:12px;border-radius:14px;border:1.5px solid var(--code-border);background:var(--code-bg);color:var(--code-text)}
+.btn{width:100%;padding:12px;border-radius:100px;border:0;font-weight:600;font-size:14px;cursor:pointer;margin-top:10px;color:var(--btn-text);background:var(--btn-bg);transition:opacity .15s}
+.btn:hover{opacity:.9}
+.btn.ok{background:var(--ok);color:#fff} .btn.ghost{background:var(--accent-subtle);border:1px solid var(--line);color:var(--text)}
+select{width:100%;padding:10px 12px;border-radius:10px;background:var(--bg);border:1px solid var(--line);color:var(--text);font-size:13px;font-family:inherit}
+video{width:100%;border-radius:14px;background:#000;margin-top:12px;max-height:280px;border:1px solid var(--line)}
+.stat{font-size:12px;color:var(--accent);margin-top:10px;text-align:center;font-weight:500}
+</style></head><body>
+<div class="hdr">
+  <div class="brand">
+    <img src="/logo.png" alt="CHAKRA Logo" style="height:26px;width:auto;object-fit:contain" onerror="this.style.display='none'">
+    <svg width="20" height="20" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="color:var(--accent)">
+      <circle cx="50" cy="50" r="44" stroke="currentColor" stroke-width="7" stroke-dasharray="6 3" opacity="0.85"/>
+      <circle cx="50" cy="50" r="28" stroke="currentColor" stroke-width="6"/>
+      <circle cx="50" cy="50" r="12" fill="currentColor"/>
+      <path d="M50 6 L50 22 M50 78 L50 94 M6 50 L22 50 M78 50 L94 50 M19 19 L30 30 M70 70 L81 81 M19 81 L30 70 M70 30 L81 19" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+    </svg>
+    <span>CHAKRA Mobile Scope</span>
+  </div>
+  <button id="themeToggle" class="pill" onclick="toggleTheme()"><span id="themeIcon">☀️</span> <span id="themeLabel">Light</span></button>
+</div>
+
+<div class="card">
+  <h2>Mobile Scope Bridge</h2>
+  <p>Scan the QR code from the Backend Console or enter the 6-digit code to pair your camera to the sterile Doctor HUD.</p>
+  <input id="codeIn" type="text" maxlength="6" placeholder="000000">
+  <button class="btn ok" onclick="pair()">Connect to Backend Session</button>
+  <div id="status" class="stat">Disconnected</div>
+</div>
+
+<div class="card">
+  <h2 style="font-size:16px">Stream Source</h2>
+  <button class="btn" onclick="startCamera()">Use Live Phone Camera</button>
+  
+  <label style="display:block;margin-top:14px;font-size:12px;font-weight:500;color:var(--muted)">Cloud Demo Clips (Range/206 & OpenCV Fallback):</label>
+  <div style="display:flex;gap:6px;margin-top:6px">
+    <select id="cloudClipSel" style="flex:1"></select>
+    <button class="btn ok" style="width:auto;margin:0" onclick="startCloudDemoVideo()">Stream Clip</button>
+  </div>
+
+  <label style="display:block;margin-top:14px;font-size:12px;font-weight:500;color:var(--muted)">Or Upload Local Video File:</label>
+  <input id="vidFile" type="file" accept="video/*" style="width:100%;margin-top:6px;color:var(--text)" onchange="startUploadedVideo(this)">
+  
+  <video id="vid" autoplay loop muted playsinline></video>
+  <canvas id="cvs" style="display:none"></canvas>
+  <div id="txStat" class="stat">Waiting for stream source...</div>
+</div>
+
+<script>
+// Prevent window.status collision in browser DOM
+Object.defineProperty(window, 'status', {
+  get() { return document.getElementById('status'); },
+  set(v) {},
+  configurable: true
+});
+
+function initTheme(){
+  const saved=localStorage.getItem('chakra_theme')||'light';
+  if(saved==='dark'){ document.documentElement.classList.add('dark'); updateThemeIcon(true); }
+  else { document.documentElement.classList.remove('dark'); updateThemeIcon(false); }
+}
+function toggleTheme(){
+  const isDark=document.documentElement.classList.toggle('dark');
+  localStorage.setItem('chakra_theme',isDark?'dark':'light');
+  updateThemeIcon(isDark);
+}
+function updateThemeIcon(isDark){
+  const el=document.getElementById('themeIcon');
+  const lbl=document.getElementById('themeLabel');
+  if(el) el.textContent=isDark?'🌙':'☀️';
+  if(lbl) lbl.textContent=isDark?'Dark':'Light';
+}
+initTheme();
+
+let ws=null, timer=null, sourceMode='live', sent=0;
+const params=new URLSearchParams(location.search);
+if(params.get('code')) codeIn.value=params.get('code');
+
+function pair(){
+  const c=codeIn.value.trim(); if(c.length!==6) return alert('Enter the 6-digit code');
+  if(ws) ws.close();
+  const proto=location.protocol==='https:'?'wss:':'ws:';
+  ws=new WebSocket(`${proto}//${location.host}/ws/v2/${c}/phone`);
+  ws.onopen=()=>{ 
+    const el=document.getElementById('status');
+    if(el){ el.textContent='Paired to Room '+c+' · Ready to stream'; el.style.color='#059669'; }
+  };
+  ws.onclose=()=>{ 
+    const el=document.getElementById('status');
+    if(el){ el.textContent='Disconnected from room'; el.style.color='#d97706'; }
+  };
+}
+async function loadClips(){
+  try{
+    const d=await (await fetch('/api/v2/demo-videos')).json();
+    cloudClipSel.innerHTML=d.videos.map(v=>`<option value="${v.name}" data-url="${v.stream_url}" data-fmt="${v.format}">${v.name} (${(v.size_bytes/1024).toFixed(0)} KB)</option>`).join('');
+  }catch(e){}
+}
+async function startCloudDemoVideo(){
+  const opt=cloudClipSel.options[cloudClipSel.selectedIndex]; if(!opt) return;
+  const name=opt.value, fmt=opt.getAttribute('data-fmt'), url=opt.getAttribute('data-url');
+  sourceMode='cloud_demo:'+name;
+  if(fmt==='avi'){
+    txStat.textContent=`Streaming ${name} via OpenCV frame-extract fallback...`;
+    vid.style.display='none';
+    const img=new Image();
+    img.crossOrigin='anonymous';
+    img.src=`/api/v2/demo-videos/${name}/frame?idx=0`;
+    img.onload=()=>{
+      cvs.width=480; cvs.height=Math.round(480*(img.height/img.width||0.75));
+      cvs.getContext('2d').drawImage(img,0,0,cvs.width,cvs.height);
+      if(timer) clearInterval(timer);
+      timer=setInterval(()=>{
+        if(!ws||ws.readyState!==1) return;
+        ws.send(JSON.stringify({type:'frame',source:sourceMode,image_b64:cvs.toDataURL('image/jpeg',0.6)}));
+        sent++; txStat.textContent=`Streaming ${name} (OpenCV fallback) · Frames sent: ${sent}`;
+      },260);
+    };
+  } else {
+    vid.style.display='block';
+    vid.srcObject=null; vid.src=url; await vid.play(); beginLoop();
+  }
+}
+async function startCamera(){
+  sourceMode='camera';
+  try{
+    const devices=await navigator.mediaDevices.enumerateDevices();
+    const videoDevices=devices.filter(d=>d.kind==='videoinput'&&!d.label.toLowerCase().includes('obs virtual'));
+    const deviceId=videoDevices.length?videoDevices[0].deviceId:undefined;
+    const constraints={video:deviceId?{deviceId:{exact:deviceId},facingMode:'environment'}:{facingMode:'environment'},audio:false};
+    const stream=await navigator.mediaDevices.getUserMedia(constraints);
+    vid.style.display='block'; vid.srcObject=stream; await vid.play(); beginLoop();
+  }catch(e){
+    const stream=await navigator.mediaDevices.getUserMedia({video:true,audio:false});
+    vid.style.display='block'; vid.srcObject=stream; await vid.play(); beginLoop();
+  }
+}
+function startUploadedVideo(inp){
+  const f=inp.files[0]; if(!f) return;
+  sourceMode='simulated_live_video';
+  vid.style.display='block'; vid.srcObject=null; vid.src=URL.createObjectURL(f); vid.play(); beginLoop();
+}
+function beginLoop(){
+  if(timer) clearInterval(timer);
+  timer=setInterval(()=>{
+    if(!ws||ws.readyState!==1||!vid.videoWidth) return;
+    const w=480, h=Math.round(480*(vid.videoHeight/vid.videoWidth));
+    cvs.width=w; cvs.height=h;
+    cvs.getContext('2d').drawImage(vid,0,0,w,h);
+    ws.send(JSON.stringify({type:'frame',source:sourceMode,image_b64:cvs.toDataURL('image/jpeg',0.6)}));
+    sent++; txStat.textContent=`Streaming ${sourceMode} · Frames sent: ${sent}`;
+  },260);
+}
+loadClips();
+if(codeIn.value.length===6) pair();
+</script></body></html>

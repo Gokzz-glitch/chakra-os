@@ -1,0 +1,13 @@
+.gcloudignore
+.git
+.gitignore
+__pycache__
+*.pyc
+.pytest_cache
+tests/
+submission_assets/
+~$*
+*.webm
+*.mp4
+*.pptx
+*.log
