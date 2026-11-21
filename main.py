@@ -636,3 +636,122 @@ async def ws_room(ws: WebSocket, code: str, role: str):
             r["phone_connected"] = False
             r["in_flight"] = False
             await _broadcast(code, ["admin", "doctor"], {"type": "phone_status", "connected": False})
+
+# ---- Phase 2: Longitudinal Patient History & Pathology Reconciliation Registry ----
+class PathologySignoffReq(BaseModel):
+    signed_by: str = "DR-PATH-RAMESH-V"
+    diagnosis: str = "Tubular Adenoma with Low-Grade Dysplasia"
+    dysplasia_grade: str = "Low-Grade"
+    margins: str = "Negative / Clear (R0 Resection)"
+    icd_o_code: Optional[str] = "8211/0"
+
+PATIENT_REGISTRY: Dict[str, Dict[str, Any]] = {
+    "DEMO-PATIENT-01": {
+        "patient_id": "DEMO-PATIENT-01",
+        "abha_id": "ABHA-HASH-677466",
+        "hospital_id": "HOSP-CHENNAI-01",
+        "encounters": [
+            {
+                "encounter_id": "ENC-2025-0814",
+                "procedure_id": "PROC-20250814-118240",
+                "date": "2025-08-14",
+                "endoscopist_id": "DR-GOKUL-R",
+                "hospital_id": "HOSP-CHENNAI-01",
+                "indication": "Screening Colonoscopy (Age 50)",
+                "withdrawal_time_seconds": 580,
+                "bbps_scores": {"right": 3, "transverse": 3, "left": 2, "total": 8, "adequate": True},
+                "findings": [
+                    {
+                        "finding_id": "FND-2025-01",
+                        "episode_id": "EPISODE-01",
+                        "timestamp": "2025-08-14T10:14:22Z",
+                        "location": "Cecum / Ascending",
+                        "size_mm": 7.0,
+                        "morphology": "Paris 0-Is (Sessile)",
+                        "physician_decision": "accepted",
+                        "evidence_frame_url": "/api/v2/demo-videos/1_35.avi/frame?idx=0",
+                        "pathology_status": "SIGNED",
+                        "pathology_result": {
+                            "signed_by": "DR-PATH-RAMESH-V",
+                            "signed_at": "2025-08-19T14:30:00Z",
+                            "diagnosis": "Tubular Adenoma with Low-Grade Dysplasia",
+                            "dysplasia_grade": "Low-Grade",
+                            "margins": "Negative / Clear (R0 Resection)",
+                            "icd_o_code": "8211/0",
+                        },
+                        "surveillance_recommendation": "7-10 years (USMSTF 2020: 1 small tubular adenoma <10mm, completely resected)",
+                    }
+                ],
+                "clinical_narrative": "Screening colonoscopy revealed adequate bowel prep (BBPS 8/9). Single 7mm sessile lesion in cecum removed via cold snare. Pathology confirmed Tubular Adenoma with low-grade dysplasia and clear margins.",
+            }
+        ]
+    },
+    "PATIENT-MUMBAI-99": {
+        "patient_id": "PATIENT-MUMBAI-99",
+        "abha_id": "ABHA-HASH-MUMBAI-99",
+        "hospital_id": "HOSP-MUMBAI-02",
+        "encounters": [
+            {
+                "encounter_id": "ENC-MUMBAI-01",
+                "procedure_id": "PROC-MUMBAI-001",
+                "date": "2026-01-10",
+                "endoscopist_id": "DR-SHAH-K",
+                "hospital_id": "HOSP-MUMBAI-02",
+                "indication": "Diagnostic Colonoscopy",
+                "findings": [],
+            }
+        ]
+    }
+}
+
+@app.get("/api/v2/patients/{patient_id}/history")
+def get_patient_history(
+    patient_id: str,
+    x_hospital_id: Optional[str] = Header("HOSP-CHENNAI-01")
+):
+    if patient_id not in PATIENT_REGISTRY:
+        PATIENT_REGISTRY[patient_id] = {
+            "patient_id": patient_id,
+            "abha_id": f"ABHA-HASH-{patient_id[-6:]}",
+            "hospital_id": x_hospital_id or "HOSP-CHENNAI-01",
+            "encounters": []
+        }
+
+    patient = PATIENT_REGISTRY[patient_id]
+    if patient["hospital_id"] != x_hospital_id:
+        raise HTTPException(
+            status_code=403,
+            detail=f"Cross-hospital data boundary violation: patient records for hospital '{patient['hospital_id']}' are isolated from querying tenant '{x_hospital_id}'"
+        )
+
+    return patient
+
+@app.post("/api/v2/findings/{finding_id}/pathology")
+def sign_pathology_result(finding_id: str, req: PathologySignoffReq):
+    for p_id, p_data in PATIENT_REGISTRY.items():
+        for enc in p_data.get("encounters", []):
+            for f in enc.get("findings", []):
+                if f["finding_id"] == finding_id:
+                    f["pathology_status"] = "SIGNED"
+                    f["pathology_result"] = {
+                        "signed_by": req.signed_by,
+                        "signed_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                        "diagnosis": req.diagnosis,
+                        "dysplasia_grade": req.dysplasia_grade,
+                        "margins": req.margins,
+                        "icd_o_code": req.icd_o_code,
+                    }
+                    if "adenoma" in req.diagnosis.lower():
+                        f["surveillance_recommendation"] = "7-10 years (USMSTF 2020: 1-2 small adenomas <10mm, histology confirmed)"
+                    elif "hyperplastic" in req.diagnosis.lower() or "serrated" in req.diagnosis.lower():
+                        f["surveillance_recommendation"] = "10 years (USMSTF 2020: hyperplastic/serrated polyp <10mm)"
+                    else:
+                        f["surveillance_recommendation"] = "5-10 years (histology confirmed)"
+                    return {
+                        "ok": True,
+                        "finding_id": finding_id,
+                        "reconciled": True,
+                        "earlier_decision_preserved": f["physician_decision"],
+                        "finding": f,
+                    }
+    raise HTTPException(status_code=404, detail=f"Finding '{finding_id}' not found in registry")

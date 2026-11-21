@@ -64,6 +64,7 @@ img.preview{width:100%;border-radius:12px;border:1px solid var(--line);margin-to
   <button class="nav" onclick="tab('models',this)">2. Model Registry</button>
   <button class="nav" onclick="tab('workers',this)">3. Compute Workers</button>
   <button class="nav" onclick="tab('analytics',this)">4. BigQuery Analytics</button>
+  <button class="nav" onclick="tab('history',this)">5. Patient History & Reconciliation</button>
   <div style="margin-top:auto;padding-top:16px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px">
     <a id="docLink" href="/v2/doctor" target="_blank" class="btn ok" style="text-align:center;text-decoration:none">Open Doctor HUD ↗</a>
     <a id="phoneLink" href="/v2/phone" target="_blank" class="btn ghost" style="text-align:center;text-decoration:none">Open Phone Streamer ↗</a>
@@ -152,6 +153,48 @@ img.preview{width:100%;border-radius:12px;border:1px solid var(--line);margin-to
       <button class="btn ghost" style="margin-bottom:14px" onclick="loadAnalytics()">Refresh BigQuery Metrics</button>
       <div id="bqWrap" class="grid2"></div>
     </section>
+
+    <section id="tab-history" class="hide">
+      <h2>Longitudinal Patient History & Pathology Reconciliation</h2>
+      <p class="sub">When a patient returns, how quickly can the endoscopist find the previous finding, inspect its image, and verify what pathology eventually reported? Explore the 4 clinical demonstration cases below.</p>
+      
+      <div class="card" style="margin-bottom:18px">
+        <div style="display:flex;gap:10px;align-items:center">
+          <input id="histPatientInput" value="DEMO-PATIENT-01" style="flex:1" placeholder="Enter Patient ID (e.g. DEMO-PATIENT-01)">
+          <button class="btn ok" style="width:auto" onclick="loadPatientHistory(histPatientInput.value)">Open Patient Record</button>
+          <button class="btn ghost" style="width:auto" onclick="loadPatientHistory('DEMO-PATIENT-01')">Patient 01 (Chennai)</button>
+          <button class="btn ghost" style="width:auto" onclick="testCrossHospitalSecurity()">Test Hospital Boundary (Mumbai 403)</button>
+        </div>
+        <div id="histSecurityMsg" style="margin-top:10px;font-size:12px"></div>
+      </div>
+
+      <div id="histContent" class="hide">
+        <div class="card" style="margin-bottom:18px;background:var(--accent-subtle)">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <b id="histPatId" style="font-size:16px;color:var(--text)">DEMO-PATIENT-01</b>
+              <span id="histAbha" class="pill" style="margin-left:10px">ABHA-HASH-677466</span>
+            </div>
+            <div><span>Home Hospital: </span><b id="histHospId">HOSP-CHENNAI-01</b></div>
+          </div>
+        </div>
+
+        <div id="encountersList"></div>
+
+        <div class="card" style="margin-top:18px">
+          <h3>Simulate Delayed Pathology Lab Result Arrival (Case 2)</h3>
+          <p style="font-size:12px;color:var(--muted);margin-top:0">Simulate histopathology lab completing analysis 5 days post-procedure: updates finding from PENDING to SIGNED, preserves clinician review, and recalculates surveillance.</p>
+          <div style="display:flex;gap:10px;align-items:center">
+            <select id="pathFindingSelect" style="flex:1">
+              <option value="FND-2025-01">FND-2025-01 (Cecum · Tubular Adenoma)</option>
+              <option value="FND-2026-PENDING-02">FND-2026-PENDING-02 (Descending Colon · Pending -> Serrated Polyp)</option>
+            </select>
+            <button class="btn ok" style="width:auto" onclick="simulatePathologyArrival()">Sign & Reconcile Pathology Result</button>
+          </div>
+          <div id="pathReconcileResult" style="margin-top:12px;font-size:12px"></div>
+        </div>
+      </div>
+    </section>
   </div>
 </div>
 
@@ -195,6 +238,96 @@ function tab(id,el){
   document.querySelectorAll('.nav').forEach(n=>n.classList.remove('active'));
   el.classList.add('active');
   if(id==='analytics') loadAnalytics();
+  if(id==='history') loadPatientHistory('DEMO-PATIENT-01');
+}
+async function loadPatientHistory(pId){
+  histSecurityMsg.textContent = 'Loading patient history...';
+  histSecurityMsg.style.color = 'var(--accent)';
+  try {
+    const res = await fetch(`/api/v2/patients/${pId}/history`, {
+      headers: { 'X-Hospital-ID': 'HOSP-CHENNAI-01' }
+    });
+    if(!res.ok){
+      const err = await res.json();
+      histSecurityMsg.textContent = `❌ ${err.detail}`;
+      histSecurityMsg.style.color = '#dc2626';
+      histContent.classList.add('hide');
+      return;
+    }
+    const data = await res.json();
+    histSecurityMsg.textContent = `✓ Successfully verified patient records within tenant boundary (${data.hospital_id})`;
+    histSecurityMsg.style.color = 'var(--ok)';
+    histContent.classList.remove('hide');
+    histPatId.textContent = data.patient_id;
+    histAbha.textContent = data.abha_id;
+    histHospId.textContent = data.hospital_id;
+
+    encountersList.innerHTML = data.encounters.map(enc => `
+      <div class="card" style="margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:12px">
+          <div>
+            <b style="font-size:15px">${enc.indication}</b> · <span style="color:var(--muted)">${enc.date} (${enc.procedure_id})</span>
+          </div>
+          <div style="font-size:12px;color:var(--muted)">Endoscopist: <b>${enc.endoscopist_id}</b> · BBPS: <b>${enc.bbps_scores ? enc.bbps_scores.total + '/9' : 'N/A'}</b></div>
+        </div>
+        <div style="font-size:13px;margin-bottom:12px;color:var(--text)">${enc.clinical_narrative || 'Standard colonoscopy procedure.'}</div>
+        <h4>Findings & Verified Pathology:</h4>
+        ${enc.findings.map(f => `
+          <div style="display:flex;gap:16px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:12px;margin-bottom:8px;background:var(--bg)">
+            <img src="${f.evidence_frame_url}" style="width:100px;height:75px;object-fit:cover;border-radius:8px;border:1px solid var(--line)" alt="Evidence Frame">
+            <div style="flex:1">
+              <div style="display:flex;justify-content:space-between">
+                <b>${f.finding_id} (${f.location})</b>
+                <span class="pill" style="font-weight:700;color:${f.pathology_status==='SIGNED'?'var(--ok)':'var(--warn)'}">${f.pathology_status}</span>
+              </div>
+              <div style="font-size:12px;color:var(--muted);margin:4px 0">
+                Size: <b>${f.size_mm} mm</b> · Morphology: <b>${f.morphology}</b> · Clinician Review: <b style="color:var(--ok)">${f.physician_decision.toUpperCase()}</b>
+              </div>
+              <div style="font-size:12px;color:var(--accent)">
+                ${f.pathology_result ? `<b>Pathology Diagnosis:</b> ${f.pathology_result.diagnosis} (Signed by ${f.pathology_result.signed_by})` : '<i>Pathology: Pending signed laboratory receipt</i>'}
+              </div>
+              <div style="font-size:11px;color:var(--muted);margin-top:2px">
+                Surveillance Guidance: <b>${f.surveillance_recommendation || 'Provisional 3 years (pending pathology)'}</b>
+              </div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `).join('');
+  } catch(e) {
+    histSecurityMsg.textContent = 'Network or system error: ' + e;
+    histSecurityMsg.style.color = '#dc2626';
+  }
+}
+async function testCrossHospitalSecurity(){
+  histPatientInput.value = 'PATIENT-MUMBAI-99';
+  await loadPatientHistory('PATIENT-MUMBAI-99');
+}
+async function simulatePathologyArrival(){
+  const fId = pathFindingSelect.value;
+  pathReconcileResult.textContent = 'Transmitting signed pathology report...';
+  try {
+    const res = await fetch(`/api/v2/findings/${fId}/pathology`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        signed_by: 'DR-PATH-RAMESH-V',
+        diagnosis: fId === 'FND-2025-01' ? 'Tubular Adenoma with Low-Grade Dysplasia' : 'Serrated Polyp with No Dysplasia',
+        dysplasia_grade: fId === 'FND-2025-01' ? 'Low-Grade' : 'None',
+        margins: 'Negative / Clear (R0 Resection)',
+        icd_o_code: '8213/0'
+      })
+    });
+    const d = await res.json();
+    if(res.ok){
+      pathReconcileResult.innerHTML = `<span style="color:var(--ok)">✓ Reconciled finding ${fId} with signed pathology! Preserved earlier decision: <b>${d.earlier_decision_preserved}</b>. Surveillance updated to: <b>${d.finding.surveillance_recommendation}</b></span>`;
+      await loadPatientHistory('DEMO-PATIENT-01');
+    } else {
+      pathReconcileResult.innerHTML = `<span style="color:#dc2626">Error: ${d.detail}</span>`;
+    }
+  } catch(e) {
+    pathReconcileResult.innerHTML = `<span style="color:#dc2626">Error: ${e}</span>`;
+  }
 }
 async function warmup(){
   const d=await (await fetch('/api/warmup')).json();

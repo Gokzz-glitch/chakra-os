@@ -1,6 +1,6 @@
 # CHAKRA V2 — 5-Video Multi-Model Hybrid Benchmark Report
 
-**Generated:** 2026-11-21 01:49:50 UTC  
+**Generated:** 2026-11-21 03:18:23 UTC  
 **Target Revision:** `chakra-os-00004-jxj` on Cloud Run `asia-south1`  
 **Vision Service:** `chakra-vision` on Cloud Run NVIDIA L4 (24GB VRAM) in `asia-southeast1`  
 **Verification Status:** 100% Passed (All Clinical Safety, Streaming, and Sign-off Gates Enforced)

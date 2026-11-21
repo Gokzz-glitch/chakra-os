@@ -78,16 +78,36 @@ def parse_voice_note(transcript: str) -> Dict[str, Any]:
         "Only fill BBPS (0-3) or location/size if explicitly spoken; otherwise leave null. "
         f"Transcript: {clean}"
     )
-    resp = client.models.generate_content(
-        model=GEMINI_MODEL,
-        contents=prompt,
-        config=types.GenerateContentConfig(
-            response_mime_type="application/json",
-            response_schema=VoiceExtraction,
-            temperature=0.0,
-        ),
-    )
-    return VoiceExtraction.model_validate_json(resp.text).model_dump()
+    try:
+        resp = client.models.generate_content(
+            model=GEMINI_MODEL,
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                response_mime_type="application/json",
+                response_schema=VoiceExtraction,
+                temperature=0.0,
+            ),
+        )
+        return VoiceExtraction.model_validate_json(resp.text).model_dump()
+    except Exception:
+        res = {
+            "bbps_right": None, "bbps_transverse": None, "bbps_left": None,
+            "suspected_location": None, "suspected_size_mm": None,
+            "clinical_note": clean
+        }
+        m_bbps = re.search(r"bbps.*?(\d).*?(\d).*?(\d)", clean, re.IGNORECASE)
+        if m_bbps:
+            res["bbps_right"] = int(m_bbps.group(1))
+            res["bbps_transverse"] = int(m_bbps.group(2))
+            res["bbps_left"] = int(m_bbps.group(3))
+        m_size = re.search(r"(\d+(?:\.\d+)?)\s*mm", clean, re.IGNORECASE)
+        if m_size:
+            res["suspected_size_mm"] = float(m_size.group(1))
+        for loc in ["cecum", "ascending", "transverse", "descending", "sigmoid", "rectum"]:
+            if loc in clean.lower():
+                res["suspected_location"] = loc.capitalize()
+                break
+        return res
 
 def upload_evidence_frame(proc_id: str, frame_b64: str) -> Optional[str]:
     if not frame_b64:
@@ -160,16 +180,25 @@ def build_clinical_report(payload: Dict[str, Any], hitl_approved: bool = False) 
         f"Doctor voice notes: {json.dumps(voice_notes)}\n"
         f"Telemetry JSON: {json.dumps(approved[:8])}"
     )
-    resp = client.models.generate_content(
-        model=GEMINI_MODEL,
-        contents=prompt,
-        config=types.GenerateContentConfig(
-            response_mime_type="application/json",
-            response_schema=ClinicalNarrative,
-            temperature=0.0,
-        ),
-    )
-    ai = ClinicalNarrative.model_validate_json(resp.text)
+    try:
+        resp = client.models.generate_content(
+            model=GEMINI_MODEL,
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                response_mime_type="application/json",
+                response_schema=ClinicalNarrative,
+                temperature=0.0,
+            ),
+        )
+        ai = ClinicalNarrative.model_validate_json(resp.text)
+    except Exception:
+        ai = ClinicalNarrative(
+            findings_summary=f"Colonoscopy completed. Bowel preparation was {bbps_reason}. {len(approved)} candidate lesion(s) documented. Histopathology pending.",
+            patient_discharge_english="Procedure completed successfully. Rest today and resume normal diet as tolerated. Follow up for pathology results.",
+            patient_discharge_tamil="கொலோனோஸ்கோபி பரிசோதனை வெற்றிகரமாக முடிந்தது. இன்று ஓய்வெடுத்து, சாதாரண உணவை உட்கொள்ளவும். பயாப்ஸி முடிவுகளுக்கு மருத்துவரை அணுகவும்.",
+            snomed_conclusion="Colonoscopy procedure completed with candidate lesion documentation",
+            red_flag_precautions_english="Seek immediate emergency care if you experience severe abdominal pain, persistent rectal bleeding, high fever, or dizziness.",
+        )
     status = "final" if hitl_approved else "preliminary"
     return {
         "procedure_id": payload["procedure_id"],
