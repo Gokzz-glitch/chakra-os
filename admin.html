@@ -45,6 +45,18 @@ input,select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid va
 .bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--ok))}
 img.preview{width:100%;border-radius:12px;border:1px solid var(--line);margin-top:12px;background:#000}
 .modalBg{position:fixed;inset:0;background:rgba(0,0,0,0.55);place-items:center;padding:20px;z-index:100;backdrop-filter:blur(2px)}
+table.chakra-table{width:100%;border-collapse:collapse;font-size:12.5px;text-align:left}
+table.chakra-table th{background:var(--panel-elevated);color:var(--muted);padding:11px 14px;border-bottom:1px solid var(--line);font-weight:600;letter-spacing:.02em}
+table.chakra-table td{padding:10px 14px;border-bottom:1px solid var(--line);color:var(--text);vertical-align:middle}
+table.chakra-table tr:hover td{background:var(--accent-subtle)}
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:100px;font-size:11px;font-weight:600}
+.badge-ok{background:#d1fae5;color:#065f46}
+.badge-warn{background:#fef3c7;color:#92400e}
+.badge-danger{background:#fee2e2;color:#991b1b}
+.badge-info{background:var(--accent-subtle);color:var(--accent)}
+html.dark .badge-ok{background:#064e3b;color:#a7f3d0}
+html.dark .badge-warn{background:#78350f;color:#fde68a}
+html.dark .badge-danger{background:#7f1d1d;color:#fecaca}
 </style></head><body>
 <aside class="side">
   <div class="brand">
@@ -65,6 +77,8 @@ img.preview{width:100%;border-radius:12px;border:1px solid var(--line);margin-to
   <button class="nav" onclick="tab('workers',this)">3. Compute Workers</button>
   <button class="nav" onclick="tab('analytics',this)">4. BigQuery Analytics</button>
   <button class="nav" onclick="tab('history',this)">5. Patient History & Reconciliation</button>
+  <button class="nav" onclick="tab('runs',this)">6. Runs (Job History)</button>
+  <button class="nav" onclick="tab('review',this)">7. Review & FL Curation</button>
   <div style="margin-top:auto;padding-top:16px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px">
     <a id="docLink" href="/v2/doctor" target="_blank" class="btn ok" style="text-align:center;text-decoration:none">Open Doctor HUD ↗</a>
     <a id="phoneLink" href="/v2/phone" target="_blank" class="btn ghost" style="text-align:center;text-decoration:none">Open Phone Streamer ↗</a>
@@ -195,6 +209,134 @@ img.preview{width:100%;border-radius:12px;border:1px solid var(--line);margin-to
         </div>
       </div>
     </section>
+
+    <section id="tab-runs" class="hide">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+        <div>
+          <h2>6. Runs (Backend Job History)</h2>
+          <p class="sub" style="margin-bottom:12px">Searchable ledger of all CADe/CADx inference executions, benchmark video evaluations, and live Doctor procedures.</p>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn ghost" style="width:auto;padding:8px 14px" onclick="loadRuns()">↻ Refresh Runs</button>
+          <button class="btn ok" style="width:auto;padding:8px 14px" onclick="switchToReviewTab()">Open Review & Curation ↗</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px;padding:14px 18px">
+        <div style="display:flex;gap:12px;align-items:center">
+          <input id="runSearchInput" placeholder="🔍 Search runs by ID, input clip, model, worker, or status..." style="flex:1" oninput="filterRunsTable()">
+          <select id="runStatusFilter" style="width:180px" onchange="filterRunsTable()">
+            <option value="all">All Review Statuses</option>
+            <option value="accepted">Accepted (FL-Eligible)</option>
+            <option value="dismissed">Dismissed</option>
+            <option value="pending">Pending Review</option>
+          </select>
+          <span id="runCountBadge" class="pill" style="font-weight:600">-- Runs</span>
+        </div>
+      </div>
+
+      <div class="card" style="padding:0;overflow:hidden">
+        <div style="overflow-x:auto">
+          <table class="chakra-table" id="runsTable">
+            <thead>
+              <tr>
+                <th>Run ID</th>
+                <th>Timestamp</th>
+                <th>Input Clip / Source</th>
+                <th>Model</th>
+                <th>Frames (Flagged)</th>
+                <th>Inference FPS</th>
+                <th>Compute Worker</th>
+                <th>Review Status</th>
+                <th style="text-align:center">Action</th>
+              </tr>
+            </thead>
+            <tbody id="runsTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-review" class="hide">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+        <div>
+          <h2>7. Clinician Review & Federated Learning Curation</h2>
+          <p class="sub" style="margin-bottom:12px">Adjudicate automated AI polyp detections. Clinician-accepted runs are marked FL-eligible and exported into zero-PHI training manifests for distributed hospital model rounds.</p>
+        </div>
+        <button class="btn ok" style="width:auto;padding:8px 16px" onclick="exportFlManifest()">📥 Export FL Dataset Manifest (.jsonl)</button>
+      </div>
+
+      <div class="card" style="margin-bottom:16px;padding:14px 18px">
+        <div style="display:flex;gap:12px;align-items:center">
+          <label style="margin:0;font-weight:600;white-space:nowrap">Select Backend Run:</label>
+          <select id="reviewRunSel" style="flex:1" onchange="onReviewRunSelect()"></select>
+          <button class="btn ghost" style="width:auto;padding:8px 14px" onclick="loadReviewTab()">↻ Refresh</button>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <!-- Media / Frame Evidence Player Card -->
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <h3 style="margin:0" id="previewTitle">Media & Evidence Preview</h3>
+            <span id="previewBadge" class="pill">No Run Selected</span>
+          </div>
+
+          <!-- Video Player for MP4 clips -->
+          <div id="reviewVideoWrap" class="hide">
+            <video id="reviewVideo" controls playsinline style="width:100%;border-radius:12px;background:#000;border:1px solid var(--line);max-height:340px"></video>
+            <div style="font-size:11px;color:var(--muted);margin-top:6px;text-align:right">Direct GCS HTTP 206 Byte-Range Streaming</div>
+          </div>
+
+          <!-- Image Preview for Frames / AVI JPEGs -->
+          <div id="reviewImgWrap" class="hide">
+            <img id="reviewImg" class="preview" style="max-height:340px;object-fit:contain;margin-top:0" alt="Evidence Frame">
+            <div style="font-size:11px;color:var(--muted);margin-top:6px;text-align:right">OpenCV / GCS Ephemeral Frame Capture</div>
+          </div>
+
+          <!-- No Media Placeholder -->
+          <div id="reviewNoMedia" style="padding:48px 16px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:12px">
+            Select a run from the dropdown above to inspect bound video clips and flagged candidate polyp frames.
+          </div>
+
+          <!-- Flagged Frames Evidence Gallery -->
+          <div id="evidenceGalleryWrap" style="margin-top:14px" class="hide">
+            <h4 style="margin:0 0 8px;font-size:12px;color:var(--muted)">Flagged Candidate Frame Evidence:</h4>
+            <div id="evidenceChips" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+          </div>
+        </div>
+
+        <!-- Run Summary & Clinician Adjudication Card -->
+        <div class="card">
+          <h3 style="margin-top:0">Run Summary & FL Curation</h3>
+          <div id="runSummaryBox">
+            <div class="row"><span>Run ID</span><b id="sumRunId" style="font-family:monospace">--</b></div>
+            <div class="row"><span>Execution Timestamp</span><b id="sumTs">--</b></div>
+            <div class="row"><span>Hospital Tenant</span><b id="sumHosp">HOSP-CHENNAI-01</b></div>
+            <div class="row"><span>Active Model</span><b id="sumModel">--</b></div>
+            <div class="row"><span>Confidence Threshold</span><b id="sumThresh">--</b></div>
+            <div class="row"><span>Frames Processed / Flagged</span><b id="sumFrames">--</b></div>
+            <div class="row"><span>Execution Speed</span><b id="sumFps">--</b></div>
+            <div class="row"><span>Compute Backend</span><b id="sumWorker">--</b></div>
+            <div class="row"><span>FL Eligibility</span><b id="sumFlStatus">--</b></div>
+          </div>
+
+          <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--line)">
+            <h4 style="margin:0 0 10px;font-size:14px">Clinician Adjudication (HITL)</h4>
+            <label>Adjudication Notes & Rationale (Zero-PHI Enforced):</label>
+            <textarea id="reviewReason" rows="3" style="width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);font-size:13px;font-family:inherit;resize:vertical" placeholder="Enter clinical rationale (e.g. 'True positive Paris 0-Is mucosal elevation verified in cecum; high quality candidate for FL round')..."></textarea>
+            
+            <div style="display:flex;gap:10px;margin-top:12px">
+              <button class="btn ok" style="flex:1" onclick="submitRunReview('accepted')">✓ Accept Run (FL-Eligible)</button>
+              <button class="btn" style="flex:1;background:#dc2626;color:#fff" onclick="submitRunReview('dismissed')">✕ Dismiss Run</button>
+            </div>
+            <div id="reviewFeedback" style="margin-top:10px;font-size:12.5px;font-weight:500"></div>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </div>
 
@@ -239,6 +381,8 @@ function tab(id,el){
   el.classList.add('active');
   if(id==='analytics') loadAnalytics();
   if(id==='history') loadPatientHistory('DEMO-PATIENT-01');
+  if(id==='runs') loadRuns();
+  if(id==='review') loadReviewTab();
 }
 async function loadPatientHistory(pId){
   histSecurityMsg.textContent = 'Loading patient history...';
@@ -407,10 +551,11 @@ async function runAdminTest(){
     c.getContext('2d').drawImage(v,0,0,c.width,c.height);
     blob=await new Promise(res=>c.toBlob(res,'image/jpeg',0.85));
   }
-  const fd=new FormData(); fd.append('file',blob,'test.jpg');
+  const fd=new FormData(); fd.append('file',blob,f.name||'test.jpg');
   const d=await (await fetch(`/api/v2/rooms/${roomCode}/admin-test-frame`,{method:'POST',body:fd})).json();
   testMeta.textContent=`${d.device} | ${d.latency_ms} ms | Detections: ${d.count}`;
   testImg.src='data:image/jpeg;base64,'+d.overlay_jpg_b64; testImg.classList.remove('hide');
+  loadRuns();
 }
 async function loadAnalytics(){
   const d=await (await fetch('/api/v2/analytics')).json();
@@ -446,10 +591,255 @@ async function runCloudClipTest(){
     blob=await new Promise(res=>c.toBlob(res,'image/jpeg',0.85));
   }
   testMeta.textContent='Running Cloud Run L4 inference on demo clip...';
-  const fd=new FormData(); fd.append('file',blob,'demo_frame.jpg');
+  const fd=new FormData(); fd.append('file',blob,name);
   const d=await (await fetch(`/api/v2/rooms/${roomCode}/admin-test-frame`,{method:'POST',body:fd})).json();
   testMeta.textContent=`${d.device} | ${d.latency_ms} ms | Detections: ${d.count}`;
   testImg.src='data:image/jpeg;base64,'+d.overlay_jpg_b64; testImg.classList.remove('hide');
+  loadRuns();
 }
-warmup(); loadCatalog(); loadClips(); mintRoom();
+
+let allRuns=[];
+let selectedRunId=null;
+
+async function loadRuns(){
+  try{
+    const res=await fetch('/api/v2/runs');
+    const data=await res.json();
+    allRuns=Array.isArray(data)?data:(data.runs||[]);
+    if(document.getElementById('runCountBadge')) runCountBadge.textContent=`${allRuns.length} Runs`;
+    filterRunsTable();
+  }catch(e){
+    if(document.getElementById('runsTableBody')) runsTableBody.innerHTML=`<tr><td colspan="9" style="text-align:center;padding:20px;color:#dc2626">Failed to load runs: ${e}</td></tr>`;
+  }
+}
+
+function filterRunsTable(){
+  if(!document.getElementById('runSearchInput')) return;
+  const q=(runSearchInput.value||'').toLowerCase().trim();
+  const st=runStatusFilter.value;
+
+  const filtered=allRuns.filter(r=>{
+    const matchesQ=!q||
+      (r.run_id&&r.run_id.toLowerCase().includes(q))||
+      (r.input_clip&&r.input_clip.toLowerCase().includes(q))||
+      (r.model&&r.model.toLowerCase().includes(q))||
+      (r.execution_worker&&r.execution_worker.toLowerCase().includes(q))||
+      (r.review_status&&r.review_status.toLowerCase().includes(q));
+    const matchesSt=st==='all'||r.review_status===st;
+    return matchesQ&&matchesSt;
+  });
+
+  renderRunsTable(filtered);
+}
+
+function renderRunsTable(runs){
+  if(!document.getElementById('runsTableBody')) return;
+  if(!runs.length){
+    runsTableBody.innerHTML=`<tr><td colspan="9" style="text-align:center;padding:28px;color:var(--muted)">No backend runs match filter.</td></tr>`;
+    return;
+  }
+
+  runsTableBody.innerHTML=runs.map(r=>{
+    let stBadge='<span class="badge badge-warn">Pending</span>';
+    if(r.review_status==='accepted') stBadge='<span class="badge badge-ok">✓ Accepted (FL)</span>';
+    else if(r.review_status==='dismissed') stBadge='<span class="badge badge-danger">✕ Dismissed</span>';
+
+    const ts=r.timestamp?(new Date(r.timestamp).toLocaleString()):'--';
+    const clip=r.input_clip||'Live Feed';
+    const fps=r.fps?`${Number(r.fps).toFixed(1)} FPS`:'--';
+    const frames=`${r.frames_total||1} (${r.frames_flagged||0})`;
+
+    return `<tr>
+      <td><a href="javascript:void(0)" onclick="openInReview('${r.run_id}')" style="font-family:monospace;font-weight:700;color:var(--accent);text-decoration:none">${r.run_id}</a></td>
+      <td style="font-size:12px;color:var(--muted)">${ts}</td>
+      <td><b>${clip}</b></td>
+      <td><code>${r.model||'yolovit_yolo'}</code></td>
+      <td>${frames}</td>
+      <td><span style="font-weight:600;color:var(--ok)">${fps}</span></td>
+      <td style="font-size:12px;color:var(--muted)">${r.execution_worker||'Cloud Run NVIDIA L4'}</td>
+      <td>${stBadge}</td>
+      <td style="text-align:center">
+        <button class="btn ghost" style="padding:4px 10px;font-size:11.5px" onclick="openInReview('${r.run_id}')">Review →</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function switchToReviewTab(){
+  const navBtns=document.querySelectorAll('.nav');
+  tab('review',navBtns[6]);
+}
+
+function openInReview(runId){
+  selectedRunId=runId;
+  switchToReviewTab();
+  if(document.getElementById('reviewRunSel')) reviewRunSel.value=runId;
+  displayRunInReview(runId);
+}
+
+async function loadReviewTab(){
+  try{
+    const res=await fetch('/api/v2/runs');
+    const data=await res.json();
+    allRuns=Array.isArray(data)?data:(data.runs||[]);
+    
+    if(document.getElementById('reviewRunSel')){
+      reviewRunSel.innerHTML=allRuns.map(r=>{
+        const tag=r.review_status==='accepted'?'[ACCEPTED]':(r.review_status==='dismissed'?'[DISMISSED]':'[PENDING]');
+        return `<option value="${r.run_id}">${tag} ${r.run_id} · ${r.input_clip||'Clip'} (${r.model})</option>`;
+      }).join('');
+
+      const targetId=selectedRunId||(allRuns[0]?allRuns[0].run_id:null);
+      if(targetId){
+        reviewRunSel.value=targetId;
+        displayRunInReview(targetId);
+      }
+    }
+  }catch(e){
+    console.error('Failed to load review tab runs:',e);
+  }
+}
+
+function onReviewRunSelect(){
+  if(!reviewRunSel) return;
+  selectedRunId=reviewRunSel.value;
+  displayRunInReview(selectedRunId);
+}
+
+function displayRunInReview(runId){
+  selectedRunId=runId;
+  const run=allRuns.find(r=>r.run_id===runId);
+  if(!run) return;
+
+  if(document.getElementById('sumRunId')) sumRunId.textContent=run.run_id;
+  if(document.getElementById('sumTs')) sumTs.textContent=run.timestamp?(new Date(run.timestamp).toLocaleString()):'--';
+  if(document.getElementById('sumHosp')) sumHosp.textContent=run.hospital_id||'HOSP-CHENNAI-01';
+  if(document.getElementById('sumModel')) sumModel.textContent=run.model;
+  if(document.getElementById('sumThresh')) sumThresh.textContent=run.threshold!=null?Number(run.threshold).toFixed(2):'0.45';
+  if(document.getElementById('sumFrames')) sumFrames.textContent=`${run.frames_total||1} frames / ${run.frames_flagged||0} flagged`;
+  if(document.getElementById('sumFps')) sumFps.textContent=run.fps?`${Number(run.fps).toFixed(1)} FPS`:'--';
+  if(document.getElementById('sumWorker')) sumWorker.textContent=run.execution_worker||'Cloud Run NVIDIA L4';
+
+  if(document.getElementById('sumFlStatus')){
+    if(run.fl_eligible||run.review_status==='accepted'){
+      sumFlStatus.innerHTML='<span class="badge badge-ok">✓ FL-ELIGIBLE</span>';
+    }else if(run.review_status==='dismissed'){
+      sumFlStatus.innerHTML='<span class="badge badge-danger">✕ DISMISSED</span>';
+    }else{
+      sumFlStatus.innerHTML='<span class="badge badge-warn">⏳ AWAITING CLINICIAN REVIEW</span>';
+    }
+  }
+
+  if(document.getElementById('reviewReason')) reviewReason.value=run.clinician_notes||'';
+  if(document.getElementById('reviewFeedback')) reviewFeedback.textContent='';
+
+  const clip=run.input_clip||'';
+  const mediaUrl=run.media_url||(clip?`/api/v2/demo-videos/${clip}`:null);
+  
+  reviewVideoWrap.classList.add('hide');
+  reviewImgWrap.classList.add('hide');
+  reviewNoMedia.classList.add('hide');
+  evidenceGalleryWrap.classList.add('hide');
+
+  previewBadge.textContent=clip||run.run_id;
+
+  if(clip.endsWith('.mp4')){
+    reviewVideoWrap.classList.remove('hide');
+    reviewVideo.src=mediaUrl;
+    previewTitle.textContent=`Video Playback: ${clip}`;
+  }else if(clip.endsWith('.avi')){
+    reviewImgWrap.classList.remove('hide');
+    reviewImg.src=`/api/v2/demo-videos/${clip}/frame?idx=0`;
+    previewTitle.textContent=`Evidence Frame: ${clip}`;
+  }else if(mediaUrl&&mediaUrl.startsWith('data:image')){
+    reviewImgWrap.classList.remove('hide');
+    reviewImg.src=mediaUrl;
+    previewTitle.textContent=`Evidence Frame: ${clip||run.run_id}`;
+  }else if(run.flagged_evidence&&run.flagged_evidence.length&&run.flagged_evidence[0].evidence_url){
+    const ev=run.flagged_evidence[0];
+    if(ev.evidence_url.endsWith('.avi')){
+      reviewImgWrap.classList.remove('hide');
+      reviewImg.src=`/api/v2/demo-videos/${ev.evidence_url.split('/').pop()}/frame?idx=${ev.frame_idx||0}`;
+    }else{
+      reviewVideoWrap.classList.remove('hide');
+      reviewVideo.src=ev.evidence_url;
+    }
+  }else{
+    reviewNoMedia.classList.remove('hide');
+  }
+
+  if(run.flagged_evidence&&run.flagged_evidence.length){
+    evidenceGalleryWrap.classList.remove('hide');
+    evidenceChips.innerHTML=run.flagged_evidence.map((ev,idx)=>`
+      <button class="pill" style="cursor:pointer;font-size:11px" onclick="inspectEvidenceFrame(${idx})">
+        Frame #${ev.frame_idx!=null?ev.frame_idx:idx} (Conf: ${ev.conf!=null?Number(ev.conf).toFixed(2):'--'})
+      </button>
+    `).join('');
+  }
+}
+
+function inspectEvidenceFrame(idx){
+  const run=allRuns.find(r=>r.run_id===selectedRunId);
+  if(!run||!run.flagged_evidence||!run.flagged_evidence[idx]) return;
+  const ev=run.flagged_evidence[idx];
+  if(run.input_clip&&run.input_clip.endsWith('.avi')){
+    reviewImgWrap.classList.remove('hide');
+    reviewVideoWrap.classList.add('hide');
+    reviewImg.src=`/api/v2/demo-videos/${run.input_clip}/frame?idx=${ev.frame_idx||0}`;
+  }else if(reviewVideo&&!reviewVideoWrap.classList.contains('hide')){
+    if(ev.frame_idx!=null){
+      reviewVideo.currentTime=Math.max(0,ev.frame_idx/(run.fps||30.0));
+      reviewVideo.play().catch(()=>{});
+    }
+  }
+}
+
+async function submitRunReview(decision){
+  if(!selectedRunId) return alert('Select a run to review first');
+  const reason=reviewReason.value.trim();
+  reviewFeedback.textContent=`Submitting clinician ${decision}...`;
+  reviewFeedback.style.color='var(--accent)';
+
+  try{
+    const res=await fetch(`/api/v2/runs/${selectedRunId}/review`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        decision:decision,
+        reason:reason,
+        reviewer_id:'DR-GOKUL-R'
+      })
+    });
+    const d=await res.json();
+    if(res.ok){
+      reviewFeedback.innerHTML=`<span style="color:var(--ok)">✓ Run ${selectedRunId} successfully recorded as <b>${decision.toUpperCase()}</b> (FL-eligible: true)!</span>`;
+      await loadReviewTab();
+      await loadRuns();
+    }else{
+      reviewFeedback.innerHTML=`<span style="color:#dc2626">Error: ${d.detail}</span>`;
+    }
+  }catch(e){
+    reviewFeedback.innerHTML=`<span style="color:#dc2626">Submission failed: ${e}</span>`;
+  }
+}
+
+async function exportFlManifest(){
+  try{
+    const res=await fetch('/api/v2/runs/export-fl-manifest');
+    if(!res.ok) throw new Error(`HTTP ${res.status}`);
+    const blob=await res.blob();
+    const url=window.URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;
+    a.download='chakra_fl_dataset_manifest.jsonl';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+  }catch(e){
+    alert('Failed to export FL manifest: '+e);
+  }
+}
+
+warmup(); loadCatalog(); loadClips(); mintRoom(); loadRuns();
 </script></body></html>

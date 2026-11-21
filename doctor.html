@@ -42,8 +42,8 @@ pre{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding
 </style></head><body>
 <header class="hdr">
   <div style="display:flex;align-items:center;gap:12px">
-    <img src="/logo.png" alt="CHAKRA Logo" style="height:32px;width:auto;object-fit:contain" onerror="this.style.display='none'">
-    <div style="color:var(--accent);display:grid;place-items:center">
+    <img src="/logo.png" alt="CHAKRA Logo" style="height:32px;width:auto;object-fit:contain" onerror="this.style.display='none';document.getElementById('svgLogo').style.display='grid'">
+    <div id="svgLogo" style="color:var(--accent);display:none;place-items:center">
       <svg width="24" height="24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="50" cy="50" r="44" stroke="currentColor" stroke-width="7" stroke-dasharray="6 3" opacity="0.85"/>
         <circle cx="50" cy="50" r="28" stroke="currentColor" stroke-width="6"/>

@@ -299,3 +299,97 @@ def test_demo_videos_listing_and_range_206_streaming():
     assert query_res.status_code == 200
     assert query_res.headers.get("content-type") == "image/jpeg"
     assert query_res.content.startswith(b"\xff\xd8")
+
+
+def test_runs_enumeration_and_preseeded_history():
+    """Verify stored backend runs enumeration, pre-seeded historical runs, and summary fields."""
+    res = client.get("/api/v2/runs")
+    assert res.status_code == 200
+    data = res.json()
+    assert "runs" in data
+    runs_by_id = {r["run_id"]: r for r in data["runs"]}
+
+    # Pre-seeded historical runs must exist
+    for r_id in ["2abe559e", "d80e0cd7", "0273f6f9"]:
+        assert r_id in runs_by_id, f"Pre-seeded run {r_id} missing from runs catalog"
+
+    r_pra = runs_by_id["2abe559e"]
+    assert r_pra["model"] == "pvt_pranet_v1"
+    assert r_pra["frames_total"] == 944
+    assert r_pra["frames_flagged"] == 932
+    assert r_pra["fps"] == 37.97
+    assert r_pra["review_status"] == "accepted"
+    assert r_pra["fl_eligible"] is True
+    assert r_pra["media_url"] == "/api/v2/demo-videos/ldpolyp_clip01.mp4"
+
+    # Specific run lookup
+    get_res = client.get("/api/v2/runs/2abe559e")
+    assert get_res.status_code == 200
+    run_detail = get_res.json()
+    assert run_detail["run_id"] == "2abe559e"
+    assert "flagged_evidence" in run_detail
+    assert len(run_detail["flagged_evidence"]) >= 1
+
+    # Non-existent run returns 404
+    assert client.get("/api/v2/runs/nonexistent-run-id").status_code == 404
+
+
+def test_runs_auto_append_and_clinician_fl_review():
+    """Verify auto-appending of new runs on test-frame and clinician review marking FL-eligible."""
+    # Create room and post test frame
+    room = client.post("/api/v2/rooms").json()
+    code = room["code"]
+
+    runs_before = len(client.get("/api/v2/runs").json()["runs"])
+
+    file_payload = {"file": ("test_auto_run.jpg", io.BytesIO(TINY_JPEG_BYTES), "image/jpeg")}
+    tf_res = client.post(f"/api/v2/rooms/{code}/admin-test-frame", files=file_payload)
+    assert tf_res.status_code == 200
+
+    runs_after = client.get("/api/v2/runs").json()["runs"]
+    assert len(runs_after) == runs_before + 1
+
+    # Find the newly created run
+    new_run = [r for r in runs_after if r.get("input_clip") == "test_auto_run.jpg"][0]
+    new_run_id = new_run["run_id"]
+    assert new_run["review_status"] == "pending"
+    assert new_run["fl_eligible"] is False
+
+    # Review run with clinician accept decision and zero-PHI reason
+    review_payload = {
+        "decision": "accepted",
+        "reason": "Clinician approved: Clear adenoma candidate, patient phone 9876543210 Aadhaar 1234-5678-9012",
+        "reviewer_id": "DR-GOKUL-R",
+    }
+    rev_res = client.post(f"/api/v2/runs/{new_run_id}/review", json=review_payload)
+    assert rev_res.status_code == 200
+    rev_data = rev_res.json()["run"]
+    assert rev_data["review_status"] == "accepted"
+    assert rev_data["fl_eligible"] is True
+    # Zero-PHI check: phone and aadhaar must be scrubbed
+    assert "9876543210" not in rev_data["clinician_notes"]
+    assert "1234-5678-9012" not in rev_data["clinician_notes"]
+
+
+def test_export_fl_manifest():
+    """Verify clean JSONL export containing only clinician-verified runs and GCS evidence URIs."""
+    res = client.get("/api/v2/runs/export-fl-manifest")
+    assert res.status_code == 200
+    assert "application/x-jsonlines" in res.headers.get("content-type", "")
+
+    lines = [line for line in res.text.strip().split("\n") if line.strip()]
+    assert len(lines) >= 2  # At least 2abe559e and 0273f6f9
+
+    import json
+    for line in lines:
+        item = json.loads(line)
+        assert "run_id" in item
+        assert "decision" in item
+        assert item["decision"] in ("accepted", "dismissed")
+        assert item["fl_eligible"] is True
+        assert "gcs_media_uri" in item
+        assert item["gcs_media_uri"].startswith("gs://")
+        assert "evidence_uris" in item
+        assert "anonymized_metadata" in item
+        assert item["anonymized_metadata"]["zero_phi"] is True
+
