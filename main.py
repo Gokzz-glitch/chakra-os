@@ -116,6 +116,10 @@ async def security_and_rate_limit_middleware(request: Request, call_next):
 def doctor_history_map():
     return FileResponse("static/patient-history.html", media_type="text/html")
 
+@app.get("/v2/assets/operation-feedback.js")
+def operation_feedback_script():
+    return FileResponse("static/operation-feedback.js", media_type="text/javascript")
+
 @app.get("/v2/assets/cohort-index.json")
 def cohort_index():
     return FileResponse("static/cohort-index.json", media_type="application/json")
@@ -169,86 +173,55 @@ def _sanitize_video_name(name: str) -> str:
     return name
 
 def _stream_video_direct(clean_name: str, range_header: Optional[str], media_type: str) -> Response:
-    """Zero-disk byte-range streaming directly from GCS to prevent Cloud Run tmpfs RAM OOM."""
+    """Serve real bytes from a pinned object generation or an available local file."""
+    from google.api_core.exceptions import NotFound
     local_path = os.path.join(DEMO_CACHE_DIR, clean_name)
-    blob = None
-    total_size = None
     try:
-        st = storage.Client(project=os.getenv("GOOGLE_CLOUD_PROJECT", "girpolypposframesrealcolon"))
-        blob = st.bucket(GCS_BUCKET).blob(f"demo_videos/{clean_name}")
+        client = storage.Client(project=os.getenv("GOOGLE_CLOUD_PROJECT", "girpolypposframesrealcolon"))
+        blob = client.bucket(GCS_BUCKET).blob(f"demo_videos/{clean_name}")
         blob.reload()
-        total_size = blob.size
-    except Exception:
-        if os.path.exists(local_path):
-            total_size = os.path.getsize(local_path)
+        size = blob.size
+    except Exception as exc:
+        blob = None
+        if not os.path.isfile(local_path):
+            code = 404 if isinstance(exc, NotFound) else 503
+            raise HTTPException(code, "Recording missing" if code == 404 else "Media storage unavailable") from exc
+        size = os.path.getsize(local_path)
+    if not size:
+        raise HTTPException(422, "Recording is empty")
+
+    start, end = 0, size - 1
+    headers = {"Accept-Ranges": "bytes", "Cache-Control": "public, max-age=3600"}
+    if range_header:
+        invalid = HTTPException(416, "Range not satisfiable", headers={"Content-Range": f"bytes */{size}"})
+        match = re.fullmatch(r"bytes=(\d*)-(\d*)", range_header.strip())
+        if not match or not any(match.groups()):
+            raise invalid
+        first, last = match.groups()
+        if first:
+            start = int(first)
+            if last:
+                end = min(int(last), end)
         else:
-            total_size = 28733
+            start = max(0, size - int(last))
+        if start > end:
+            raise invalid
+        headers["Content-Range"] = f"bytes {start}-{end}/{size}"
 
-    if not range_header:
-        if blob:
-            def gcs_stream():
-                with blob.open("rb") as f:
-                    while chunk := f.read(65536):
-                        yield chunk
-            return StreamingResponse(
-                gcs_stream(),
-                status_code=200,
-                media_type=media_type,
-                headers={"Accept-Ranges": "bytes", "Content-Length": str(total_size), "Content-Type": media_type, "Cache-Control": "public, max-age=3600"}
-            )
-        elif os.path.exists(local_path):
-            def file_stream():
-                with open(local_path, "rb") as f:
-                    while chunk := f.read(65536):
-                        yield chunk
-            return StreamingResponse(
-                file_stream(),
-                status_code=200,
-                media_type=media_type,
-                headers={"Accept-Ranges": "bytes", "Content-Length": str(total_size), "Content-Type": media_type, "Cache-Control": "public, max-age=3600"}
-            )
-        else:
-            return Response(content=b"", media_type=media_type, headers={"Accept-Ranges": "bytes", "Content-Length": "0"})
-
-    match = re.match(r"^bytes=(\d*)-(\d*)$", range_header.strip())
-    if not match:
-        raise HTTPException(status_code=416, detail="Range Not Satisfiable", headers={"Content-Range": f"bytes */{total_size}"})
-
-    start_str, end_str = match.groups()
-    if start_str and end_str:
-        start = int(start_str)
-        end = int(end_str)
-    elif start_str:
-        start = int(start_str)
-        end = total_size - 1
-    elif end_str:
-        suffix = int(end_str)
-        start = max(0, total_size - suffix)
-        end = total_size - 1
-    else:
-        raise HTTPException(status_code=416, detail="Range Not Satisfiable", headers={"Content-Range": f"bytes */{total_size}"})
-
-    if start > end or start >= total_size or end >= total_size:
-        raise HTTPException(status_code=416, detail="Range Not Satisfiable", headers={"Content-Range": f"bytes */{total_size}"})
-
-    chunk_length = end - start + 1
-    if blob:
-        data = blob.download_as_bytes(start=start, end=end)
-    elif os.path.exists(local_path):
-        with open(local_path, "rb") as f:
-            f.seek(start)
-            data = f.read(chunk_length)
-    else:
-        data = b"\x00" * chunk_length
-
-    headers = {
-        "Content-Range": f"bytes {start}-{end}/{total_size}",
-        "Accept-Ranges": "bytes",
-        "Content-Length": str(len(data)),
-        "Content-Type": media_type,
-        "Cache-Control": "public, max-age=3600",
-    }
-    return Response(content=data, status_code=206, media_type=media_type, headers=headers)
+    length = end - start + 1
+    headers["Content-Length"] = str(length)
+    def chunks():
+        reader = blob.open("rb", chunk_size=1024*1024) if blob is not None else open(local_path, "rb")
+        with reader:
+            reader.seek(start)
+            remaining = length
+            while remaining:
+                part = reader.read(min(remaining, 256*1024))
+                if not part:
+                    raise IOError("Recording ended early")
+                yield part
+                remaining -= len(part)
+    return StreamingResponse(chunks(), status_code=206 if range_header else 200, media_type=media_type, headers=headers)
 
 def _extract_video_frame(clean_name: str, frame_idx: int = 0) -> bytes:
     """Extracts frame via OpenCV, caches only the lightweight 32KB JPEG, and purges heavy video tempfiles."""
@@ -485,7 +458,12 @@ def get_demo_video(
         )
 
     media_type = "video/x-msvideo" if is_avi else "video/mp4"
-    resp = _stream_video_direct(clean_name, range, media_type)
+    # Keep original files for frame extraction; serve fast-start H.264 to video players.
+    playback_names = {
+        "ldpolyp_clip01.mp4": "ldpolyp_clip01_web_1795211682309814.mp4",
+        "sun_seg_seq01.mp4": "sun_seg_seq01_web_1795211682309814.mp4",
+    }
+    resp = _stream_video_direct(playback_names.get(clean_name, clean_name), range, media_type)
     if is_avi:
         resp.headers["X-Frame-Extract-Fallback"] = f"/api/v2/demo-videos/{clean_name}/frame"
     return resp
@@ -1107,7 +1085,7 @@ def _record_procedure_run(room: Dict[str, Any], approved: List[Dict[str, Any]], 
         "status": "COMPLETED",
         "review_status": "accepted" if approved else "pending",
         "fl_eligible": True if approved else False,
-        "media_url": gcs_uri or "/api/v2/demo-videos/1_35.avi",
+        "media_url": gcs_uri,
         "hospital_id": "HOSP-CHENNAI-01",
         "procedure_id": room["procedure_id"],
         "clinician_label": "accepted" if approved else None,
@@ -1123,7 +1101,7 @@ def _record_procedure_run(room: Dict[str, Any], approved: List[Dict[str, Any]], 
             }
             for f in room.get("findings", [])
         ],
-        "gcs_media_uri": gcs_uri or f"gs://{GCS_BUCKET}/procedures/{room['procedure_id']}.mp4",
+        "gcs_media_uri": gcs_uri,
         "gcs_evidence_uris": [gcs_uri] if gcs_uri else [],
     }
     _save_run_log(proc_run)
@@ -1140,6 +1118,7 @@ def export_fl_manifest(hospital_id: Optional[str] = "HOSP-CHENNAI-01"):
         if r.get("fl_eligible") or r.get("review_status") in ("accepted", "dismissed"):
             if hospital_id and r.get("hospital_id") and r.get("hospital_id") != hospital_id:
                 continue
+            media_uri = r.get("gcs_media_uri") or f"gs://{GCS_BUCKET}/demo_videos/{r.get('input_clip') or (r['run_id'] + '.mp4')}"
             manifest_item = {
                 "run_id": r["run_id"],
                 "hospital_id": r.get("hospital_id", "HOSP-CHENNAI-01"),
@@ -1148,7 +1127,7 @@ def export_fl_manifest(hospital_id: Optional[str] = "HOSP-CHENNAI-01"):
                 "decision": r.get("review_status") or r.get("clinician_label") or "accepted",
                 "clinician_notes": scrub_phi(r.get("clinician_notes") or ""),
                 "input_clip": r.get("input_clip"),
-                "gcs_media_uri": r.get("gcs_media_uri", f"gs://{GCS_BUCKET}/demo_videos/{r.get('input_clip')}"),
+                "gcs_media_uri": media_uri,
                 "frames_total": r.get("frames_total", 0),
                 "frames_flagged": r.get("frames_flagged", 0),
                 "fps": r.get("fps", 30.0),

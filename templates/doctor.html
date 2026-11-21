@@ -51,7 +51,13 @@ pre{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding
 .footer-link{background:none;border:none;color:var(--accent);font-size:11.5px;cursor:pointer;padding:0;text-decoration:underline;font-family:inherit}
 .footer-link:hover{color:var(--text)}
 .footer-modal{max-width:540px;width:100%;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 12px 36px rgba(0,0,0,0.18)}
-</style></head><body>
+</style><style>
+.hdr,.hdr>div,.modal div[style*="display:flex"]{flex-wrap:wrap;gap:8px}
+.workspace,.workspace>*,.banner>div,.col,.card{min-width:0}
+.banner b,.card{overflow-wrap:anywhere}
+@media(max-width:950px){.workspace{grid-template-columns:minmax(0,1fr)}.banner{grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}.stage{min-height:clamp(260px,52vw,500px)}}
+@media(max-width:600px){.hdr{padding:12px}.banner{margin:8px 12px;padding:12px}.workspace{padding:8px 12px}.modal{padding:14px}.stage img{max-height:60dvh}.clinical-footer{padding:12px}}
+</style><script src="/v2/assets/operation-feedback.js"></script></head><body>
 <header class="hdr">
   <div style="display:flex;align-items:center;gap:12px">
     <img src="/logo.png" alt="CHAKRA Logo" style="height:32px;width:auto;object-fit:contain" onerror="this.style.display='none';document.getElementById('svgLogo').style.display='grid'">
@@ -232,7 +238,7 @@ async function connect(){
   };
 }
 async function startProc(){
-  await fetch(`/api/v2/rooms/${code}/doctor-start`,{method:'POST'});
+  await chakraFeedback.request('Start procedure',`/api/v2/rooms/${code}/doctor-start`,{method:'POST'});
   standbyBox.style.display='none'; endBtn.disabled=false;
   sec=0; if(timer) clearInterval(timer);
   timer=setInterval(()=>{
@@ -251,7 +257,7 @@ function renderFindings(list){
     </span></div>`).join('');
 }
 async function rev(id,dec){
-  await fetch(`/api/v2/rooms/${code}/finding-review`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({finding_id:id,decision:dec})});
+  await chakraFeedback.request('Save finding review',`/api/v2/rooms/${code}/finding-review`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({finding_id:id,decision:dec})});
 }
 function toggleVoice(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
@@ -265,13 +271,13 @@ function toggleVoice(){
 async function sendDemoVoice(){ await postVoice('BBPS right 3 transverse 3 left 2, 7mm sessile candidate in cecum, cold snare planned'); }
 async function postVoice(text){
   voiceLog.textContent='Sending to Gemini 3.8 Flash...';
-  await fetch(`/api/v2/rooms/${code}/voice-note`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({transcript:text})});
+  await chakraFeedback.request('Save voice note',`/api/v2/rooms/${code}/voice-note`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({transcript:text})});
 }
 async function endAndReport(){
   if(timer) clearInterval(timer);
   modalBg.style.display='grid'; hitlChk.checked=false; signBtn.disabled=true;
   repBody.innerHTML='Drafting structured report via Vertex AI Gemini 3.8 Flash & archiving evidence frame to GCS...';
-  const d=await (await fetch(`/api/v2/rooms/${code}/end-report`,{method:'POST'})).json();
+  const d=await (await chakraFeedback.request('Generate report',`/api/v2/rooms/${code}/end-report`,{method:'POST'})).json();
   lastReport=d.report;
   const n=lastReport.narrative;
   repBody.innerHTML=`
@@ -286,13 +292,13 @@ async function endAndReport(){
 async function playTts(lang){
   if(!lastReport) return;
   const txt=lang==='ta'?lastReport.narrative.patient_discharge_tamil:lastReport.narrative.patient_discharge_english;
-  const d=await (await fetch(`/api/v2/rooms/${code}/tts`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:txt})})).json();
+  const d=await (await chakraFeedback.request('Prepare audio',`/api/v2/rooms/${code}/tts`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:txt})})).json();
   if(d.audio_b64){ ttsPlayer.src='data:audio/wav;base64,'+d.audio_b64; ttsPlayer.style.display='block'; ttsPlayer.play(); }
   else alert('TTS note: '+(d.error||'unavailable'));
 }
 async function commitBigQuery(){
   signBtn.textContent='Committing to BigQuery...';
-  const d=await (await fetch(`/api/v2/rooms/${code}/signoff`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({hitl_attested:true})})).json();
+  const d=await (await chakraFeedback.request('Sign off report',`/api/v2/rooms/${code}/signoff`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({hitl_attested:true})})).json();
   signBtn.textContent='Signed Off & Logged to BigQuery'; signBtn.disabled=true;
   fhirBox.textContent=JSON.stringify({status:d.report.status, bigquery:d.bigquery},null,2);
 }
@@ -320,10 +326,10 @@ if(codeIn.value.length===6) connect();
       </button>
     </div>
     <div style="font-size:12.5px;color:var(--text);line-height:1.55;display:flex;flex-direction:column;gap:10px">
-      <p style="margin:0"><b>1. Zero-PHI Architecture:</b> Patient identifiable data (Aadhaar 12-digit numbers, 10-digit mobile numbers, explicit names, and UHID identifiers) are irreversibly scrubbed client-side and at API ingestion prior to Gemini processing or BigQuery analytics insertion.</p>
-      <p style="margin:0"><b>2. MeitY Sovereign Hosting:</b> All longitudinal procedure records, clinical narratives, and ABDM FHIR R4 DiagnosticReportRecord bundles reside exclusively within the Google Cloud asia-south1 (Mumbai) boundary.</p>
-      <p style="margin:0"><b>3. Tenant Isolation:</b> Inter-hospital access is strictly blocked at the API gateway via cryptographic X-Hospital-ID verification, preventing cross-tenant information disclosure.</p>
-      <p style="margin:0"><b>4. Federated Learning Curation:</b> Exported FL manifests (.jsonl) strip all institutional and clinician identifiable signatures, publishing purely zero-PHI weight telemetry.</p>
+      <p style="margin:0"><b>Demo identifiers.</b> Hospital UHID and ABHA examples on the cohort map are fictional. Use only synthetic patient details in this demo.</p>
+      <p style="margin:0"><b>Encryption.</b> Browser connections use HTTPS. Google Cloud Storage encrypts stored objects at rest.</p>
+      <p style="margin:0"><b>Access.</b> The research cohort and its run summaries are available to demo viewers. Real patient use requires authenticated clinical roles and hospital-specific access checks.</p>
+      <p style="margin:0"><b>Gemini run guides.</b> The saved guides explain boxes and masks. Their generation used model descriptions and excluded patient identifiers, videos and clinical notes.</p>
     </div>
     <button class="btn" style="width:100%;margin-top:16px" onclick="closeModal('privacyModal')">Acknowledge & Close</button>
   </div>

@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Patient evidence map · CHAKRA</title><style>
 :root{font:16px/1.55 "Segoe UI",sans-serif;color:#173533;background:#f5f7f4}main{max-width:900px;margin:auto;padding:24px}a{color:#076455}h1{margin-bottom:0}h2{font-size:1.15rem}article{border-left:3px solid #397765;padding-left:18px;margin:20px 0}details{background:white;border:1px solid #acbeb6;border-radius:6px;padding:12px;margin:.6rem 0}summary{cursor:pointer;font-weight:650}small{display:block}button{font:inherit}img{max-width:100%;max-height:320px}a:focus-visible,summary:focus-visible,button:focus-visible{outline:3px solid #b5561d}
-</style></head><body><main><a href="/v2/doctor">Back to procedure screen</a><h1>Patient evidence map</h1><div id="historyGraph" aria-label="Synthetic patient history graph" style="background:#101521;border-radius:12px;overflow:auto;margin-top:12px"></div>
+</style><style>main{min-width:0;padding:clamp(12px,3vw,24px)}article{overflow-wrap:anywhere}button{min-height:36px}</style><script src="/v2/assets/operation-feedback.js"></script></head><body><main><a href="/v2/doctor">Back to procedure screen</a><h1>Patient evidence map</h1><div id="historyGraph" aria-label="Synthetic patient history graph" style="background:#101521;border-radius:12px;overflow:auto;margin-top:12px"></div>
   <p id="patient">Loading synthetic case…</p>
 <button id="refresh">Refresh history</button><div id="visits" aria-live="polite"></div></main>
 <script src="/v2/assets/patient-history.js" defer></script></body></html>

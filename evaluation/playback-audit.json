@@ -1,0 +1,2168 @@
+{
+  "batch": "chakra-mixed-evaluation-kkq65",
+  "passed": 240,
+  "decoded_frames": 1003508,
+  "errors": [],
+  "replays": [
+    {
+      "patient": "SIM-001",
+      "model": "yolovit_vit",
+      "generation": "1795236696570650",
+      "decoded_frames": 1400,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-001",
+      "model": "pvt_pranet",
+      "generation": "1795236734898507",
+      "decoded_frames": 1400,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-001",
+      "model": "chakranet",
+      "generation": "1795236741417042",
+      "decoded_frames": 1400,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-002",
+      "model": "chakranet",
+      "generation": "1795236927708025",
+      "decoded_frames": 4001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-001",
+      "model": "sepnet",
+      "generation": "1795236817504921",
+      "decoded_frames": 1400,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-002",
+      "model": "yolovit_vit",
+      "generation": "1795236814185688",
+      "decoded_frames": 4001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-003",
+      "model": "pvt_pranet",
+      "generation": "1795238495596177",
+      "decoded_frames": 4001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-003",
+      "model": "yolovit_vit",
+      "generation": "1795237003943700",
+      "decoded_frames": 4001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-002",
+      "model": "sepnet",
+      "generation": "1795237059799404",
+      "decoded_frames": 4001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-003",
+      "model": "sepnet",
+      "generation": "1795238965282725",
+      "decoded_frames": 4001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-004",
+      "model": "yolovit_vit",
+      "generation": "1795237388820593",
+      "decoded_frames": 4600,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-002",
+      "model": "pvt_pranet",
+      "generation": "1795236989659369",
+      "decoded_frames": 4001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-005",
+      "model": "yolovit_vit",
+      "generation": "1795237402652903",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-005",
+      "model": "chakranet",
+      "generation": "1795238643347635",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-004",
+      "model": "sepnet",
+      "generation": "1795239186745927",
+      "decoded_frames": 4600,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-006",
+      "model": "yolovit_vit",
+      "generation": "1795237592762763",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-003",
+      "model": "chakranet",
+      "generation": "1795240127802307",
+      "decoded_frames": 4001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-006",
+      "model": "chakranet",
+      "generation": "1795238837384671",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-005",
+      "model": "pvt_pranet",
+      "generation": "1795238907621939",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-004",
+      "model": "pvt_pranet",
+      "generation": "1795238850049319",
+      "decoded_frames": 4600,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-005",
+      "model": "sepnet",
+      "generation": "1795239095145059",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-006",
+      "model": "pvt_pranet",
+      "generation": "1795238763404598",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-006",
+      "model": "sepnet",
+      "generation": "1795239774097869",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-007",
+      "model": "yolovit_vit",
+      "generation": "1795237407917509",
+      "decoded_frames": 5000,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-004",
+      "model": "chakranet",
+      "generation": "1795238571690086",
+      "decoded_frames": 4600,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-008",
+      "model": "yolovit_vit",
+      "generation": "1795237457063115",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-007",
+      "model": "chakranet",
+      "generation": "1795238919218543",
+      "decoded_frames": 5000,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-008",
+      "model": "chakranet",
+      "generation": "1795239808032149",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-008",
+      "model": "sepnet",
+      "generation": "1795239926407074",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-009",
+      "model": "yolovit_vit",
+      "generation": "1795237543383582",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-009",
+      "model": "chakranet",
+      "generation": "1795239710156961",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-007",
+      "model": "sepnet",
+      "generation": "1795239472576171",
+      "decoded_frames": 5000,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-009",
+      "model": "pvt_pranet",
+      "generation": "1795239113252480",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-007",
+      "model": "pvt_pranet",
+      "generation": "1795238907511274",
+      "decoded_frames": 5000,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-008",
+      "model": "pvt_pranet",
+      "generation": "1795238598315555",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-009",
+      "model": "sepnet",
+      "generation": "1795239763153483",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-010",
+      "model": "yolovit_vit",
+      "generation": "1795237444798197",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-010",
+      "model": "chakranet",
+      "generation": "1795238692681904",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-010",
+      "model": "sepnet",
+      "generation": "1795239451929730",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-010",
+      "model": "pvt_pranet",
+      "generation": "1795239111726532",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-011",
+      "model": "yolovit_vit",
+      "generation": "1795237483341262",
+      "decoded_frames": 6000,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-011",
+      "model": "chakranet",
+      "generation": "1795239116911300",
+      "decoded_frames": 6000,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-011",
+      "model": "pvt_pranet",
+      "generation": "1795239157967043",
+      "decoded_frames": 6000,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-011",
+      "model": "sepnet",
+      "generation": "1795240370728083",
+      "decoded_frames": 6000,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-012",
+      "model": "yolovit_vit",
+      "generation": "1795237420364196",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-012",
+      "model": "chakranet",
+      "generation": "1795239115108617",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-012",
+      "model": "sepnet",
+      "generation": "1795239580164778",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-013",
+      "model": "yolovit_vit",
+      "generation": "1795237652548802",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-013",
+      "model": "sepnet",
+      "generation": "1795239858547653",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-012",
+      "model": "pvt_pranet",
+      "generation": "1795241371491282",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-014",
+      "model": "yolovit_vit",
+      "generation": "1795237458561155",
+      "decoded_frames": 6400,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-014",
+      "model": "pvt_pranet",
+      "generation": "1795239289522941",
+      "decoded_frames": 6400,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-014",
+      "model": "sepnet",
+      "generation": "1795240147340694",
+      "decoded_frames": 6400,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-015",
+      "model": "yolovit_vit",
+      "generation": "1795237426614980",
+      "decoded_frames": 7001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-015",
+      "model": "pvt_pranet",
+      "generation": "1795239664428884",
+      "decoded_frames": 7001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-013",
+      "model": "chakranet",
+      "generation": "1795239317346434",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-013",
+      "model": "pvt_pranet",
+      "generation": "1795239178561951",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-016",
+      "model": "yolovit_vit",
+      "generation": "1795237662795261",
+      "decoded_frames": 7001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-015",
+      "model": "chakranet",
+      "generation": "1795238925493760",
+      "decoded_frames": 7001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-015",
+      "model": "sepnet",
+      "generation": "1795239732614531",
+      "decoded_frames": 7001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-016",
+      "model": "chakranet",
+      "generation": "1795239807653958",
+      "decoded_frames": 7001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-014",
+      "model": "chakranet",
+      "generation": "1795239037268808",
+      "decoded_frames": 6400,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-016",
+      "model": "pvt_pranet",
+      "generation": "1795239534230239",
+      "decoded_frames": 7001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-017",
+      "model": "yolovit_vit",
+      "generation": "1795237496439516",
+      "decoded_frames": 7001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-017",
+      "model": "pvt_pranet",
+      "generation": "1795240254435845",
+      "decoded_frames": 7001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-018",
+      "model": "chakranet",
+      "generation": "1795237833524033",
+      "decoded_frames": 8001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-017",
+      "model": "chakranet",
+      "generation": "1795239356640972",
+      "decoded_frames": 7001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-016",
+      "model": "sepnet",
+      "generation": "1795240477772920",
+      "decoded_frames": 7001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-019",
+      "model": "yolovit_vit",
+      "generation": "1795237682792482",
+      "decoded_frames": 8001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-017",
+      "model": "sepnet",
+      "generation": "1795240991157193",
+      "decoded_frames": 7001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-018",
+      "model": "pvt_pranet",
+      "generation": "1795237818998117",
+      "decoded_frames": 8001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-019",
+      "model": "pvt_pranet",
+      "generation": "1795239594584303",
+      "decoded_frames": 8001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-018",
+      "model": "sepnet",
+      "generation": "1795238068668721",
+      "decoded_frames": 8001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-019",
+      "model": "chakranet",
+      "generation": "1795239809442392",
+      "decoded_frames": 8001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-018",
+      "model": "yolovit_vit",
+      "generation": "1795237471973727",
+      "decoded_frames": 8001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-019",
+      "model": "sepnet",
+      "generation": "1795240671467986",
+      "decoded_frames": 8001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-020",
+      "model": "chakranet",
+      "generation": "1795237486697746",
+      "decoded_frames": 9001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-021",
+      "model": "yolovit_vit",
+      "generation": "1795237352858018",
+      "decoded_frames": 4001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-021",
+      "model": "chakranet",
+      "generation": "1795238616818643",
+      "decoded_frames": 4001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-021",
+      "model": "pvt_pranet",
+      "generation": "1795238744753809",
+      "decoded_frames": 4001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-020",
+      "model": "pvt_pranet",
+      "generation": "1795237484809466",
+      "decoded_frames": 9001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-022",
+      "model": "yolovit_vit",
+      "generation": "1795237375728153",
+      "decoded_frames": 5000,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-021",
+      "model": "sepnet",
+      "generation": "1795239033387004",
+      "decoded_frames": 4001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-022",
+      "model": "pvt_pranet",
+      "generation": "1795238621884712",
+      "decoded_frames": 5000,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-022",
+      "model": "chakranet",
+      "generation": "1795238927333742",
+      "decoded_frames": 5000,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-022",
+      "model": "sepnet",
+      "generation": "1795240556825725",
+      "decoded_frames": 5000,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-020",
+      "model": "yolovit_vit",
+      "generation": "1795237546603911",
+      "decoded_frames": 9001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-020",
+      "model": "sepnet",
+      "generation": "1795237631037383",
+      "decoded_frames": 9001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-023",
+      "model": "sepnet",
+      "generation": "1795238874527680",
+      "decoded_frames": 5000,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-023",
+      "model": "pvt_pranet",
+      "generation": "1795238787130264",
+      "decoded_frames": 5000,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-023",
+      "model": "chakranet",
+      "generation": "1795238794012264",
+      "decoded_frames": 5000,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-023",
+      "model": "yolovit_vit",
+      "generation": "1795237574882568",
+      "decoded_frames": 5000,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-024",
+      "model": "yolovit_vit",
+      "generation": "1795237448267523",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-024",
+      "model": "sepnet",
+      "generation": "1795239577431609",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-025",
+      "model": "yolovit_vit",
+      "generation": "1795237441254943",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-024",
+      "model": "pvt_pranet",
+      "generation": "1795238950840946",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-024",
+      "model": "chakranet",
+      "generation": "1795238790692236",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-025",
+      "model": "sepnet",
+      "generation": "1795238887748676",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-026",
+      "model": "chakranet",
+      "generation": "1795238897896240",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-025",
+      "model": "chakranet",
+      "generation": "1795238732113395",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-026",
+      "model": "yolovit_vit",
+      "generation": "1795237419285398",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-026",
+      "model": "pvt_pranet",
+      "generation": "1795239088306161",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-025",
+      "model": "pvt_pranet",
+      "generation": "1795238661591017",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-026",
+      "model": "sepnet",
+      "generation": "1795240518965913",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-027",
+      "model": "yolovit_vit",
+      "generation": "1795237365441485",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-027",
+      "model": "chakranet",
+      "generation": "1795238740805205",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-027",
+      "model": "pvt_pranet",
+      "generation": "1795238950026501",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-027",
+      "model": "sepnet",
+      "generation": "1795239072829975",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-028",
+      "model": "yolovit_vit",
+      "generation": "1795237687393268",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-028",
+      "model": "sepnet",
+      "generation": "1795239552283415",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-029",
+      "model": "yolovit_vit",
+      "generation": "1795237448675638",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-028",
+      "model": "chakranet",
+      "generation": "1795238656100274",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-030",
+      "model": "yolovit_vit",
+      "generation": "1795237473923011",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-030",
+      "model": "chakranet",
+      "generation": "1795239121060830",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-028",
+      "model": "pvt_pranet",
+      "generation": "1795238827161284",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-029",
+      "model": "chakranet",
+      "generation": "1795238706598178",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-029",
+      "model": "sepnet",
+      "generation": "1795239108500409",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-029",
+      "model": "pvt_pranet",
+      "generation": "1795239769960772",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-030",
+      "model": "pvt_pranet",
+      "generation": "1795238403560155",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-031",
+      "model": "chakranet",
+      "generation": "1795239446217540",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-030",
+      "model": "sepnet",
+      "generation": "1795239474378665",
+      "decoded_frames": 5001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-031",
+      "model": "yolovit_vit",
+      "generation": "1795237600788072",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-031",
+      "model": "pvt_pranet",
+      "generation": "1795238582624453",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-031",
+      "model": "sepnet",
+      "generation": "1795239283045446",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-032",
+      "model": "chakranet",
+      "generation": "1795239906843880",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-032",
+      "model": "pvt_pranet",
+      "generation": "1795238971174485",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-032",
+      "model": "yolovit_vit",
+      "generation": "1795237642419883",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-034",
+      "model": "yolovit_vit",
+      "generation": "1795237633186296",
+      "decoded_frames": 6000,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-033",
+      "model": "chakranet",
+      "generation": "1795238836829181",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-033",
+      "model": "sepnet",
+      "generation": "1795239422788516",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-033",
+      "model": "yolovit_vit",
+      "generation": "1795237448305603",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-034",
+      "model": "pvt_pranet",
+      "generation": "1795239337688744",
+      "decoded_frames": 6000,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-033",
+      "model": "pvt_pranet",
+      "generation": "1795239218904106",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-032",
+      "model": "sepnet",
+      "generation": "1795239877410566",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-034",
+      "model": "chakranet",
+      "generation": "1795239005438693",
+      "decoded_frames": 6000,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-034",
+      "model": "sepnet",
+      "generation": "1795241134261473",
+      "decoded_frames": 6000,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-035",
+      "model": "yolovit_vit",
+      "generation": "1795237416429243",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-035",
+      "model": "chakranet",
+      "generation": "1795238856227681",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-035",
+      "model": "pvt_pranet",
+      "generation": "1795239089857186",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-035",
+      "model": "sepnet",
+      "generation": "1795240092272767",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-037",
+      "model": "chakranet",
+      "generation": "1795239182765584",
+      "decoded_frames": 7001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-037",
+      "model": "pvt_pranet",
+      "generation": "1795238754265921",
+      "decoded_frames": 7001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-037",
+      "model": "yolovit_vit",
+      "generation": "1795237558414894",
+      "decoded_frames": 7001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-036",
+      "model": "yolovit_vit",
+      "generation": "1795237616588712",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-038",
+      "model": "chakranet",
+      "generation": "1795239564239911",
+      "decoded_frames": 7001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-036",
+      "model": "sepnet",
+      "generation": "1795239818051780",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-036",
+      "model": "chakranet",
+      "generation": "1795239003526065",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-038",
+      "model": "yolovit_vit",
+      "generation": "1795237494212509",
+      "decoded_frames": 7001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-037",
+      "model": "sepnet",
+      "generation": "1795240966397379",
+      "decoded_frames": 7001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-036",
+      "model": "pvt_pranet",
+      "generation": "1795239290180047",
+      "decoded_frames": 6001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-038",
+      "model": "pvt_pranet",
+      "generation": "1795239088858549",
+      "decoded_frames": 7001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-041",
+      "model": "yolovit_vit",
+      "generation": "1795237195131563",
+      "decoded_frames": 96,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-038",
+      "model": "sepnet",
+      "generation": "1795240224460785",
+      "decoded_frames": 7001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-041",
+      "model": "chakranet",
+      "generation": "1795237312159463",
+      "decoded_frames": 96,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-041",
+      "model": "pvt_pranet",
+      "generation": "1795237325353833",
+      "decoded_frames": 96,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-041",
+      "model": "sepnet",
+      "generation": "1795237290779401",
+      "decoded_frames": 96,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-039",
+      "model": "yolovit_vit",
+      "generation": "1795237656029955",
+      "decoded_frames": 7000,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-042",
+      "model": "yolovit_vit",
+      "generation": "1795237450216877",
+      "decoded_frames": 538,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-042",
+      "model": "chakranet",
+      "generation": "1795237381457913",
+      "decoded_frames": 538,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-042",
+      "model": "pvt_pranet",
+      "generation": "1795237591639897",
+      "decoded_frames": 538,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-039",
+      "model": "chakranet",
+      "generation": "1795239734708635",
+      "decoded_frames": 7000,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-042",
+      "model": "sepnet",
+      "generation": "1795237514907709",
+      "decoded_frames": 538,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-043",
+      "model": "yolovit_vit",
+      "generation": "1795237212257286",
+      "decoded_frames": 594,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-039",
+      "model": "pvt_pranet",
+      "generation": "1795239432289694",
+      "decoded_frames": 7000,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-043",
+      "model": "chakranet",
+      "generation": "1795237479078221",
+      "decoded_frames": 594,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-043",
+      "model": "pvt_pranet",
+      "generation": "1795237461491697",
+      "decoded_frames": 594,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-043",
+      "model": "sepnet",
+      "generation": "1795237546684821",
+      "decoded_frames": 594,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-044",
+      "model": "yolovit_vit",
+      "generation": "1795237265376431",
+      "decoded_frames": 811,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-044",
+      "model": "chakranet",
+      "generation": "1795237484615736",
+      "decoded_frames": 811,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-044",
+      "model": "pvt_pranet",
+      "generation": "1795237444171230",
+      "decoded_frames": 811,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-045",
+      "model": "yolovit_vit",
+      "generation": "1795237312152986",
+      "decoded_frames": 679,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-044",
+      "model": "sepnet",
+      "generation": "1795237708059216",
+      "decoded_frames": 811,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-040",
+      "model": "chakranet",
+      "generation": "1795239099525332",
+      "decoded_frames": 7001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-040",
+      "model": "pvt_pranet",
+      "generation": "1795239944475342",
+      "decoded_frames": 7001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-045",
+      "model": "chakranet",
+      "generation": "1795237641757356",
+      "decoded_frames": 679,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-045",
+      "model": "sepnet",
+      "generation": "1795237581034539",
+      "decoded_frames": 679,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-045",
+      "model": "pvt_pranet",
+      "generation": "1795237497447620",
+      "decoded_frames": 679,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-046",
+      "model": "yolovit_vit",
+      "generation": "1795237458105048",
+      "decoded_frames": 777,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-046",
+      "model": "chakranet",
+      "generation": "1795237470463138",
+      "decoded_frames": 777,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-046",
+      "model": "pvt_pranet",
+      "generation": "1795237788765376",
+      "decoded_frames": 777,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-046",
+      "model": "sepnet",
+      "generation": "1795237546738763",
+      "decoded_frames": 777,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-039",
+      "model": "sepnet",
+      "generation": "1795239752061196",
+      "decoded_frames": 7000,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-047",
+      "model": "yolovit_vit",
+      "generation": "1795237242920882",
+      "decoded_frames": 1067,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-040",
+      "model": "sepnet",
+      "generation": "1795241938571917",
+      "decoded_frames": 7001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-047",
+      "model": "chakranet",
+      "generation": "1795237958928623",
+      "decoded_frames": 1067,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-047",
+      "model": "pvt_pranet",
+      "generation": "1795237611054903",
+      "decoded_frames": 1067,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-040",
+      "model": "yolovit_vit",
+      "generation": "1795237485633746",
+      "decoded_frames": 7001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-047",
+      "model": "sepnet",
+      "generation": "1795237903170094",
+      "decoded_frames": 1067,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-048",
+      "model": "yolovit_vit",
+      "generation": "1795237255245153",
+      "decoded_frames": 661,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-048",
+      "model": "chakranet",
+      "generation": "1795237409689377",
+      "decoded_frames": 661,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-048",
+      "model": "pvt_pranet",
+      "generation": "1795237469908595",
+      "decoded_frames": 661,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-048",
+      "model": "sepnet",
+      "generation": "1795237661363312",
+      "decoded_frames": 661,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-049",
+      "model": "yolovit_vit",
+      "generation": "1795237312648088",
+      "decoded_frames": 1001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-049",
+      "model": "pvt_pranet",
+      "generation": "1795237597801256",
+      "decoded_frames": 1001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-050",
+      "model": "chakranet",
+      "generation": "1795237542339383",
+      "decoded_frames": 1051,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-049",
+      "model": "chakranet",
+      "generation": "1795237589462151",
+      "decoded_frames": 1001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-050",
+      "model": "sepnet",
+      "generation": "1795237793003541",
+      "decoded_frames": 1051,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-049",
+      "model": "sepnet",
+      "generation": "1795237586520235",
+      "decoded_frames": 1001,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-050",
+      "model": "yolovit_vit",
+      "generation": "1795237467570328",
+      "decoded_frames": 1051,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-050",
+      "model": "pvt_pranet",
+      "generation": "1795237506792850",
+      "decoded_frames": 1051,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-051",
+      "model": "yolovit_vit",
+      "generation": "1795237330157004",
+      "decoded_frames": 1442,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-051",
+      "model": "chakranet",
+      "generation": "1795237800901180",
+      "decoded_frames": 1442,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-051",
+      "model": "pvt_pranet",
+      "generation": "1795237896080525",
+      "decoded_frames": 1442,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-051",
+      "model": "sepnet",
+      "generation": "1795237716930313",
+      "decoded_frames": 1442,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-052",
+      "model": "chakranet",
+      "generation": "1795237538992476",
+      "decoded_frames": 795,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-052",
+      "model": "sepnet",
+      "generation": "1795237578929340",
+      "decoded_frames": 795,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-052",
+      "model": "yolovit_vit",
+      "generation": "1795237224353156",
+      "decoded_frames": 795,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-052",
+      "model": "pvt_pranet",
+      "generation": "1795237525455455",
+      "decoded_frames": 795,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-053",
+      "model": "yolovit_vit",
+      "generation": "1795237312716985",
+      "decoded_frames": 765,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-054",
+      "model": "pvt_pranet",
+      "generation": "1795237700822166",
+      "decoded_frames": 1160,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-053",
+      "model": "sepnet",
+      "generation": "1795237691053375",
+      "decoded_frames": 765,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-054",
+      "model": "chakranet",
+      "generation": "1795237667189858",
+      "decoded_frames": 1160,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-054",
+      "model": "yolovit_vit",
+      "generation": "1795237273231330",
+      "decoded_frames": 1160,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-054",
+      "model": "sepnet",
+      "generation": "1795237620417963",
+      "decoded_frames": 1160,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-053",
+      "model": "pvt_pranet",
+      "generation": "1795237515962442",
+      "decoded_frames": 765,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-053",
+      "model": "chakranet",
+      "generation": "1795237538544029",
+      "decoded_frames": 765,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-055",
+      "model": "chakranet",
+      "generation": "1795237714646513",
+      "decoded_frames": 863,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-056",
+      "model": "chakranet",
+      "generation": "1795237899988994",
+      "decoded_frames": 1960,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-055",
+      "model": "yolovit_vit",
+      "generation": "1795237353965100",
+      "decoded_frames": 863,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-056",
+      "model": "yolovit_vit",
+      "generation": "1795237356563655",
+      "decoded_frames": 1960,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-057",
+      "model": "yolovit_vit",
+      "generation": "1795237304763356",
+      "decoded_frames": 1570,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-056",
+      "model": "sepnet",
+      "generation": "1795238142243656",
+      "decoded_frames": 1960,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-056",
+      "model": "pvt_pranet",
+      "generation": "1795238075200653",
+      "decoded_frames": 1960,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-057",
+      "model": "chakranet",
+      "generation": "1795237907856449",
+      "decoded_frames": 1570,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-057",
+      "model": "pvt_pranet",
+      "generation": "1795237893649320",
+      "decoded_frames": 1570,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-055",
+      "model": "pvt_pranet",
+      "generation": "1795237595377229",
+      "decoded_frames": 863,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-057",
+      "model": "sepnet",
+      "generation": "1795238242781070",
+      "decoded_frames": 1570,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-058",
+      "model": "yolovit_vit",
+      "generation": "1795237328597694",
+      "decoded_frames": 1443,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-058",
+      "model": "chakranet",
+      "generation": "1795237662535436",
+      "decoded_frames": 1443,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-055",
+      "model": "sepnet",
+      "generation": "1795237781072594",
+      "decoded_frames": 863,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-058",
+      "model": "pvt_pranet",
+      "generation": "1795237626016318",
+      "decoded_frames": 1443,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-059",
+      "model": "yolovit_vit",
+      "generation": "1795237528797808",
+      "decoded_frames": 1534,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-058",
+      "model": "sepnet",
+      "generation": "1795238357847808",
+      "decoded_frames": 1443,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-059",
+      "model": "chakranet",
+      "generation": "1795237689512110",
+      "decoded_frames": 1534,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-059",
+      "model": "pvt_pranet",
+      "generation": "1795237703663691",
+      "decoded_frames": 1534,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-059",
+      "model": "sepnet",
+      "generation": "1795237941098897",
+      "decoded_frames": 1534,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-060",
+      "model": "yolovit_vit",
+      "generation": "1795237279995473",
+      "decoded_frames": 1639,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-060",
+      "model": "chakranet",
+      "generation": "1795237784258800",
+      "decoded_frames": 1639,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-060",
+      "model": "pvt_pranet",
+      "generation": "1795238090170017",
+      "decoded_frames": 1639,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    },
+    {
+      "patient": "SIM-060",
+      "model": "sepnet",
+      "generation": "1795237845929131",
+      "decoded_frames": 1639,
+      "codec": "h264",
+      "pixel_format": "yuv420p",
+      "faststart": true
+    }
+  ]
+}

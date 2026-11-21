@@ -64,7 +64,50 @@ html.dark .badge-danger{background:#7f1d1d;color:#fecaca}
 .footer-link{background:none;border:none;color:var(--accent);font-size:11.5px;cursor:pointer;padding:0;text-decoration:underline;font-family:inherit}
 .footer-link:hover{color:var(--text)}
 .footer-modal{max-width:540px;width:100%;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 12px 36px rgba(0,0,0,0.18)}
-</style></head><body>
+</style><style>
+.side,.main,.content,.card,.grid2>*,.grid3>*{min-width:0}
+.side{flex:0 0 clamp(195px,17vw,245px)}
+.content{max-width:none;padding:clamp(12px,2vw,32px)}
+.top{height:auto;min-height:62px;padding:12px clamp(12px,2vw,26px);gap:12px;flex-wrap:wrap}
+.top>div,.card div[style*="display:flex"],.eg-tools,.clinical-footer{flex-wrap:wrap}
+.grid2,.grid3{grid-template-columns:repeat(auto-fit,minmax(min(100%,285px),1fr))}
+.row{gap:8px;flex-wrap:wrap}.card{overflow-wrap:anywhere}
+.card input,.card select,.card img{max-width:100%;min-width:0}
+.eg-scroll{min-width:0;overflow-x:auto}
+.mobile-sections{display:none}
+@media(max-width:800px){
+ body{flex-direction:column}
+ .side{width:100%;flex:auto;padding:10px 14px;display:grid;grid-template-columns:minmax(100px,1fr) minmax(0,1.6fr);align-items:center;gap:8px;border-right:0;border-bottom:1px solid var(--line)}
+ .side .nav{display:none}.mobile-sections{display:block;min-width:0}
+ .side>div:first-child{margin:0!important;padding:0!important}
+ .side>div:last-child{grid-column:1/-1;display:flex!important;flex-direction:row!important;flex-wrap:wrap;align-items:center;border:0!important;padding:0!important}
+ .side>div:last-child a{font-size:12px;padding:6px}
+ .top{min-height:0}.top .pill{padding:5px 8px}
+ .content .card{padding:14px}
+ .content [style*="display:grid"]{grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr))!important}
+ .eg-scroll #eg-graph{min-width:680px}
+ .content pre,.card pre{max-width:100%;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere}
+ .modalBg>div{max-width:100%;max-height:90dvh;overflow:auto}
+}
+</style><style>
+.conf-wheel{position:relative;display:block;width:100%;height:44px;--wheel:30px}
+.conf-wheel.ready input{position:absolute;inset:0;width:100%;height:44px;margin:0;padding:0;border:0;opacity:0;cursor:pointer;z-index:1}
+.conf-wheel.ready input::-webkit-slider-thumb{-webkit-appearance:none;width:var(--wheel);height:var(--wheel)}
+.conf-wheel.ready input,.conf-wheel.ready input::-webkit-slider-runnable-track{-webkit-appearance:none}
+.conf-wheel.ready input::-moz-range-thumb{width:var(--wheel);height:var(--wheel);border:0}
+.conf-wheel::before,.conf-wheel img{display:none}
+.conf-wheel.ready::before{content:"";display:block;position:absolute;left:calc(var(--wheel)/2);right:calc(var(--wheel)/2);top:calc(50% - 3px);height:6px;border-radius:6px;background:linear-gradient(to right,var(--accent) var(--fill),var(--line) var(--fill))}
+.conf-wheel.ready img{display:block;position:absolute;left:0;top:50%;width:var(--wheel);height:var(--wheel);pointer-events:none;border-radius:50%;background:white;transform:translate(var(--travel),-50%) rotate(var(--angle))}
+.conf-wheel:focus-within{outline:2px solid var(--accent);outline-offset:2px;border-radius:8px}
+@media(prefers-reduced-motion:reduce){.conf-wheel.ready img{transform:translate(var(--travel),-50%)}}
+@media(forced-colors:active){.conf-wheel.ready input{opacity:1;appearance:auto}.conf-wheel.ready::before,.conf-wheel.ready img{display:none}}
+</style><style>
+@media(min-width:801px){
+ .side{position:sticky;top:0;height:100vh;height:100dvh;align-self:flex-start;overflow-y:auto;overscroll-behavior:contain}
+ .side>.nav{flex:1 0 auto;min-height:44px;width:100%;display:flex;align-items:center}
+ .side>div{flex-shrink:0}
+}
+</style><script src="/v2/assets/operation-feedback.js"></script></head><body>
 <aside class="side">
   <div class="brand">
     <img src="/logo.png" alt="CHAKRA Logo" style="height:32px;width:auto;object-fit:contain" onerror="this.style.display='none';document.getElementById('svgLogo').style.display='block'">
@@ -77,8 +120,8 @@ html.dark .badge-danger{background:#7f1d1d;color:#fecaca}
       </svg>
     </div>
     <span>CHAKRA</span>
-    <span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:6px;background:var(--accent-subtle);color:var(--accent)">V2</span>
   </div>
+  <select class="mobile-sections" aria-label="Admin section"></select>
   <button class="nav active" onclick="tab('setup',this)">1. Setup & Pairing</button>
   <button class="nav" onclick="tab('models',this)">2. Model Registry</button>
   <button class="nav" onclick="tab('workers',this)">3. Compute Workers</button>
@@ -120,7 +163,7 @@ html.dark .badge-danger{background:#7f1d1d;color:#fecaca}
 <label>Cohort <select id="eg-filter"><option value="">All patients</option><option value="dataset-labeled polyp">Labeled polyp</option><option value="dataset-labeled no polyp">Labeled no polyp</option><option value="other lower-GI annotation">Other lower-GI</option></select></label>
 <label>Patient <select id="eg-patient"></select></label><label><input id="eg-flags" type="checkbox"> Model flagged</label>
 </div><p>Large nodes are fictional patients. Each satellite is one model run. Green means a saved result is available.</p>
-<div class="eg-board"><svg id="eg-graph" viewBox="0 0 990 460" role="group" aria-label="Interactive patient and model run graph"></svg><div id="eg-detail"></div></div>
+<div class="eg-board"><div class="eg-scroll"><svg id="eg-graph" viewBox="0 0 990 460" role="group" aria-label="Interactive patient and model run graph"></svg></div><div id="eg-detail"></div></div>
 </section>
     <section id="tab-setup">
       <h2>Clinical Session Setup & Mobile Pairing</h2>
@@ -146,8 +189,8 @@ html.dark .badge-danger{background:#7f1d1d;color:#fecaca}
           <h3>2. Model, Threshold & Worker</h3>
           <label>Active Detector Model</label>
           <select id="modelSel"><option value="yolovit_yolo">YOLOViT-YOLO (weights.pt · Verified L4)</option><option value="pvt_pranet_v1">PVT-PraNet-V1 (GCS Staged)</option><option value="chakranet">AdaBN-ChakraNet (GCS Staged)</option></select>
-          <label>Confidence Threshold: <b id="confVal">0.45</b></label>
-          <input id="confRange" type="range" min="0.15" max="0.90" step="0.05" value="0.45" oninput="confVal.textContent=Number(this.value).toFixed(2)">
+          <label for="confRange">Confidence Threshold: <b id="confVal">0.45</b></label>
+          <div class="conf-wheel"><input id="confRange" type="range" min="0.15" max="0.90" step="0.05" value="0.45" oninput="confVal.textContent=Number(this.value).toFixed(2)"><img src="/logo.png" alt="" aria-hidden="true" draggable="false"></div>
           <label>Compute Backend</label>
           <select id="workerSel"><option value="cloud_run_l4">Cloud Run NVIDIA L4 GPU (Default)</option><option value="cpu_preview">Cloud Run CPU Preview Fallback</option></select>
           <label>Endoscopist ID</label>
@@ -409,10 +452,10 @@ html.dark .badge-danger{background:#7f1d1d;color:#fecaca}
       </button>
     </div>
     <div style="font-size:12.5px;color:var(--text);line-height:1.55;display:flex;flex-direction:column;gap:10px">
-      <p style="margin:0"><b>1. Zero-PHI Architecture:</b> Patient identifiable data (Aadhaar 12-digit numbers, 10-digit mobile numbers, explicit names, and UHID identifiers) are irreversibly scrubbed client-side and at API ingestion prior to Gemini processing or BigQuery analytics insertion.</p>
-      <p style="margin:0"><b>2. MeitY Sovereign Hosting:</b> All longitudinal procedure records, clinical narratives, and ABDM FHIR R4 DiagnosticReportRecord bundles reside exclusively within the Google Cloud asia-south1 (Mumbai) boundary.</p>
-      <p style="margin:0"><b>3. Tenant Isolation:</b> Inter-hospital access is strictly blocked at the API gateway via cryptographic X-Hospital-ID verification, preventing cross-tenant information disclosure.</p>
-      <p style="margin:0"><b>4. Federated Learning Curation:</b> Exported FL manifests (.jsonl) strip all institutional and clinician identifiable signatures, publishing purely zero-PHI weight telemetry.</p>
+      <p style="margin:0"><b>Demo identifiers.</b> Hospital UHID and ABHA examples on the cohort map are fictional. Use only synthetic patient details in this demo.</p>
+      <p style="margin:0"><b>Encryption.</b> Browser connections use HTTPS. Google Cloud Storage encrypts stored objects at rest.</p>
+      <p style="margin:0"><b>Access.</b> The research cohort and its run summaries are available to demo viewers. Real patient use requires authenticated clinical roles and hospital-specific access checks.</p>
+      <p style="margin:0"><b>Gemini run guides.</b> The saved guides explain boxes and masks. Their generation used model descriptions and excluded patient identifiers, videos and clinical notes.</p>
     </div>
     <button class="btn" style="width:100%;margin-top:16px" onclick="closeModal('privacyModal')">Acknowledge & Close</button>
   </div>
@@ -544,7 +587,7 @@ async function simulatePathologyArrival(){
   const fId = pathFindingSelect.value;
   pathReconcileResult.textContent = 'Transmitting signed pathology report...';
   try {
-    const res = await fetch(`/api/v2/findings/${fId}/pathology`, {
+    const res = await chakraFeedback.request('Save pathology entry',`/api/v2/findings/${fId}/pathology`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -578,7 +621,7 @@ async function loadCatalog(){
   modelGrid.innerHTML=d.models.map(m=>`<div class="card"><div style="display:flex;justify-content:space-between"><b>${m.name}</b><span class="pill">${m.status}</span></div><p style="font-size:12px;color:var(--muted);margin:8px 0 0">${m.type} · ID: <code>${m.id}</code></p></div>`).join('');
 }
 async function mintRoom(){
-  const r=await (await fetch('/api/v2/rooms',{method:'POST'})).json();
+  const r=await (await chakraFeedback.request('Create pairing room','/api/v2/rooms',{method:'POST'})).json();
   roomCode=r.code;
   codeBox.textContent=roomCode;
   procId.textContent=r.procedure_id;
@@ -626,13 +669,13 @@ function connectWs(){
 }
 async function applyConfig(){
   if(!roomCode) return;
-  await fetch(`/api/v2/rooms/${roomCode}/config`,{
+  await chakraFeedback.request('Apply configuration',`/api/v2/rooms/${roomCode}/config`,{
     method:'PATCH',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({model:modelSel.value,conf:parseFloat(confRange.value),worker:workerSel.value,endoscopist_id:docId.value})
   });
   cfgMsg.textContent=`Synced ${modelSel.value} @ ${confRange.value} (${workerSel.value}) to Doctor HUD & Phone.`;
 }
-function copyCode(){ if(roomCode) navigator.clipboard.writeText(roomCode); }
+async function copyCode(){ if(!roomCode)return;try{await navigator.clipboard.writeText(roomCode);chakraFeedback.emit("success","Pairing code copied")}catch{chakraFeedback.emit("error","Could not copy pairing code")} }
 async function runAdminTest(){
   const f=testFile.files[0]; if(!f||!roomCode) return alert('Choose an image or video file first');
   testMeta.textContent='Running Cloud Run L4 inference...';
@@ -645,7 +688,7 @@ async function runAdminTest(){
     blob=await new Promise(res=>c.toBlob(res,'image/jpeg',0.85));
   }
   const fd=new FormData(); fd.append('file',blob,f.name||'test.jpg');
-  const d=await (await fetch(`/api/v2/rooms/${roomCode}/admin-test-frame`,{method:'POST',body:fd})).json();
+  const d=await (await chakraFeedback.request('Run frame test',`/api/v2/rooms/${roomCode}/admin-test-frame`,{method:'POST',body:fd})).json();
   testMeta.textContent=`${d.device} | ${d.latency_ms} ms | Detections: ${d.count}`;
   testImg.src='data:image/jpeg;base64,'+d.overlay_jpg_b64; testImg.classList.remove('hide');
   loadRuns();
@@ -686,7 +729,7 @@ async function runCloudClipTest(){
   }
   testMeta.textContent='Running Cloud Run L4 inference on demo clip...';
   const fd=new FormData(); fd.append('file',blob,name);
-  const d=await (await fetch(`/api/v2/rooms/${roomCode}/admin-test-frame`,{method:'POST',body:fd})).json();
+  const d=await (await chakraFeedback.request('Run frame test',`/api/v2/rooms/${roomCode}/admin-test-frame`,{method:'POST',body:fd})).json();
   testMeta.textContent=`${d.device} | ${d.latency_ms} ms | Detections: ${d.count}`;
   testImg.src='data:image/jpeg;base64,'+d.overlay_jpg_b64; testImg.classList.remove('hide');
   loadRuns();
@@ -828,45 +871,50 @@ function displayRunInReview(runId){
   if(document.getElementById('reviewFeedback')) reviewFeedback.textContent='';
 
   const clip=run.input_clip||'';
-  const mediaUrl=run.media_url||(clip?`/api/v2/demo-videos/${clip}`:null);
-  
-  reviewVideoWrap.classList.add('hide');
-  reviewImgWrap.classList.add('hide');
-  reviewNoMedia.classList.add('hide');
-  evidenceGalleryWrap.classList.add('hide');
-
+  reviewVideo.onerror=null; reviewVideo.pause(); reviewVideo.removeAttribute('src'); reviewVideo.load();
+  reviewImg.onerror=null; reviewImg.removeAttribute('src');
+  for(const panel of [reviewVideoWrap,reviewImgWrap,reviewNoMedia,evidenceGalleryWrap])panel.classList.add('hide');
   previewBadge.textContent=clip||run.run_id;
 
-  if(clip.endsWith('.mp4')){
-    reviewVideoWrap.classList.remove('hide');
-    reviewVideo.src=mediaUrl;
-    previewTitle.textContent=`Video Playback: ${clip}`;
-  }else if(clip.endsWith('.avi')){
-    reviewImgWrap.classList.remove('hide');
-    reviewImg.src=`/api/v2/demo-videos/${clip}/frame?idx=0`;
-    previewTitle.textContent=`Evidence Frame: ${clip}`;
-  }else if(mediaUrl&&mediaUrl.startsWith('data:image')){
-    reviewImgWrap.classList.remove('hide');
-    reviewImg.src=mediaUrl;
-    previewTitle.textContent=`Evidence Frame: ${clip||run.run_id}`;
-  }else if(run.flagged_evidence&&run.flagged_evidence.length&&run.flagged_evidence[0].evidence_url){
-    const ev=run.flagged_evidence[0];
-    if(ev.evidence_url.endsWith('.avi')){
-      reviewImgWrap.classList.remove('hide');
-      reviewImg.src=`/api/v2/demo-videos/${ev.evidence_url.split('/').pop()}/frame?idx=${ev.frame_idx||0}`;
-    }else{
-      reviewVideoWrap.classList.remove('hide');
-      reviewVideo.src=ev.evidence_url;
-    }
-  }else{
-    reviewNoMedia.classList.remove('hide');
+  function notice(message){
+    reviewVideoWrap.classList.add('hide');reviewImgWrap.classList.add('hide');
+    reviewNoMedia.classList.remove('hide');reviewNoMedia.textContent=message+' ';
+    const button=document.createElement('button');button.className='btn ghost';button.textContent='Browse saved evaluation replays';
+    button.onclick=()=>document.getElementById('galaxyNav').click();
+    reviewNoMedia.append(button);
   }
+  const procedure=clip.startsWith('procedure_') && !!run.procedure_id;
+  const first=run.flagged_evidence?.find(e=>e.evidence_url);
+  const source=procedure ? (run.gcs_evidence_uris?.[0] || (run.media_url?.startsWith('data:image/') ? run.media_url : null))
+                         : (run.media_url || first?.evidence_url);
+  const shortClip=['/api/v2/demo-videos/ldpolyp_clip01.mp4','/api/v2/demo-videos/sun_seg_seq01.mp4'].includes(source);
+  previewTitle.textContent=procedure?'Procedure evidence':'Run evidence';
+  if(!source){
+    notice(procedure?'No recording or evidence frame was saved for this procedure.':'No media was attached to this run.');
+  }else if(source.startsWith('gs://girpolypposframesrealcolon-chakra-models/')){
+    reviewNoMedia.textContent='This run has a private evidence file. ';
+    const a=document.createElement('a');a.textContent='Open saved evidence';a.target='_blank';a.rel='noopener';
+    const url='https://storage.cloud.google.com/'+source.slice(5).split('/').map(encodeURIComponent).join('/');
+    a.href='https://accounts.google.com/AccountChooser?continue='+encodeURIComponent(url);
+    reviewNoMedia.append(a);reviewNoMedia.classList.remove('hide');
+  }else if(source.startsWith('data:image/') || source.startsWith('/api/v2/demo-videos/')){
+    const avi=/\.avi$/i.test(source);
+    const image=avi||source.startsWith('data:image/')||/\/frame(?:\?|$)/.test(source)||/\.(jpg|jpeg|png)$/i.test(source);
+    if(image){
+      reviewImgWrap.classList.remove('hide');reviewImg.onerror=()=>notice('The saved evidence frame could not be loaded.');
+      reviewImg.src=avi?source+'/frame?idx=0':source;previewTitle.textContent='Evidence frame';
+    }else{
+      reviewVideoWrap.classList.remove('hide');reviewVideo.onerror=()=>notice('The recording could not be played in this browser.');
+      reviewVideo.src=source;
+      previewTitle.textContent=shortClip?'Video playback · 24-frame excerpt':'Video playback';
+    }
+  }else{notice('No supported preview is available for this media source.');}
 
   if(run.flagged_evidence&&run.flagged_evidence.length){
     evidenceGalleryWrap.classList.remove('hide');
     evidenceChips.innerHTML=run.flagged_evidence.map((ev,idx)=>`
-      <button class="pill" style="cursor:pointer;font-size:11px" onclick="inspectEvidenceFrame(${idx})">
-        Frame #${ev.frame_idx!=null?ev.frame_idx:idx} (Conf: ${ev.conf!=null?Number(ev.conf).toFixed(2):'--'})
+      <button class="pill" style="cursor:pointer;font-size:11px" ${shortClip && ev.frame_idx>=24?'disabled title="Outside the saved 24-frame excerpt"':''} onclick="inspectEvidenceFrame(${idx})">
+        Frame #${ev.frame_idx!=null?ev.frame_idx:idx}${shortClip && ev.frame_idx>=24?' · outside excerpt':''} (Conf: ${ev.conf!=null?Number(ev.conf).toFixed(2):'--'})
       </button>
     `).join('');
   }
@@ -882,7 +930,7 @@ function inspectEvidenceFrame(idx){
     reviewImg.src=`/api/v2/demo-videos/${run.input_clip}/frame?idx=${ev.frame_idx||0}`;
   }else if(reviewVideo&&!reviewVideoWrap.classList.contains('hide')){
     if(ev.frame_idx!=null){
-      reviewVideo.currentTime=Math.max(0,ev.frame_idx/(run.fps||30.0));
+      reviewVideo.currentTime=Math.max(0,ev.frame_idx/(["ldpolyp_clip01.mp4","sun_seg_seq01.mp4"].includes(run.input_clip)?15:(run.fps||30.0)));
       reviewVideo.play().catch(()=>{});
     }
   }
@@ -895,7 +943,7 @@ async function submitRunReview(decision){
   reviewFeedback.style.color='var(--accent)';
 
   try{
-    const res=await fetch(`/api/v2/runs/${selectedRunId}/review`,{
+    const res=await chakraFeedback.request('Save review',`/api/v2/runs/${selectedRunId}/review`,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
@@ -919,7 +967,7 @@ async function submitRunReview(decision){
 
 async function exportFlManifest(){
   try{
-    const res=await fetch('/api/v2/runs/export-fl-manifest');
+    const res=await chakraFeedback.request('Prepare manifest','/api/v2/runs/export-fl-manifest');
     if(!res.ok) throw new Error(`HTTP ${res.status}`);
     const blob=await res.blob();
     const url=window.URL.createObjectURL(blob);
@@ -936,4 +984,19 @@ async function exportFlManifest(){
 }
 
 warmup(); loadCatalog(); loadClips(); mintRoom(); loadRuns();
-</script><footer style="padding:16px;text-align:center"><details><summary>Privacy &amp; DPDP Notice</summary><p>This buildathon demo uses synthetic records. Use demo media only. Review actions can be stored in Google Cloud.</p></details><details><summary>Terms of Use (Non-SaMD Prototype)</summary><p>Research demonstration only. Clinical decisions require an independent clinician assessment.</p></details></footer><script src="/v2/assets/evaluation-galaxy.js"></script><script>if(!location.hash || location.hash==="#results") tab("galaxy",document.getElementById("galaxyNav"));</script></body></html>
+</script><script src="/v2/assets/evaluation-galaxy.js"></script><script>if(!location.hash || location.hash==="#results") tab("galaxy",document.getElementById("galaxyNav"));</script><script>(()=>{const nav=[...document.querySelectorAll('.side button.nav')],menu=document.querySelector('.mobile-sections');if(!menu)return;nav.forEach((b,i)=>{menu.add(new Option(b.textContent,i));b.addEventListener('click',()=>menu.value=i)});menu.selectedIndex=Math.max(0,nav.findIndex(b=>b.classList.contains('active')));menu.onchange=()=>nav[menu.selectedIndex].click()})();</script><script>
+(()=>{
+ const slider=document.getElementById('confRange'), wrap=slider.parentElement, wheel=wrap.querySelector('img');
+ function render(){
+   const fraction=(slider.valueAsNumber-Number(slider.min))/(Number(slider.max)-Number(slider.min));
+   const diameter=parseFloat(getComputedStyle(wrap).getPropertyValue('--wheel'));
+   const distance=fraction*Math.max(0,wrap.clientWidth-diameter);
+   wrap.style.setProperty('--fill',(100*fraction)+'%');
+   wrap.style.setProperty('--travel',distance+'px');
+   wrap.style.setProperty('--angle',(distance*360/(Math.PI*diameter))+'deg');
+ }
+ function enable(){if(!wheel.naturalWidth)return;render();wrap.classList.add('ready')}
+ wheel.addEventListener('load',enable);enable();
+ slider.addEventListener('input',render);new ResizeObserver(render).observe(wrap);
+})();
+</script></body></html>

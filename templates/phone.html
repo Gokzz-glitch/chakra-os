@@ -30,7 +30,12 @@ video{width:100%;border-radius:12px;background:#000;margin-top:12px;max-height:2
 .footer-link:hover{color:var(--text)}
 .modalBg{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;place-items:center;padding:16px;z-index:50;backdrop-filter:blur(3px)}
 .footer-modal{max-width:440px;width:100%;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 12px 36px rgba(0,0,0,0.18)}
-</style></head><body>
+</style><style>
+body{width:100%;max-width:clamp(480px,70vw,800px);padding:clamp(10px,2vw,22px)}
+.hdr,.hdr>div,.card div[style*="display:flex"]{flex-wrap:wrap;gap:8px}
+.card,.card input,.card select,video,canvas,img{min-width:0;max-width:100%}
+@media(max-width:480px){.card{padding:14px}.clinical-footer{padding:10px}}
+</style><script src="/v2/assets/operation-feedback.js"></script></head><body>
 <div class="hdr">
   <div class="brand">
     <img src="/logo.png" alt="CHAKRA Logo" style="height:26px;width:auto;object-fit:contain" onerror="this.style.display='none';document.getElementById('svgLogo').style.display='block'">
@@ -112,11 +117,11 @@ function pair(){
   if(ws) ws.close();
   const proto=location.protocol==='https:'?'wss:':'ws:';
   ws=new WebSocket(`${proto}//${location.host}/ws/v2/${c}/phone`);
-  ws.onopen=()=>{ 
+  ws.onopen=()=>{ chakraFeedback.emit("success","Phone connected"); 
     const el=document.getElementById('status');
     if(el){ el.textContent='Paired to Room '+c+' · Ready to stream'; el.style.color='#059669'; }
   };
-  ws.onclose=()=>{ 
+  ws.onclose=()=>{ chakraFeedback.emit("error","Phone disconnected"); 
     const el=document.getElementById('status');
     if(el){ el.textContent='Disconnected from room'; el.style.color='#d97706'; }
   };

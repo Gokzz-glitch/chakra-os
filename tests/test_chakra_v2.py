@@ -270,12 +270,14 @@ def test_demo_videos_listing_and_range_206_streaming():
     assert full_res.status_code == 200
     assert full_res.headers.get("accept-ranges") == "bytes"
     assert full_res.headers.get("content-type") == "video/mp4"
-    assert len(full_res.content) == 28733
+    size = len(full_res.content)
+    assert size > 500 and size == int(full_res.headers["content-length"])
+    assert full_res.content[4:8] == b"ftyp"
 
     # Partial Range stream (HTTP 206)
     range_res = client.get("/api/v2/demo-videos/ldpolyp_clip01.mp4", headers={"Range": "bytes=0-100"})
     assert range_res.status_code == 206
-    assert range_res.headers.get("content-range") == "bytes 0-100/28733"
+    assert range_res.headers.get("content-range") == f"bytes 0-100/{size}"
     assert range_res.headers.get("content-length") == "101"
     assert len(range_res.content) == 101
 
@@ -283,7 +285,9 @@ def test_demo_videos_listing_and_range_206_streaming():
     suffix_res = client.get("/api/v2/demo-videos/ldpolyp_clip01.mp4", headers={"Range": "bytes=-500"})
     assert suffix_res.status_code == 206
     assert suffix_res.headers.get("content-length") == "500"
-    assert len(suffix_res.content) == 500
+    assert suffix_res.content == full_res.content[-500:]
+    extended = client.get("/api/v2/demo-videos/ldpolyp_clip01.mp4", headers={"Range": f"bytes={size-5}-{size+100}"})
+    assert extended.status_code == 206 and extended.content == full_res.content[-5:]
 
     # Invalid range returns 416
     unsat_res = client.get("/api/v2/demo-videos/ldpolyp_clip01.mp4", headers={"Range": "bytes=999999-9999999"})

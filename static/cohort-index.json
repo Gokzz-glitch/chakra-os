@@ -1,1 +1,2402 @@
-[{"patient_id": "SIM-001", "label": "dataset-labeled polyp", "source": "videos with polyps", "frames": 1400, "fps": 24.908, "annotation": "videos with polyps"}, {"patient_id": "SIM-002", "label": "dataset-labeled polyp", "source": "videos with polyps", "frames": 4001, "fps": 24.843, "annotation": "videos with polyps"}, {"patient_id": "SIM-003", "label": "dataset-labeled polyp", "source": "videos with polyps", "frames": 4001, "fps": 24.918, "annotation": "videos with polyps"}, {"patient_id": "SIM-004", "label": "dataset-labeled polyp", "source": "videos with polyps", "frames": 4600, "fps": 24.899, "annotation": "videos with polyps"}, {"patient_id": "SIM-005", "label": "dataset-labeled polyp", "source": "videos with polyps", "frames": 5001, "fps": 24.874, "annotation": "videos with polyps"}, {"patient_id": "SIM-006", "label": "dataset-labeled polyp", "source": "videos with polyps", "frames": 5001, "fps": 24.92, "annotation": "videos with polyps"}, {"patient_id": "SIM-007", "label": "dataset-labeled polyp", "source": "videos with polyps", "frames": 5000, "fps": 24.873, "annotation": "videos with polyps"}, {"patient_id": "SIM-008", "label": "dataset-labeled polyp", "source": "videos with polyps", "frames": 6001, "fps": 24.956, "annotation": "videos with polyps"}, {"patient_id": "SIM-009", "label": "dataset-labeled polyp", "source": "videos with polyps", "frames": 6001, "fps": 24.877, "annotation": "videos with polyps"}, {"patient_id": "SIM-010", "label": "dataset-labeled polyp", "source": "videos with polyps", "frames": 6001, "fps": 24.881, "annotation": "videos with polyps"}, {"patient_id": "SIM-011", "label": "dataset-labeled polyp", "source": "videos with polyps", "frames": 6000, "fps": 24.899, "annotation": "videos with polyps"}, {"patient_id": "SIM-012", "label": "dataset-labeled polyp", "source": "videos with polyps", "frames": 6001, "fps": 24.9, "annotation": "videos with polyps"}, {"patient_id": "SIM-013", "label": "dataset-labeled polyp", "source": "videos with polyps", "frames": 6001, "fps": 24.972, "annotation": "videos with polyps"}, {"patient_id": "SIM-014", "label": "dataset-labeled polyp", "source": "videos with polyps", "frames": 6400, "fps": 24.867, "annotation": "videos with polyps"}, {"patient_id": "SIM-015", "label": "dataset-labeled polyp", "source": "videos with polyps", "frames": 7001, "fps": 24.92, "annotation": "videos with polyps"}, {"patient_id": "SIM-016", "label": "dataset-labeled polyp", "source": "videos with polyps", "frames": 7001, "fps": 24.89, "annotation": "videos with polyps"}, {"patient_id": "SIM-017", "label": "dataset-labeled polyp", "source": "videos with polyps", "frames": 7001, "fps": 24.903, "annotation": "videos with polyps"}, {"patient_id": "SIM-018", "label": "dataset-labeled polyp", "source": "videos with polyps", "frames": 8001, "fps": 24.863, "annotation": "videos with polyps"}, {"patient_id": "SIM-019", "label": "dataset-labeled polyp", "source": "videos with polyps", "frames": 8001, "fps": 24.896, "annotation": "videos with polyps"}, {"patient_id": "SIM-020", "label": "dataset-labeled polyp", "source": "videos with polyps", "frames": 9001, "fps": 24.97, "annotation": "videos with polyps"}, {"patient_id": "SIM-021", "label": "dataset-labeled no polyp", "source": "videos without polyps", "frames": 4001, "fps": 24.887, "annotation": "videos without polyps"}, {"patient_id": "SIM-022", "label": "dataset-labeled no polyp", "source": "videos without polyps", "frames": 5000, "fps": 24.891, "annotation": "videos without polyps"}, {"patient_id": "SIM-023", "label": "dataset-labeled no polyp", "source": "videos without polyps", "frames": 5000, "fps": 24.886, "annotation": "videos without polyps"}, {"patient_id": "SIM-024", "label": "dataset-labeled no polyp", "source": "videos without polyps", "frames": 5001, "fps": 24.847, "annotation": "videos without polyps"}, {"patient_id": "SIM-025", "label": "dataset-labeled no polyp", "source": "videos without polyps", "frames": 5001, "fps": 24.95, "annotation": "videos without polyps"}, {"patient_id": "SIM-026", "label": "dataset-labeled no polyp", "source": "videos without polyps", "frames": 5001, "fps": 24.902, "annotation": "videos without polyps"}, {"patient_id": "SIM-027", "label": "dataset-labeled no polyp", "source": "videos without polyps", "frames": 5001, "fps": 24.887, "annotation": "videos without polyps"}, {"patient_id": "SIM-028", "label": "dataset-labeled no polyp", "source": "videos without polyps", "frames": 5001, "fps": 24.873, "annotation": "videos without polyps"}, {"patient_id": "SIM-029", "label": "dataset-labeled no polyp", "source": "videos without polyps", "frames": 5001, "fps": 24.846, "annotation": "videos without polyps"}, {"patient_id": "SIM-030", "label": "dataset-labeled no polyp", "source": "videos without polyps", "frames": 5001, "fps": 24.836, "annotation": "videos without polyps"}, {"patient_id": "SIM-031", "label": "dataset-labeled no polyp", "source": "videos without polyps", "frames": 6001, "fps": 24.91, "annotation": "videos without polyps"}, {"patient_id": "SIM-032", "label": "dataset-labeled no polyp", "source": "videos without polyps", "frames": 6001, "fps": 24.927, "annotation": "videos without polyps"}, {"patient_id": "SIM-033", "label": "dataset-labeled no polyp", "source": "videos without polyps", "frames": 6001, "fps": 24.796, "annotation": "videos without polyps"}, {"patient_id": "SIM-034", "label": "dataset-labeled no polyp", "source": "videos without polyps", "frames": 6000, "fps": 24.905, "annotation": "videos without polyps"}, {"patient_id": "SIM-035", "label": "dataset-labeled no polyp", "source": "videos without polyps", "frames": 6001, "fps": 24.646, "annotation": "videos without polyps"}, {"patient_id": "SIM-036", "label": "dataset-labeled no polyp", "source": "videos without polyps", "frames": 6001, "fps": 24.784, "annotation": "videos without polyps"}, {"patient_id": "SIM-037", "label": "dataset-labeled no polyp", "source": "videos without polyps", "frames": 7001, "fps": 24.914, "annotation": "videos without polyps"}, {"patient_id": "SIM-038", "label": "dataset-labeled no polyp", "source": "videos without polyps", "frames": 7001, "fps": 24.924, "annotation": "videos without polyps"}, {"patient_id": "SIM-039", "label": "dataset-labeled no polyp", "source": "videos without polyps", "frames": 7000, "fps": 24.904, "annotation": "videos without polyps"}, {"patient_id": "SIM-040", "label": "dataset-labeled no polyp", "source": "videos without polyps", "frames": 7001, "fps": 24.715, "annotation": "videos without polyps"}, {"patient_id": "SIM-041", "label": "other lower-GI annotation", "source": "HyperKvasir", "frames": 96, "fps": 25.0, "annotation": "cecum"}, {"patient_id": "SIM-042", "label": "other lower-GI annotation", "source": "HyperKvasir", "frames": 538, "fps": 25.0, "annotation": "normal mucosa colon"}, {"patient_id": "SIM-043", "label": "other lower-GI annotation", "source": "HyperKvasir", "frames": 594, "fps": 25.0, "annotation": "ulcerative colitis"}, {"patient_id": "SIM-044", "label": "dataset-labeled polyp", "source": "HyperKvasir", "frames": 811, "fps": 25.0, "annotation": "cecum polyp"}, {"patient_id": "SIM-045", "label": "other lower-GI annotation", "source": "HyperKvasir", "frames": 679, "fps": 25.0, "annotation": "ulcerative colitis"}, {"patient_id": "SIM-046", "label": "other lower-GI annotation", "source": "HyperKvasir", "frames": 777, "fps": 25.0, "annotation": "cecum ileocecal valve"}, {"patient_id": "SIM-047", "label": "other lower-GI annotation", "source": "HyperKvasir", "frames": 1067, "fps": 25.0, "annotation": "Normal colon"}, {"patient_id": "SIM-048", "label": "dataset-labeled polyp", "source": "HyperKvasir", "frames": 661, "fps": 25.0, "annotation": "polyp retroflex rectum"}, {"patient_id": "SIM-049", "label": "other lower-GI annotation", "source": "HyperKvasir", "frames": 1001, "fps": 25.0, "annotation": "Normal colon"}, {"patient_id": "SIM-050", "label": "other lower-GI annotation", "source": "HyperKvasir", "frames": 1051, "fps": 25.0, "annotation": "ileitis and colitis"}, {"patient_id": "SIM-051", "label": "dataset-labeled polyp", "source": "HyperKvasir", "frames": 1442, "fps": 25.0, "annotation": "dye lifted polyp retroflex rectum"}, {"patient_id": "SIM-052", "label": "dataset-labeled polyp", "source": "HyperKvasir", "frames": 795, "fps": 25.0, "annotation": "lifted polyp,rectum"}, {"patient_id": "SIM-053", "label": "other lower-GI annotation", "source": "HyperKvasir", "frames": 765, "fps": 25.0, "annotation": "worms in colon"}, {"patient_id": "SIM-054", "label": "other lower-GI annotation", "source": "HyperKvasir", "frames": 1160, "fps": 25.0, "annotation": "colorectal cancer"}, {"patient_id": "SIM-055", "label": "other lower-GI annotation", "source": "HyperKvasir", "frames": 863, "fps": 25.00406316026354, "annotation": "ABD colitis"}, {"patient_id": "SIM-056", "label": "other lower-GI annotation", "source": "HyperKvasir", "frames": 1960, "fps": 25.0, "annotation": "normal colon"}, {"patient_id": "SIM-057", "label": "other lower-GI annotation", "source": "HyperKvasir", "frames": 1570, "fps": 25.0, "annotation": "colitis, pseudomembrane"}, {"patient_id": "SIM-058", "label": "other lower-GI annotation", "source": "HyperKvasir", "frames": 1443, "fps": 25.0, "annotation": "normal colon"}, {"patient_id": "SIM-059", "label": "other lower-GI annotation", "source": "HyperKvasir", "frames": 1534, "fps": 25.0, "annotation": "iscemich colitis"}, {"patient_id": "SIM-060", "label": "dataset-labeled polyp", "source": "HyperKvasir", "frames": 1639, "fps": 25.0, "annotation": "polyp, colon"}]
+[
+  {
+    "patient_id": "SIM-001",
+    "label": "dataset-labeled polyp",
+    "source": "videos with polyps",
+    "frames": 1400,
+    "fps": 24.908,
+    "annotation": "videos with polyps",
+    "demo_uhid": "DEMO-UHID-001",
+    "demo_abha": "DEMO-ABHA-001",
+    "run_notes": {
+      "chakranet": {
+        "frames": 1400,
+        "flagged": 798,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 1400,
+        "flagged": 1342,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 1400,
+        "flagged": 1376,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 1400,
+        "flagged": 188,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-002",
+    "label": "dataset-labeled polyp",
+    "source": "videos with polyps",
+    "frames": 4001,
+    "fps": 24.843,
+    "annotation": "videos with polyps",
+    "demo_uhid": "DEMO-UHID-002",
+    "demo_abha": "DEMO-ABHA-002",
+    "run_notes": {
+      "chakranet": {
+        "frames": 4001,
+        "flagged": 2781,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 4001,
+        "flagged": 3965,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 4001,
+        "flagged": 3888,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 4001,
+        "flagged": 70,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-003",
+    "label": "dataset-labeled polyp",
+    "source": "videos with polyps",
+    "frames": 4001,
+    "fps": 24.918,
+    "annotation": "videos with polyps",
+    "demo_uhid": "DEMO-UHID-003",
+    "demo_abha": "DEMO-ABHA-003",
+    "run_notes": {
+      "chakranet": {
+        "frames": 4001,
+        "flagged": 3015,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 4001,
+        "flagged": 3967,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 4001,
+        "flagged": 3912,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 4001,
+        "flagged": 270,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-004",
+    "label": "dataset-labeled polyp",
+    "source": "videos with polyps",
+    "frames": 4600,
+    "fps": 24.899,
+    "annotation": "videos with polyps",
+    "demo_uhid": "DEMO-UHID-004",
+    "demo_abha": "DEMO-ABHA-004",
+    "run_notes": {
+      "chakranet": {
+        "frames": 4600,
+        "flagged": 2083,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 4600,
+        "flagged": 4358,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 4600,
+        "flagged": 4375,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 4600,
+        "flagged": 148,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-005",
+    "label": "dataset-labeled polyp",
+    "source": "videos with polyps",
+    "frames": 5001,
+    "fps": 24.874,
+    "annotation": "videos with polyps",
+    "demo_uhid": "DEMO-UHID-005",
+    "demo_abha": "DEMO-ABHA-005",
+    "run_notes": {
+      "chakranet": {
+        "frames": 5001,
+        "flagged": 3317,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 5001,
+        "flagged": 4918,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 5001,
+        "flagged": 4843,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 5001,
+        "flagged": 148,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-006",
+    "label": "dataset-labeled polyp",
+    "source": "videos with polyps",
+    "frames": 5001,
+    "fps": 24.92,
+    "annotation": "videos with polyps",
+    "demo_uhid": "DEMO-UHID-006",
+    "demo_abha": "DEMO-ABHA-006",
+    "run_notes": {
+      "chakranet": {
+        "frames": 5001,
+        "flagged": 4879,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 5001,
+        "flagged": 4989,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 5001,
+        "flagged": 4995,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 5001,
+        "flagged": 531,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-007",
+    "label": "dataset-labeled polyp",
+    "source": "videos with polyps",
+    "frames": 5000,
+    "fps": 24.873,
+    "annotation": "videos with polyps",
+    "demo_uhid": "DEMO-UHID-007",
+    "demo_abha": "DEMO-ABHA-007",
+    "run_notes": {
+      "chakranet": {
+        "frames": 5000,
+        "flagged": 3703,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 5000,
+        "flagged": 4991,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 5000,
+        "flagged": 4960,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 5000,
+        "flagged": 43,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-008",
+    "label": "dataset-labeled polyp",
+    "source": "videos with polyps",
+    "frames": 6001,
+    "fps": 24.956,
+    "annotation": "videos with polyps",
+    "demo_uhid": "DEMO-UHID-008",
+    "demo_abha": "DEMO-ABHA-008",
+    "run_notes": {
+      "chakranet": {
+        "frames": 6001,
+        "flagged": 4637,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 6001,
+        "flagged": 5751,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 6001,
+        "flagged": 5619,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 6001,
+        "flagged": 52,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-009",
+    "label": "dataset-labeled polyp",
+    "source": "videos with polyps",
+    "frames": 6001,
+    "fps": 24.877,
+    "annotation": "videos with polyps",
+    "demo_uhid": "DEMO-UHID-009",
+    "demo_abha": "DEMO-ABHA-009",
+    "run_notes": {
+      "chakranet": {
+        "frames": 6001,
+        "flagged": 5214,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 6001,
+        "flagged": 5935,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 6001,
+        "flagged": 5955,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 6001,
+        "flagged": 1184,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-010",
+    "label": "dataset-labeled polyp",
+    "source": "videos with polyps",
+    "frames": 6001,
+    "fps": 24.881,
+    "annotation": "videos with polyps",
+    "demo_uhid": "DEMO-UHID-010",
+    "demo_abha": "DEMO-ABHA-010",
+    "run_notes": {
+      "chakranet": {
+        "frames": 6001,
+        "flagged": 4890,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 6001,
+        "flagged": 5954,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 6001,
+        "flagged": 5922,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 6001,
+        "flagged": 1365,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-011",
+    "label": "dataset-labeled polyp",
+    "source": "videos with polyps",
+    "frames": 6000,
+    "fps": 24.899,
+    "annotation": "videos with polyps",
+    "demo_uhid": "DEMO-UHID-011",
+    "demo_abha": "DEMO-ABHA-011",
+    "run_notes": {
+      "chakranet": {
+        "frames": 6000,
+        "flagged": 4767,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 6000,
+        "flagged": 5976,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 6000,
+        "flagged": 5921,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 6000,
+        "flagged": 1062,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-012",
+    "label": "dataset-labeled polyp",
+    "source": "videos with polyps",
+    "frames": 6001,
+    "fps": 24.9,
+    "annotation": "videos with polyps",
+    "demo_uhid": "DEMO-UHID-012",
+    "demo_abha": "DEMO-ABHA-012",
+    "run_notes": {
+      "chakranet": {
+        "frames": 6001,
+        "flagged": 4212,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 6001,
+        "flagged": 5843,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 6001,
+        "flagged": 5796,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 6001,
+        "flagged": 123,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-013",
+    "label": "dataset-labeled polyp",
+    "source": "videos with polyps",
+    "frames": 6001,
+    "fps": 24.972,
+    "annotation": "videos with polyps",
+    "demo_uhid": "DEMO-UHID-013",
+    "demo_abha": "DEMO-ABHA-013",
+    "run_notes": {
+      "chakranet": {
+        "frames": 6001,
+        "flagged": 2887,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 6001,
+        "flagged": 5605,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 6001,
+        "flagged": 5633,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 6001,
+        "flagged": 1356,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-014",
+    "label": "dataset-labeled polyp",
+    "source": "videos with polyps",
+    "frames": 6400,
+    "fps": 24.867,
+    "annotation": "videos with polyps",
+    "demo_uhid": "DEMO-UHID-014",
+    "demo_abha": "DEMO-ABHA-014",
+    "run_notes": {
+      "chakranet": {
+        "frames": 6400,
+        "flagged": 6250,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 6400,
+        "flagged": 6390,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 6400,
+        "flagged": 6392,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 6400,
+        "flagged": 1040,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-015",
+    "label": "dataset-labeled polyp",
+    "source": "videos with polyps",
+    "frames": 7001,
+    "fps": 24.92,
+    "annotation": "videos with polyps",
+    "demo_uhid": "DEMO-UHID-015",
+    "demo_abha": "DEMO-ABHA-015",
+    "run_notes": {
+      "chakranet": {
+        "frames": 7001,
+        "flagged": 5226,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 7001,
+        "flagged": 6883,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 7001,
+        "flagged": 6659,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 7001,
+        "flagged": 98,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-016",
+    "label": "dataset-labeled polyp",
+    "source": "videos with polyps",
+    "frames": 7001,
+    "fps": 24.89,
+    "annotation": "videos with polyps",
+    "demo_uhid": "DEMO-UHID-016",
+    "demo_abha": "DEMO-ABHA-016",
+    "run_notes": {
+      "chakranet": {
+        "frames": 7001,
+        "flagged": 5391,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 7001,
+        "flagged": 6944,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 7001,
+        "flagged": 6813,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 7001,
+        "flagged": 389,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-017",
+    "label": "dataset-labeled polyp",
+    "source": "videos with polyps",
+    "frames": 7001,
+    "fps": 24.903,
+    "annotation": "videos with polyps",
+    "demo_uhid": "DEMO-UHID-017",
+    "demo_abha": "DEMO-ABHA-017",
+    "run_notes": {
+      "chakranet": {
+        "frames": 7001,
+        "flagged": 5353,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 7001,
+        "flagged": 6971,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 7001,
+        "flagged": 6898,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 7001,
+        "flagged": 45,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-018",
+    "label": "dataset-labeled polyp",
+    "source": "videos with polyps",
+    "frames": 8001,
+    "fps": 24.863,
+    "annotation": "videos with polyps",
+    "demo_uhid": "DEMO-UHID-018",
+    "demo_abha": "DEMO-ABHA-018",
+    "run_notes": {
+      "chakranet": {
+        "frames": 8001,
+        "flagged": 5090,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 8001,
+        "flagged": 7801,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 8001,
+        "flagged": 7594,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 8001,
+        "flagged": 69,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-019",
+    "label": "dataset-labeled polyp",
+    "source": "videos with polyps",
+    "frames": 8001,
+    "fps": 24.896,
+    "annotation": "videos with polyps",
+    "demo_uhid": "DEMO-UHID-019",
+    "demo_abha": "DEMO-ABHA-019",
+    "run_notes": {
+      "chakranet": {
+        "frames": 8001,
+        "flagged": 6559,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 8001,
+        "flagged": 7934,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 8001,
+        "flagged": 7783,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 8001,
+        "flagged": 167,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-020",
+    "label": "dataset-labeled polyp",
+    "source": "videos with polyps",
+    "frames": 9001,
+    "fps": 24.97,
+    "annotation": "videos with polyps",
+    "demo_uhid": "DEMO-UHID-020",
+    "demo_abha": "DEMO-ABHA-020",
+    "run_notes": {
+      "chakranet": {
+        "frames": 9001,
+        "flagged": 7028,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 9001,
+        "flagged": 8820,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 9001,
+        "flagged": 8771,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 9001,
+        "flagged": 1266,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-021",
+    "label": "dataset-labeled no polyp",
+    "source": "videos without polyps",
+    "frames": 4001,
+    "fps": 24.887,
+    "annotation": "videos without polyps",
+    "demo_uhid": "DEMO-UHID-021",
+    "demo_abha": "DEMO-ABHA-021",
+    "run_notes": {
+      "chakranet": {
+        "frames": 4001,
+        "flagged": 1515,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 4001,
+        "flagged": 3562,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 4001,
+        "flagged": 3826,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 4001,
+        "flagged": 20,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-022",
+    "label": "dataset-labeled no polyp",
+    "source": "videos without polyps",
+    "frames": 5000,
+    "fps": 24.891,
+    "annotation": "videos without polyps",
+    "demo_uhid": "DEMO-UHID-022",
+    "demo_abha": "DEMO-ABHA-022",
+    "run_notes": {
+      "chakranet": {
+        "frames": 5000,
+        "flagged": 4249,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 5000,
+        "flagged": 4843,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 5000,
+        "flagged": 4853,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 5000,
+        "flagged": 66,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-023",
+    "label": "dataset-labeled no polyp",
+    "source": "videos without polyps",
+    "frames": 5000,
+    "fps": 24.886,
+    "annotation": "videos without polyps",
+    "demo_uhid": "DEMO-UHID-023",
+    "demo_abha": "DEMO-ABHA-023",
+    "run_notes": {
+      "chakranet": {
+        "frames": 5000,
+        "flagged": 1560,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 5000,
+        "flagged": 4445,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 5000,
+        "flagged": 4435,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 5000,
+        "flagged": 110,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-024",
+    "label": "dataset-labeled no polyp",
+    "source": "videos without polyps",
+    "frames": 5001,
+    "fps": 24.847,
+    "annotation": "videos without polyps",
+    "demo_uhid": "DEMO-UHID-024",
+    "demo_abha": "DEMO-ABHA-024",
+    "run_notes": {
+      "chakranet": {
+        "frames": 5001,
+        "flagged": 1595,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 5001,
+        "flagged": 4144,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 5001,
+        "flagged": 4394,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 5001,
+        "flagged": 207,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-025",
+    "label": "dataset-labeled no polyp",
+    "source": "videos without polyps",
+    "frames": 5001,
+    "fps": 24.95,
+    "annotation": "videos without polyps",
+    "demo_uhid": "DEMO-UHID-025",
+    "demo_abha": "DEMO-ABHA-025",
+    "run_notes": {
+      "chakranet": {
+        "frames": 5001,
+        "flagged": 4304,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 5001,
+        "flagged": 4900,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 5001,
+        "flagged": 4840,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 5001,
+        "flagged": 121,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-026",
+    "label": "dataset-labeled no polyp",
+    "source": "videos without polyps",
+    "frames": 5001,
+    "fps": 24.902,
+    "annotation": "videos without polyps",
+    "demo_uhid": "DEMO-UHID-026",
+    "demo_abha": "DEMO-ABHA-026",
+    "run_notes": {
+      "chakranet": {
+        "frames": 5001,
+        "flagged": 1697,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 5001,
+        "flagged": 4770,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 5001,
+        "flagged": 4791,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 5001,
+        "flagged": 68,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-027",
+    "label": "dataset-labeled no polyp",
+    "source": "videos without polyps",
+    "frames": 5001,
+    "fps": 24.887,
+    "annotation": "videos without polyps",
+    "demo_uhid": "DEMO-UHID-027",
+    "demo_abha": "DEMO-ABHA-027",
+    "run_notes": {
+      "chakranet": {
+        "frames": 5001,
+        "flagged": 1244,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 5001,
+        "flagged": 4566,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 5001,
+        "flagged": 4704,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 5001,
+        "flagged": 19,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-028",
+    "label": "dataset-labeled no polyp",
+    "source": "videos without polyps",
+    "frames": 5001,
+    "fps": 24.873,
+    "annotation": "videos without polyps",
+    "demo_uhid": "DEMO-UHID-028",
+    "demo_abha": "DEMO-ABHA-028",
+    "run_notes": {
+      "chakranet": {
+        "frames": 5001,
+        "flagged": 1833,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 5001,
+        "flagged": 4373,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 5001,
+        "flagged": 4499,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 5001,
+        "flagged": 42,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-029",
+    "label": "dataset-labeled no polyp",
+    "source": "videos without polyps",
+    "frames": 5001,
+    "fps": 24.846,
+    "annotation": "videos without polyps",
+    "demo_uhid": "DEMO-UHID-029",
+    "demo_abha": "DEMO-ABHA-029",
+    "run_notes": {
+      "chakranet": {
+        "frames": 5001,
+        "flagged": 769,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 5001,
+        "flagged": 3945,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 5001,
+        "flagged": 3759,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 5001,
+        "flagged": 21,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-030",
+    "label": "dataset-labeled no polyp",
+    "source": "videos without polyps",
+    "frames": 5001,
+    "fps": 24.836,
+    "annotation": "videos without polyps",
+    "demo_uhid": "DEMO-UHID-030",
+    "demo_abha": "DEMO-ABHA-030",
+    "run_notes": {
+      "chakranet": {
+        "frames": 5001,
+        "flagged": 1183,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 5001,
+        "flagged": 4066,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 5001,
+        "flagged": 4198,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 5001,
+        "flagged": 36,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-031",
+    "label": "dataset-labeled no polyp",
+    "source": "videos without polyps",
+    "frames": 6001,
+    "fps": 24.91,
+    "annotation": "videos without polyps",
+    "demo_uhid": "DEMO-UHID-031",
+    "demo_abha": "DEMO-ABHA-031",
+    "run_notes": {
+      "chakranet": {
+        "frames": 6001,
+        "flagged": 3975,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 6001,
+        "flagged": 5832,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 6001,
+        "flagged": 5625,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 6001,
+        "flagged": 84,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-032",
+    "label": "dataset-labeled no polyp",
+    "source": "videos without polyps",
+    "frames": 6001,
+    "fps": 24.927,
+    "annotation": "videos without polyps",
+    "demo_uhid": "DEMO-UHID-032",
+    "demo_abha": "DEMO-ABHA-032",
+    "run_notes": {
+      "chakranet": {
+        "frames": 6001,
+        "flagged": 4036,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 6001,
+        "flagged": 5771,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 6001,
+        "flagged": 5806,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 6001,
+        "flagged": 120,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-033",
+    "label": "dataset-labeled no polyp",
+    "source": "videos without polyps",
+    "frames": 6001,
+    "fps": 24.796,
+    "annotation": "videos without polyps",
+    "demo_uhid": "DEMO-UHID-033",
+    "demo_abha": "DEMO-ABHA-033",
+    "run_notes": {
+      "chakranet": {
+        "frames": 6001,
+        "flagged": 4811,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 6001,
+        "flagged": 5945,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 6001,
+        "flagged": 5906,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 6001,
+        "flagged": 59,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-034",
+    "label": "dataset-labeled no polyp",
+    "source": "videos without polyps",
+    "frames": 6000,
+    "fps": 24.905,
+    "annotation": "videos without polyps",
+    "demo_uhid": "DEMO-UHID-034",
+    "demo_abha": "DEMO-ABHA-034",
+    "run_notes": {
+      "chakranet": {
+        "frames": 6000,
+        "flagged": 4501,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 6000,
+        "flagged": 5872,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 6000,
+        "flagged": 5779,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 6000,
+        "flagged": 128,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-035",
+    "label": "dataset-labeled no polyp",
+    "source": "videos without polyps",
+    "frames": 6001,
+    "fps": 24.646,
+    "annotation": "videos without polyps",
+    "demo_uhid": "DEMO-UHID-035",
+    "demo_abha": "DEMO-ABHA-035",
+    "run_notes": {
+      "chakranet": {
+        "frames": 6001,
+        "flagged": 1358,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 6001,
+        "flagged": 5118,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 6001,
+        "flagged": 5114,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 6001,
+        "flagged": 38,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-036",
+    "label": "dataset-labeled no polyp",
+    "source": "videos without polyps",
+    "frames": 6001,
+    "fps": 24.784,
+    "annotation": "videos without polyps",
+    "demo_uhid": "DEMO-UHID-036",
+    "demo_abha": "DEMO-ABHA-036",
+    "run_notes": {
+      "chakranet": {
+        "frames": 6001,
+        "flagged": 773,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 6001,
+        "flagged": 5347,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 6001,
+        "flagged": 5461,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 6001,
+        "flagged": 60,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-037",
+    "label": "dataset-labeled no polyp",
+    "source": "videos without polyps",
+    "frames": 7001,
+    "fps": 24.914,
+    "annotation": "videos without polyps",
+    "demo_uhid": "DEMO-UHID-037",
+    "demo_abha": "DEMO-ABHA-037",
+    "run_notes": {
+      "chakranet": {
+        "frames": 7001,
+        "flagged": 5561,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 7001,
+        "flagged": 6889,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 7001,
+        "flagged": 6877,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 7001,
+        "flagged": 115,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-038",
+    "label": "dataset-labeled no polyp",
+    "source": "videos without polyps",
+    "frames": 7001,
+    "fps": 24.924,
+    "annotation": "videos without polyps",
+    "demo_uhid": "DEMO-UHID-038",
+    "demo_abha": "DEMO-ABHA-038",
+    "run_notes": {
+      "chakranet": {
+        "frames": 7001,
+        "flagged": 5846,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 7001,
+        "flagged": 6919,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 7001,
+        "flagged": 6748,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 7001,
+        "flagged": 92,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-039",
+    "label": "dataset-labeled no polyp",
+    "source": "videos without polyps",
+    "frames": 7000,
+    "fps": 24.904,
+    "annotation": "videos without polyps",
+    "demo_uhid": "DEMO-UHID-039",
+    "demo_abha": "DEMO-ABHA-039",
+    "run_notes": {
+      "chakranet": {
+        "frames": 7000,
+        "flagged": 4758,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 7000,
+        "flagged": 6669,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 7000,
+        "flagged": 6646,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 7000,
+        "flagged": 121,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-040",
+    "label": "dataset-labeled no polyp",
+    "source": "videos without polyps",
+    "frames": 7001,
+    "fps": 24.715,
+    "annotation": "videos without polyps",
+    "demo_uhid": "DEMO-UHID-040",
+    "demo_abha": "DEMO-ABHA-040",
+    "run_notes": {
+      "chakranet": {
+        "frames": 7001,
+        "flagged": 2481,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 7001,
+        "flagged": 6035,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 7001,
+        "flagged": 6188,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 7001,
+        "flagged": 53,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-041",
+    "label": "other lower-GI annotation",
+    "source": "HyperKvasir",
+    "frames": 96,
+    "fps": 25.0,
+    "annotation": "cecum",
+    "demo_uhid": "DEMO-UHID-041",
+    "demo_abha": "DEMO-ABHA-041",
+    "run_notes": {
+      "chakranet": {
+        "frames": 96,
+        "flagged": 64,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 96,
+        "flagged": 96,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 96,
+        "flagged": 95,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 96,
+        "flagged": 5,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-042",
+    "label": "other lower-GI annotation",
+    "source": "HyperKvasir",
+    "frames": 538,
+    "fps": 25.0,
+    "annotation": "normal mucosa colon",
+    "demo_uhid": "DEMO-UHID-042",
+    "demo_abha": "DEMO-ABHA-042",
+    "run_notes": {
+      "chakranet": {
+        "frames": 538,
+        "flagged": 97,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 538,
+        "flagged": 519,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 538,
+        "flagged": 508,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 538,
+        "flagged": 0,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-043",
+    "label": "other lower-GI annotation",
+    "source": "HyperKvasir",
+    "frames": 594,
+    "fps": 25.0,
+    "annotation": "ulcerative colitis",
+    "demo_uhid": "DEMO-UHID-043",
+    "demo_abha": "DEMO-ABHA-043",
+    "run_notes": {
+      "chakranet": {
+        "frames": 594,
+        "flagged": 379,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 594,
+        "flagged": 590,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 594,
+        "flagged": 592,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 594,
+        "flagged": 7,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-044",
+    "label": "dataset-labeled polyp",
+    "source": "HyperKvasir",
+    "frames": 811,
+    "fps": 25.0,
+    "annotation": "cecum polyp",
+    "demo_uhid": "DEMO-UHID-044",
+    "demo_abha": "DEMO-ABHA-044",
+    "run_notes": {
+      "chakranet": {
+        "frames": 811,
+        "flagged": 361,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 811,
+        "flagged": 719,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 811,
+        "flagged": 776,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 811,
+        "flagged": 85,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-045",
+    "label": "other lower-GI annotation",
+    "source": "HyperKvasir",
+    "frames": 679,
+    "fps": 25.0,
+    "annotation": "ulcerative colitis",
+    "demo_uhid": "DEMO-UHID-045",
+    "demo_abha": "DEMO-ABHA-045",
+    "run_notes": {
+      "chakranet": {
+        "frames": 679,
+        "flagged": 565,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 679,
+        "flagged": 679,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 679,
+        "flagged": 650,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 679,
+        "flagged": 27,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-046",
+    "label": "other lower-GI annotation",
+    "source": "HyperKvasir",
+    "frames": 777,
+    "fps": 25.0,
+    "annotation": "cecum ileocecal valve",
+    "demo_uhid": "DEMO-UHID-046",
+    "demo_abha": "DEMO-ABHA-046",
+    "run_notes": {
+      "chakranet": {
+        "frames": 777,
+        "flagged": 266,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 777,
+        "flagged": 763,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 777,
+        "flagged": 700,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 777,
+        "flagged": 6,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-047",
+    "label": "other lower-GI annotation",
+    "source": "HyperKvasir",
+    "frames": 1067,
+    "fps": 25.0,
+    "annotation": "Normal colon",
+    "demo_uhid": "DEMO-UHID-047",
+    "demo_abha": "DEMO-ABHA-047",
+    "run_notes": {
+      "chakranet": {
+        "frames": 1067,
+        "flagged": 410,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 1067,
+        "flagged": 971,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 1067,
+        "flagged": 1035,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 1067,
+        "flagged": 5,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-048",
+    "label": "dataset-labeled polyp",
+    "source": "HyperKvasir",
+    "frames": 661,
+    "fps": 25.0,
+    "annotation": "polyp retroflex rectum",
+    "demo_uhid": "DEMO-UHID-048",
+    "demo_abha": "DEMO-ABHA-048",
+    "run_notes": {
+      "chakranet": {
+        "frames": 661,
+        "flagged": 561,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 661,
+        "flagged": 661,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 661,
+        "flagged": 661,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 661,
+        "flagged": 43,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-049",
+    "label": "other lower-GI annotation",
+    "source": "HyperKvasir",
+    "frames": 1001,
+    "fps": 25.0,
+    "annotation": "Normal colon",
+    "demo_uhid": "DEMO-UHID-049",
+    "demo_abha": "DEMO-ABHA-049",
+    "run_notes": {
+      "chakranet": {
+        "frames": 1001,
+        "flagged": 280,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 1001,
+        "flagged": 992,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 1001,
+        "flagged": 959,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 1001,
+        "flagged": 26,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-050",
+    "label": "other lower-GI annotation",
+    "source": "HyperKvasir",
+    "frames": 1051,
+    "fps": 25.0,
+    "annotation": "ileitis and colitis",
+    "demo_uhid": "DEMO-UHID-050",
+    "demo_abha": "DEMO-ABHA-050",
+    "run_notes": {
+      "chakranet": {
+        "frames": 1051,
+        "flagged": 467,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 1051,
+        "flagged": 969,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 1051,
+        "flagged": 995,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 1051,
+        "flagged": 0,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-051",
+    "label": "dataset-labeled polyp",
+    "source": "HyperKvasir",
+    "frames": 1442,
+    "fps": 25.0,
+    "annotation": "dye lifted polyp retroflex rectum",
+    "demo_uhid": "DEMO-UHID-051",
+    "demo_abha": "DEMO-ABHA-051",
+    "run_notes": {
+      "chakranet": {
+        "frames": 1442,
+        "flagged": 1158,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 1442,
+        "flagged": 1441,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 1442,
+        "flagged": 1442,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 1442,
+        "flagged": 124,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-052",
+    "label": "dataset-labeled polyp",
+    "source": "HyperKvasir",
+    "frames": 795,
+    "fps": 25.0,
+    "annotation": "lifted polyp,rectum",
+    "demo_uhid": "DEMO-UHID-052",
+    "demo_abha": "DEMO-ABHA-052",
+    "run_notes": {
+      "chakranet": {
+        "frames": 795,
+        "flagged": 634,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 795,
+        "flagged": 795,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 795,
+        "flagged": 669,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 795,
+        "flagged": 93,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-053",
+    "label": "other lower-GI annotation",
+    "source": "HyperKvasir",
+    "frames": 765,
+    "fps": 25.0,
+    "annotation": "worms in colon",
+    "demo_uhid": "DEMO-UHID-053",
+    "demo_abha": "DEMO-ABHA-053",
+    "run_notes": {
+      "chakranet": {
+        "frames": 765,
+        "flagged": 511,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 765,
+        "flagged": 764,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 765,
+        "flagged": 756,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 765,
+        "flagged": 18,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-054",
+    "label": "other lower-GI annotation",
+    "source": "HyperKvasir",
+    "frames": 1160,
+    "fps": 25.0,
+    "annotation": "colorectal cancer",
+    "demo_uhid": "DEMO-UHID-054",
+    "demo_abha": "DEMO-ABHA-054",
+    "run_notes": {
+      "chakranet": {
+        "frames": 1160,
+        "flagged": 846,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 1160,
+        "flagged": 1156,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 1160,
+        "flagged": 1061,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 1160,
+        "flagged": 87,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-055",
+    "label": "other lower-GI annotation",
+    "source": "HyperKvasir",
+    "frames": 863,
+    "fps": 25.00406316026354,
+    "annotation": "ABD colitis",
+    "demo_uhid": "DEMO-UHID-055",
+    "demo_abha": "DEMO-ABHA-055",
+    "run_notes": {
+      "chakranet": {
+        "frames": 863,
+        "flagged": 604,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 863,
+        "flagged": 863,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 863,
+        "flagged": 863,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 863,
+        "flagged": 100,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-056",
+    "label": "other lower-GI annotation",
+    "source": "HyperKvasir",
+    "frames": 1960,
+    "fps": 25.0,
+    "annotation": "normal colon",
+    "demo_uhid": "DEMO-UHID-056",
+    "demo_abha": "DEMO-ABHA-056",
+    "run_notes": {
+      "chakranet": {
+        "frames": 1960,
+        "flagged": 272,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 1960,
+        "flagged": 1694,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 1960,
+        "flagged": 1484,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 1960,
+        "flagged": 8,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-057",
+    "label": "other lower-GI annotation",
+    "source": "HyperKvasir",
+    "frames": 1570,
+    "fps": 25.0,
+    "annotation": "colitis, pseudomembrane",
+    "demo_uhid": "DEMO-UHID-057",
+    "demo_abha": "DEMO-ABHA-057",
+    "run_notes": {
+      "chakranet": {
+        "frames": 1570,
+        "flagged": 1461,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 1570,
+        "flagged": 1538,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 1570,
+        "flagged": 1566,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 1570,
+        "flagged": 190,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-058",
+    "label": "other lower-GI annotation",
+    "source": "HyperKvasir",
+    "frames": 1443,
+    "fps": 25.0,
+    "annotation": "normal colon",
+    "demo_uhid": "DEMO-UHID-058",
+    "demo_abha": "DEMO-ABHA-058",
+    "run_notes": {
+      "chakranet": {
+        "frames": 1443,
+        "flagged": 126,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 1443,
+        "flagged": 1132,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 1443,
+        "flagged": 1235,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 1443,
+        "flagged": 5,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-059",
+    "label": "other lower-GI annotation",
+    "source": "HyperKvasir",
+    "frames": 1534,
+    "fps": 25.0,
+    "annotation": "iscemich colitis",
+    "demo_uhid": "DEMO-UHID-059",
+    "demo_abha": "DEMO-ABHA-059",
+    "run_notes": {
+      "chakranet": {
+        "frames": 1534,
+        "flagged": 1310,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 1534,
+        "flagged": 1523,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 1534,
+        "flagged": 1181,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 1534,
+        "flagged": 22,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  },
+  {
+    "patient_id": "SIM-060",
+    "label": "dataset-labeled polyp",
+    "source": "HyperKvasir",
+    "frames": 1639,
+    "fps": 25.0,
+    "annotation": "polyp, colon",
+    "demo_uhid": "DEMO-UHID-060",
+    "demo_abha": "DEMO-ABHA-060",
+    "run_notes": {
+      "chakranet": {
+        "frames": 1639,
+        "flagged": 925,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "pvt_pranet": {
+        "frames": 1639,
+        "flagged": 1556,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "sepnet": {
+        "frames": 1639,
+        "flagged": 1436,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Masks highlight candidate regions. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      },
+      "yolovit_vit": {
+        "frames": 1639,
+        "flagged": 350,
+        "batch": "chakra-mixed-evaluation-kkq65",
+        "guide": "Bounding boxes highlight possible polyps. Repeated flagged frames may show the same region.",
+        "explainer": "gemini-3.8-flash"
+      }
+    }
+  }
+]

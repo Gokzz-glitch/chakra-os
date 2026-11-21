@@ -95,6 +95,8 @@ def cloud():
         with video.open("rb") as f:
             if hashlib.file_digest(f,"sha256").hexdigest()!=row["sha256"]: raise ValueError("Video hash mismatch")
         result=run(model_key,weights,video,path)
+        from replay_validation import validate_replay
+        result["playback_validation"]=validate_replay(path/"replay.mp4",row["frames"])
         artifacts={}
         for name in ("replay.mp4","frames.jsonl","masks.zip"):
             if (path/name).exists():

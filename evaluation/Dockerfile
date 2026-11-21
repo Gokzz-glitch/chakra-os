@@ -2,5 +2,5 @@ FROM asia-southeast1-docker.pkg.dev/girpolypposframesrealcolon/cloud-run-source-
 WORKDIR /eval
 RUN pip install --no-cache-dir timm google-cloud-storage imageio-ffmpeg einops
 COPY vendor vendor
-COPY worker.py .
+COPY worker.py replay_validation.py ./
 CMD ["python","-u","worker.py"]

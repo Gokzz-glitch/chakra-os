@@ -1,4 +1,4 @@
-﻿<!doctype html><html><head><meta charset="utf-8"><title>CHAKRA GI Clinical OS</title>
+<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><meta charset="utf-8"><title>CHAKRA GI Clinical OS</title>
 <style>
 body{font-family:system-ui,sans-serif;background:#0b1120;color:#e2e8f0;max-width:1100px;margin:24px auto;padding:0 16px}
 .card{background:#111c33;border:1px solid #1e3a5f;border-radius:12px;padding:18px;margin-bottom:16px}
@@ -8,7 +8,7 @@ button.ok{background:#059669} button:disabled{opacity:.5}
 img{max-width:100%;border-radius:8px;border:1px solid #334155}
 pre{background:#020617;padding:12px;border-radius:8px;overflow:auto;font-size:12px}
 .badge{display:inline-block;padding:4px 10px;border-radius:99px;font-size:12px;background:#1e293b}
-</style></head><body>
+</style><style>*{box-sizing:border-box}img,video,canvas,select,input{max-width:100%}.grid>*{min-width:0}pre{white-space:pre-wrap;overflow-wrap:anywhere}@media(max-width:740px){.grid{grid-template-columns:minmax(0,1fr)}body{margin:12px auto}}</style><script src="/v2/assets/operation-feedback.js"></script></head><body>
 <div class="card"><h2>CHAKRA GI Clinical OS <span id="gpu" class="badge">Waking L4 GPU...</span></h2>
 <input type="file" id="f" accept="image/*">
 BBPS R:<input id="r" type="number" value="3" min="0" max="3" style="width:40px">
@@ -30,7 +30,7 @@ async function run(){
   const f=document.getElementById('f').files[0]; if(!f) return alert('Select a colonoscopy frame');
   const fd=new FormData(); fd.append('file',f); fd.append('bbps_r',r.value); fd.append('bbps_t',t.value); fd.append('bbps_l',l.value); fd.append('withdrawal_sec',w.value);
   document.getElementById('json').textContent='Running L4 detection + Gemini 3.8 Flash...';
-  const d=await (await fetch('/api/analyze',{method:'POST',body:fd})).json();
+  const d=await (await chakraFeedback.request('Analyze upload','/api/analyze',{method:'POST',body:fd})).json();
   curId=d.report.procedure_id; document.getElementById('signBtn').disabled=false;
   document.getElementById('vmeta').textContent=`${d.vision.device} | ${d.vision.latency_ms} ms | Polyps: ${d.vision.count}`;
   document.getElementById('img').src='data:image/jpeg;base64,'+d.vision.overlay_jpg_b64;
@@ -38,7 +38,7 @@ async function run(){
   document.getElementById('json').textContent=JSON.stringify(d.report.abdm_fhir_r4,null,2);
 }
 async function signoff(){
-  const d=await (await fetch('/api/signoff/'+curId,{method:'POST'})).json();
+  const d=await (await chakraFeedback.request('Sign off report','/api/signoff/'+curId,{method:'POST'})).json();
   document.getElementById('json').textContent=JSON.stringify({status:d.report.status, bigquery:d.bigquery},null,2);
 }
 </script></body></html>

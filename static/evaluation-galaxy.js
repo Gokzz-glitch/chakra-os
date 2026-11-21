@@ -46,13 +46,28 @@
    if(!filtered.length)return;
    $('patient').value=selected;
    const p=data.patients.find(p=>p.patient_id===selected);
-   detail.append(element('h3',selected),element('p',p.source+' · '+p.annotation));
+   detail.append(element('h3',selected), element('p', 'Synthetic hospital UHID · ' + p.demo_uhid), element('p', 'Synthetic ABHA · ' + p.demo_abha),element('p',p.source+' · '+p.annotation));
    for(const m of (chosen?[chosen]:data.models)){
      const r=runs.get(selected+'/'+m),box=element('div','');box.className='eg-run';
      box.append(element('strong',names[m]),element('p',r?r.frames.toLocaleString()+' frames · '+r.flagged.toLocaleString()+' flagged above 0.70 · '+r.device:'Awaiting completion record'));
      if(r){for(const file of r.files){const a=element('a',{'frames.jsonl':'Frame log','masks.zip':'Masks','replay.mp4':'Replay'}[file]||file);
-       a.href='https://storage.cloud.google.com/'+data.bucket+'/evaluation-runs/'+selected+'/'+m+'/'+data.batch+'/'+encodeURIComponent(file);
+       const objectName=['evaluation-runs',selected,m,data.batch,file].join('/');
+       const media='https://storage.cloud.google.com/'+data.bucket+'/'+objectName.split('/').map(encodeURIComponent).join('/');
+       const chooser=new URL('https://accounts.google.com/AccountChooser');
+       chooser.searchParams.set('continue',media);a.href=chooser.href;
+       a.title='Choose a Google account with access to the project';
        a.target='_blank';a.rel='noopener';box.append(a)}}
+     if(r){
+       const help=element('details','');help.append(element('summary','File access'));
+       help.append(element('p','Choose the Google account that can view this project. A 403 means Google denied this request. If it persists, check access with the project owner.'));
+       const folder=element('a','View run in Cloud Console');
+       folder.href='https://console.cloud.google.com/storage/browser/'+data.bucket+'/evaluation-runs/'+selected+'/'+m+'/'+data.batch+'?project=girpolypposframesrealcolon';
+       folder.target='_blank';folder.rel='noopener';help.append(folder);box.append(help);
+     }
+     const note = p.run_notes?.[m];
+     if (r && note && note.batch === data.batch && note.frames === r.frames && note.flagged === r.flagged) {
+       box.append(element('p', 'Gemini guide · ' + note.guide), element('small', note.explainer));
+     }
      detail.append(box);
    }
  }

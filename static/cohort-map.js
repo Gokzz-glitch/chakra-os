@@ -16,10 +16,16 @@
     const folder = make('a', 'Open private run history in Google Cloud');
     folder.href = 'https://console.cloud.google.com/storage/browser/' + bucket + '/evaluation-runs/' + row.patient_id + '?project=girpolypposframesrealcolon';
     folder.target = '_blank'; folder.rel = 'noopener';
-    detail.replaceChildren(make('h3', row.patient_id), make('p', row.source + ' · ' + row.annotation),
+    detail.replaceChildren(make('h3', row.patient_id), make('p', 'Synthetic hospital UHID · ' + row.demo_uhid), make('p', 'Synthetic ABHA · ' + row.demo_abha), make('p', row.source + ' · ' + row.annotation),
       make('p', row.frames.toLocaleString() + ' original frames · ' + row.fps.toFixed(2) + ' fps'),
       make('p', 'YOLOViT · ChakraNet · PVT-PraNet · SEPNet'), folder,
       make('p', 'Each completed run includes an annotated replay and a frame log. Segmentation runs also include lossless masks.'));
+    for (const [model, run] of Object.entries(row.run_notes || {})) {
+      const summary = document.createElement('details');
+      summary.append(make('summary', model + ' · ' + run.flagged.toLocaleString() + ' of ' + run.frames.toLocaleString() + ' frames above 0.70'),
+        make('p', 'Gemini guide · ' + run.guide), make('small', run.explainer));
+      detail.append(summary);
+    }
   }
   function draw() {
     holder.replaceChildren();

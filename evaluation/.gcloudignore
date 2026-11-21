@@ -3,3 +3,5 @@
 !worker.py
 !vendor/
 !vendor/**
+
+!replay_validation.py

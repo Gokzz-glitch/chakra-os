@@ -8,7 +8,7 @@ HOME_REGION='asia-southeast1'
 REGIONS=['asia-east1','asia-northeast1','asia-south1','asia-southeast2','asia-southeast1-cpu']
 BATCH='chakra-mixed-evaluation-kkq65'
 BUCKET='girpolypposframesrealcolon-chakra-models'
-BUILD='c7657196-40f1-4e8b-95d0-b7386b81b0e8'
+BUILD='0672567d-cb2d-410b-b4cc-5fc8f52e7681'
 GCLOUD=Path(os.environ['LOCALAPPDATA'])/'CHAKRA/BuildathonTools/google-cloud-sdk/bin/gcloud.cmd'
 MODELS=['yolovit_vit','chakranet','pvt_pranet','sepnet']
 def cli(*args):

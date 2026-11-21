@@ -12,7 +12,18 @@ with sync_playwright() as pw:
     page.select_option("#eg-patient","SIM-001")
     page.get_by_role("button",name="SIM-001 SEPNet",exact=True).click(force=True)
     assert "SEPNet" in page.text_content("#eg-detail")
-    assert page.locator("#eg-detail a",has_text="Masks").get_attribute("href").startswith("https://storage.cloud.google.com/")
+    from urllib.parse import urlparse,parse_qs
+    href=page.locator("#eg-detail a",has_text="Masks").get_attribute("href")
+    assert urlparse(href).hostname=="accounts.google.com"
+    assert parse_qs(urlparse(href).query)["continue"][0].endswith("/masks.zip")
+    page.select_option("#eg-patient","SIM-037")
+    page.get_by_role("button",name="SIM-037 YOLOViT",exact=True).click(force=True)
+    replay=page.locator("#eg-detail a",has_text="Replay").get_attribute("href")
+    assert "/SIM-037/yolovit_vit/" in parse_qs(urlparse(replay).query)["continue"][0]
+    login=browser.new_page()
+    login.goto(replay,wait_until="domcontentloaded")
+    assert urlparse(login.url).hostname=="accounts.google.com"
+    login.close()
     page.wait_for_function("(stamp)=>document.getElementById('eg-time').textContent!==stamp",arg=first,timeout=20000)
     print(page.text_content("#eg-count"),first,"->",page.text_content("#eg-time"),"300 nodes; private mask link verified")
     page.select_option("#eg-filter","dataset-labeled polyp")
