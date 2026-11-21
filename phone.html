@@ -15,16 +15,21 @@ html.dark{
 body{margin:0;font-family:"Google Sans",Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);padding:18px;max-width:480px;margin:0 auto;transition:background .2s,color .2s}
 .hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
 .brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:16px;letter-spacing:.02em;color:var(--text)}
-.pill{font-size:11.5px;padding:5px 12px;border-radius:100px;background:var(--accent-subtle);border:1px solid var(--line);color:var(--text);display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-weight:500}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+.pill{font-size:11.5px;padding:6px 12px;border-radius:8px;background:var(--accent-subtle);border:1px solid var(--line);color:var(--text);display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-weight:500}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
 h2{margin:0 0 6px;font-size:19px;font-weight:700;letter-spacing:-.01em} p{color:var(--muted);font-size:13px;margin:0 0 14px;line-height:1.45}
-input[type=text]{width:100%;font-family:ui-monospace,SFMono-Regular,monospace;font-size:28px;letter-spacing:.2em;text-align:center;padding:12px;border-radius:14px;border:1.5px solid var(--code-border);background:var(--code-bg);color:var(--code-text)}
-.btn{width:100%;padding:12px;border-radius:100px;border:0;font-weight:600;font-size:14px;cursor:pointer;margin-top:10px;color:var(--btn-text);background:var(--btn-bg);transition:opacity .15s}
+input[type=text]{width:100%;font-family:ui-monospace,SFMono-Regular,monospace;font-size:28px;letter-spacing:.2em;text-align:center;padding:12px;border-radius:12px;border:1.5px solid var(--code-border);background:var(--code-bg);color:var(--code-text)}
+.btn{width:100%;padding:11px;border-radius:8px;border:0;font-weight:600;font-size:13.5px;cursor:pointer;margin-top:10px;color:var(--btn-text);background:var(--btn-bg);transition:opacity .15s}
 .btn:hover{opacity:.9}
 .btn.ok{background:var(--ok);color:#fff} .btn.ghost{background:var(--accent-subtle);border:1px solid var(--line);color:var(--text)}
-select{width:100%;padding:10px 12px;border-radius:10px;background:var(--bg);border:1px solid var(--line);color:var(--text);font-size:13px;font-family:inherit}
-video{width:100%;border-radius:14px;background:#000;margin-top:12px;max-height:280px;border:1px solid var(--line)}
+select{width:100%;padding:10px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--line);color:var(--text);font-size:13px;font-family:inherit}
+video{width:100%;border-radius:12px;background:#000;margin-top:12px;max-height:280px;border:1px solid var(--line)}
 .stat{font-size:12px;color:var(--accent);margin-top:10px;text-align:center;font-weight:500}
+.clinical-footer{padding:14px 10px;border-top:1px solid var(--line);background:var(--panel);display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);flex-wrap:wrap;gap:8px;margin-top:16px;border-radius:12px}
+.footer-link{background:none;border:none;color:var(--accent);font-size:11px;cursor:pointer;padding:0;text-decoration:underline;font-family:inherit}
+.footer-link:hover{color:var(--text)}
+.modalBg{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;place-items:center;padding:16px;z-index:50;backdrop-filter:blur(3px)}
+.footer-modal{max-width:440px;width:100%;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 12px 36px rgba(0,0,0,0.18)}
 </style></head><body>
 <div class="hdr">
   <div class="brand">
@@ -37,7 +42,7 @@ video{width:100%;border-radius:14px;background:#000;margin-top:12px;max-height:2
     </svg>
     <span>CHAKRA Mobile Scope</span>
   </div>
-  <button id="themeToggle" class="pill" onclick="toggleTheme()"><span id="themeIcon">☀️</span> <span id="themeLabel">Light</span></button>
+  <button id="themeToggle" class="pill" onclick="toggleTheme()"><span id="themeIcon" style="display:grid;place-items:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></span> <span id="themeLabel">Light</span></button>
 </div>
 
 <div class="card">
@@ -87,9 +92,15 @@ function toggleTheme(){
 function updateThemeIcon(isDark){
   const el=document.getElementById('themeIcon');
   const lbl=document.getElementById('themeLabel');
-  if(el) el.textContent=isDark?'🌙':'☀️';
+  if(el){
+    el.innerHTML = isDark
+      ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
+      : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+  }
   if(lbl) lbl.textContent=isDark?'Dark':'Light';
 }
+function openModal(id){ const el=document.getElementById(id); if(el) el.style.display='grid'; }
+function closeModal(id){ const el=document.getElementById(id); if(el) el.style.display='none'; }
 initTheme();
 
 let ws=null, timer=null, sourceMode='live', sent=0;
@@ -173,4 +184,48 @@ function beginLoop(){
 }
 loadClips();
 if(codeIn.value.length===6) pair();
-</script></body></html>
+</script>
+
+<footer class="clinical-footer">
+  <div>
+    <span>CHAKRA Mobile Scope · Camera Bridge</span>
+  </div>
+  <div style="display:flex;gap:10px">
+    <button class="footer-link" onclick="openModal('privacyModal')">Privacy Notice</button>
+    <button class="footer-link" onclick="openModal('termsModal')">Terms (Non-SaMD)</button>
+  </div>
+</footer>
+
+<!-- Privacy & DPDP Notice Modal -->
+<div id="privacyModal" class="modalBg">
+  <div class="footer-modal">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;border-bottom:1px solid var(--line);padding-bottom:8px">
+      <h3 style="margin:0;font-size:15px">Privacy & DPDP Notice</h3>
+      <button class="btn ghost" style="width:auto;margin:0;padding:4px 8px" onclick="closeModal('privacyModal')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div style="font-size:12px;color:var(--text);line-height:1.5;display:flex;flex-direction:column;gap:8px">
+      <p style="margin:0"><b>Zero-PHI:</b> Video frames captured via camera are streamed ephemerally over encrypted WebSockets to the active procedure session and are not permanently retained unless flagged by the attending clinician.</p>
+      <p style="margin:0"><b>MeitY Sovereignty:</b> Data processing strictly bounded within Google Cloud asia-south1.</p>
+    </div>
+    <button class="btn" style="margin-top:14px" onclick="closeModal('privacyModal')">Close</button>
+  </div>
+</div>
+
+<!-- Terms of Use Modal -->
+<div id="termsModal" class="modalBg">
+  <div class="footer-modal">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;border-bottom:1px solid var(--line);padding-bottom:8px">
+      <h3 style="margin:0;font-size:15px">Terms of Use (Non-SaMD)</h3>
+      <button class="btn ghost" style="width:auto;margin:0;padding:4px 8px" onclick="closeModal('termsModal')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div style="font-size:12px;color:var(--text);line-height:1.5;display:flex;flex-direction:column;gap:8px">
+      <p style="margin:0"><b>Non-Diagnostic:</b> This software is an investigational prototype for video bridging. It does not provide medical diagnosis or replace standard endoscopy tower video recording.</p>
+    </div>
+    <button class="btn" style="margin-top:14px" onclick="closeModal('termsModal')">Close</button>
+  </div>
+</div>
+</body></html>

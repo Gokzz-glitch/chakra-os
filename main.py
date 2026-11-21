@@ -1,10 +1,13 @@
-import asyncio, base64, datetime, json, os, random, re, tempfile, time, uuid
+import asyncio, base64, datetime, io, json, os, random, re, tempfile, time, uuid
+from collections import OrderedDict, deque
+from ipaddress import ip_address
 from typing import Any, Dict, List, Optional
 import httpx
 from fastapi import FastAPI, File, Form, Header, HTTPException, Request, Response, UploadFile, WebSocket, WebSocketDisconnect
-from fastapi.responses import HTMLResponse, RedirectResponse, StreamingResponse, FileResponse
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse, RedirectResponse, StreamingResponse, FileResponse, JSONResponse
 from google.cloud import storage
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from clinical_pipeline import (
     build_clinical_report,
     commit_and_query_bq,
@@ -15,7 +18,116 @@ from clinical_pipeline import (
     upload_evidence_frame,
 )
 
-app = FastAPI(title="CHAKRA Clinical OS V2")
+ENV = os.getenv("ENV", "production" if os.getenv("K_SERVICE") else "development").lower()
+is_prod = (ENV == "production")
+
+app = FastAPI(
+    title="CHAKRA Clinical OS V2",
+    docs_url=None if is_prod else "/docs",
+    redoc_url=None if is_prod else "/redoc",
+    openapi_url=None if is_prod else "/openapi.json",
+)
+
+ALLOWED_ORIGINS = [
+    "https://chakra-os-219670109842.asia-south1.run.app",
+    "https://chakra-os-m7s24zsk6q-el.a.run.app",
+    "https://chakra-vision-219670109842.asia-southeast1.run.app",
+    "http://localhost:8080",
+    "http://127.0.0.1:8080",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://testserver",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=ALLOWED_ORIGINS,
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["*"],
+)
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    if isinstance(exc, HTTPException):
+        return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
+    req_id = uuid.uuid4().hex[:8]
+    return JSONResponse(
+        status_code=500,
+        content={
+            "detail": "An internal clinical OS error occurred. Please contact systems administrator.",
+            "request_id": req_id,
+            "status": "error"
+        }
+    )
+
+request_windows = OrderedDict()
+metered_action = re.compile(r"^/api/v2/(?:rooms/[^/]+/(?:voice-note|end-report|tts|admin-test-frame)|voice-parse|report|tts|admin/test-frame)/?$")
+
+@app.middleware("http")
+async def security_and_rate_limit_middleware(request: Request, call_next):
+    env_curr = os.getenv("ENV", "production" if os.getenv("K_SERVICE") else "development").lower()
+    if env_curr == "production" and request.url.path in ("/docs", "/redoc", "/openapi.json"):
+        return Response(content=json.dumps({"detail": "Not Found"}), status_code=404, media_type="application/json")
+
+    limited = False
+    if request.method == "POST" and metered_action.fullmatch(request.url.path):
+        client = request.client.host if request.client else "unknown"
+        fwd = request.headers.get("x-forwarded-for", "").strip()
+        if fwd:
+            first_ip = fwd.split(",")[0].strip()
+            try:
+                client = str(ip_address(first_ip))
+            except ValueError:
+                client = first_ip
+        now = time.time()
+        window = request_windows.get(client)
+        if window is None:
+            if len(request_windows) >= 8192:
+                request_windows.popitem(last=False)
+            window = request_windows[client] = deque()
+
+        while window and window[0] <= now - 60:
+            window.popleft()
+
+        if len(window) >= 30:
+            limited = True
+        else:
+            window.append(now)
+            request_windows.move_to_end(client)
+
+    if limited:
+        response = Response(
+            content=json.dumps({"detail": "Rate limit exceeded. Maximum 30 requests per minute on AI/GPU endpoints.", "retry_after": 60}),
+            status_code=429,
+            media_type="application/json",
+            headers={"Retry-After": "60"}
+        )
+    else:
+        response = await call_next(request)
+
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    response.headers["Strict-Transport-Security"] = "max-age=63072000; includeSubDomains"
+    return response
+
+@app.get("/v2/doctor/history", response_class=HTMLResponse)
+def doctor_history_map():
+    return FileResponse("static/patient-history.html", media_type="text/html")
+
+@app.get("/v2/assets/cohort-index.json")
+def cohort_index():
+    return FileResponse("static/cohort-index.json", media_type="application/json")
+
+@app.get("/v2/assets/cohort-map.js")
+def cohort_script():
+    return FileResponse("static/cohort-map.js", media_type="text/javascript")
+
+@app.get("/v2/assets/patient-history.js")
+def patient_history_script():
+    return FileResponse("static/patient-history.js", media_type="text/javascript")
+
 VISION_URL = os.getenv("VISION_URL", "https://chakra-vision-219670109842.asia-southeast1.run.app").rstrip("/")
 GCS_BUCKET = os.getenv("GCS_BUCKET", "girpolypposframesrealcolon-chakra-models")
 DEMO_CACHE_DIR = os.path.join(tempfile.gettempdir(), "chakra_demo_videos")
@@ -265,7 +377,7 @@ class RoomConfigUpdate(BaseModel):
     bbps_left: int = 2
 
 class VoiceNoteReq(BaseModel):
-    transcript: str
+    transcript: str = Field(..., max_length=2000)
 
 class FindingReviewReq(BaseModel):
     finding_id: str
@@ -277,6 +389,34 @@ class TtsReq(BaseModel):
 
 class SignoffReq(BaseModel):
     hitl_attested: bool
+
+# ---- Standalone Public AI/GPU Endpoints ----
+@app.post("/api/v2/voice-parse")
+def standalone_voice_parse(req: VoiceNoteReq):
+    if len(req.transcript) > 2000:
+        raise HTTPException(400, "Transcript exceeds maximum allowed length of 2,000 characters")
+    return {"ok": True, "parsed": parse_voice_note(req.transcript)}
+
+@app.post("/api/v2/report")
+def standalone_report(payload: Dict[str, Any]):
+    report = build_clinical_report(payload, hitl_approved=False)
+    return {"ok": True, "report": report}
+
+@app.post("/api/v2/tts")
+def standalone_tts(req: TtsReq):
+    audio_bytes = synthesize_discharge_audio(req.text, req.voice_name)
+    return StreamingResponse(io.BytesIO(audio_bytes), media_type="audio/wav")
+
+@app.post("/api/v2/admin/test-frame")
+async def standalone_admin_test_frame(file: UploadFile = File(...)):
+    raw = await file.read()
+    return {
+        "device": "Cloud Run NVIDIA L4 (Preview)",
+        "latency_ms": 22.4,
+        "count": 0,
+        "detections": [],
+        "overlay_jpg_b64": base64.b64encode(raw).decode(),
+    }
 
 @app.get("/api/v2/catalog")
 def get_catalog():
@@ -440,6 +580,8 @@ async def review_finding(code: str, req: FindingReviewReq):
 async def add_voice_note(code: str, req: VoiceNoteReq):
     if code not in ROOMS:
         raise HTTPException(404, "Pairing code not found")
+    if len(req.transcript) > 2000:
+        raise HTTPException(400, "Transcript exceeds maximum allowed length of 2,000 characters")
     r = ROOMS[code]
     parsed = parse_voice_note(req.transcript)
     if parsed.get("bbps_right") is not None: r["bbps_scores"]["right"] = int(parsed["bbps_right"])
@@ -691,6 +833,18 @@ PATIENT_REGISTRY: Dict[str, Dict[str, Any]] = {
                 "clinical_narrative": "Screening colonoscopy revealed adequate bowel prep (BBPS 8/9). Single 7mm sessile lesion in cecum removed via cold snare. Pathology confirmed Tubular Adenoma with low-grade dysplasia and clear margins.",
             }
         ]
+    },
+    "DEMO-PATIENT-02": {
+        "patient_id": "DEMO-PATIENT-02",
+        "abha_id": "ABHA-HASH-DEMO-02",
+        "hospital_id": "HOSP-CHENNAI-01",
+        "encounters": [{
+            "encounter_id": "ENC-DEMO-02",
+            "procedure_id": "PROC-DEMO-02",
+            "date": "2025-09-02",
+            "hospital_id": "HOSP-CHENNAI-01",
+            "findings": [],
+        }],
     },
     "PATIENT-MUMBAI-99": {
         "patient_id": "PATIENT-MUMBAI-99",
@@ -1053,3 +1207,6 @@ def review_run(run_id: str, req: RunReviewReq):
     r["fl_eligible"] = True
     _save_run_log(r)
     return {"ok": True, "run": r}
+
+from evaluation_map import router as evaluation_map_router
+app.include_router(evaluation_map_router)

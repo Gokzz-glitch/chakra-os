@@ -17,31 +17,31 @@ body{margin:0;font-family:"Google Sans",Inter,system-ui,-apple-system,sans-serif
 .side{width:240px;background:var(--side-bg);border-right:1px solid var(--line);padding:20px 16px;display:flex;flex-direction:column;gap:6px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:.03em;padding:4px 8px 20px;color:var(--text)}
 .logo-icon{color:var(--accent);display:grid;place-items:center}
-.nav{padding:11px 14px;border-radius:100px;color:var(--muted);cursor:pointer;font-size:13.5px;font-weight:500;border:1px solid transparent;text-align:left;background:none;transition:all .15s}
+.nav{padding:10px 14px;border-radius:8px;color:var(--muted);cursor:pointer;font-size:13.5px;font-weight:500;border:1px solid transparent;text-align:left;background:none;transition:all .15s}
 .nav:hover{background:var(--accent-subtle);color:var(--text)}
 .nav.active{background:var(--accent-subtle);color:var(--accent);font-weight:600}
 .main{flex:1;display:flex;flex-direction:column;min-width:0}
 .top{height:62px;border-bottom:1px solid var(--line);padding:0 26px;display:flex;align-items:center;justify-content:space-between;background:var(--top-bg)}
-.pill{font-size:12px;padding:6px 14px;border-radius:100px;background:var(--accent-subtle);border:1px solid var(--line);color:var(--text);display:inline-flex;align-items:center;gap:7px;font-weight:500}
+.pill{font-size:12px;padding:6px 14px;border-radius:8px;background:var(--accent-subtle);border:1px solid var(--line);color:var(--text);display:inline-flex;align-items:center;gap:7px;font-weight:500}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--warn)} .dot.ok{background:var(--ok)}
 .content{padding:26px;max-width:1300px;width:100%}
 .grid3{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:18px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all .2s}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,0.04);transition:all .2s}
 h2{margin:0 0 6px;font-size:21px;font-weight:700;letter-spacing:-.01em}
 h3{margin:0 0 14px;font-size:15px;color:var(--text);font-weight:600}
 .sub{color:var(--muted);font-size:13px;margin:0 0 20px;line-height:1.45}
 label{display:block;font-size:12px;font-weight:500;color:var(--muted);margin:10px 0 5px}
-input,select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);font-size:13px;font-family:inherit}
-.btn{background:var(--btn-bg);color:var(--btn-text);border:0;padding:11px 16px;border-radius:100px;font-weight:600;font-size:13px;cursor:pointer;transition:opacity .15s}
+input,select{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--text);font-size:13px;font-family:inherit}
+.btn{background:var(--btn-bg);color:var(--btn-text);border:0;padding:10px 16px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;transition:opacity .15s}
 .btn:hover{opacity:.9}
 .btn.ghost{background:var(--accent-subtle);color:var(--text);border:1px solid var(--line)}
 .btn.ok{background:var(--ok);color:#fff}
-.codebox{font-family:ui-monospace,SFMono-Regular,monospace;font-size:30px;font-weight:800;letter-spacing:.18em;text-align:center;padding:14px;background:var(--code-bg);border:1.5px dashed var(--code-border);border-radius:14px;color:var(--code-text)}
+.codebox{font-family:ui-monospace,SFMono-Regular,monospace;font-size:30px;font-weight:800;letter-spacing:.18em;text-align:center;padding:14px;background:var(--code-bg);border:1.5px dashed var(--code-border);border-radius:12px;color:var(--code-text)}
 .row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
 .row:last-child{border:0}
 .hide{display:none}
-.barwrap{background:var(--bg);border-radius:100px;height:9px;overflow:hidden;margin-top:5px;border:1px solid var(--line)}
+.barwrap{background:var(--bg);border-radius:6px;height:9px;overflow:hidden;margin-top:5px;border:1px solid var(--line)}
 .bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--ok))}
 img.preview{width:100%;border-radius:12px;border:1px solid var(--line);margin-top:12px;background:#000}
 .modalBg{position:fixed;inset:0;background:rgba(0,0,0,0.55);place-items:center;padding:20px;z-index:100;backdrop-filter:blur(2px)}
@@ -49,7 +49,7 @@ table.chakra-table{width:100%;border-collapse:collapse;font-size:12.5px;text-ali
 table.chakra-table th{background:var(--panel-elevated);color:var(--muted);padding:11px 14px;border-bottom:1px solid var(--line);font-weight:600;letter-spacing:.02em}
 table.chakra-table td{padding:10px 14px;border-bottom:1px solid var(--line);color:var(--text);vertical-align:middle}
 table.chakra-table tr:hover td{background:var(--accent-subtle)}
-.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:100px;font-size:11px;font-weight:600}
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:600}
 .badge-ok{background:#d1fae5;color:#065f46}
 .badge-warn{background:#fef3c7;color:#92400e}
 .badge-danger{background:#fee2e2;color:#991b1b}
@@ -57,6 +57,13 @@ table.chakra-table tr:hover td{background:var(--accent-subtle)}
 html.dark .badge-ok{background:#064e3b;color:#a7f3d0}
 html.dark .badge-warn{background:#78350f;color:#fde68a}
 html.dark .badge-danger{background:#7f1d1d;color:#fecaca}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+.skeleton{background:linear-gradient(90deg,var(--panel-elevated) 25%,var(--line) 50%,var(--panel-elevated) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px}
+.skeleton-card{height:110px;width:100%;margin-bottom:12px}
+.clinical-footer{margin-top:auto;padding:14px 26px;border-top:1px solid var(--line);background:var(--top-bg);display:flex;justify-content:space-between;align-items:center;font-size:11.5px;color:var(--muted);flex-wrap:wrap;gap:10px}
+.footer-link{background:none;border:none;color:var(--accent);font-size:11.5px;cursor:pointer;padding:0;text-decoration:underline;font-family:inherit}
+.footer-link:hover{color:var(--text)}
+.footer-modal{max-width:540px;width:100%;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 12px 36px rgba(0,0,0,0.18)}
 </style></head><body>
 <aside class="side">
   <div class="brand">
@@ -79,6 +86,7 @@ html.dark .badge-danger{background:#7f1d1d;color:#fecaca}
   <button class="nav" onclick="tab('history',this)">5. Patient History & Reconciliation</button>
   <button class="nav" onclick="tab('runs',this)">6. Runs (Job History)</button>
   <button class="nav" onclick="tab('review',this)">7. Review & FL Curation</button>
+  <button class="nav" id="galaxyNav" onclick="tab('galaxy',this)">Patient results map</button>
   <div style="margin-top:auto;padding-top:16px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px">
     <a id="docLink" href="/v2/doctor" target="_blank" class="btn ok" style="text-align:center;text-decoration:none">Open Doctor HUD ↗</a>
     <a id="phoneLink" href="/v2/phone" target="_blank" class="btn ghost" style="text-align:center;text-decoration:none">Open Phone Streamer ↗</a>
@@ -89,12 +97,31 @@ html.dark .badge-danger{background:#7f1d1d;color:#fecaca}
   <header class="top">
     <div style="font-size:13px;color:var(--muted)">GCP Project: <b style="color:var(--text)">girpolypposframesrealcolon</b> · <b style="color:var(--text)">asia-south1 / asia-southeast1 L4</b></div>
     <div style="display:flex;gap:10px;align-items:center">
-      <button id="themeToggle" class="pill" style="cursor:pointer" onclick="toggleTheme()"><span id="themeIcon">☀️</span> <span id="themeLabel">Light Mode</span></button>
+      <button id="themeToggle" class="pill" style="cursor:pointer" onclick="toggleTheme()"><span id="themeIcon" style="display:grid;place-items:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></span> <span id="themeLabel">Light Mode</span></button>
       <span class="pill"><span id="gpuDot" class="dot"></span><span id="gpuTxt">Waking Cloud Run L4...</span></span>
       <span class="pill"><span id="phoneDot" class="dot"></span><span id="phoneTxt">Phone: Waiting</span></span>
     </div>
   </header>
   <div class="content">
+    <section id="tab-galaxy" class="hide">
+<style>
+#tab-galaxy .eg-head,#tab-galaxy .eg-tools{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+#tab-galaxy .eg-head{justify-content:space-between}#eg-count{font-weight:700}#eg-time{color:var(--muted)}
+.eg-tools select{width:auto}.eg-tools label{display:inline-flex;align-items:center;gap:6px}.eg-tools input{width:auto}
+.eg-board{display:grid;grid-template-columns:minmax(0,3fr) minmax(190px,1fr);margin-top:12px;background:#111622;color:#e9edf6;border-radius:14px;overflow:hidden}
+#eg-graph{width:100%;min-height:320px;background:radial-gradient(ellipse at center,#172336,#0c111c)}
+#eg-graph [role=button]{cursor:pointer}#eg-graph [role=button]:focus{outline:2px solid white}
+#eg-detail{padding:14px;max-height:450px;overflow:auto}#eg-detail h3{color:#fff}.eg-run{border-top:1px solid #35445b;padding:10px 0}.eg-run p{margin:4px 0}.eg-run a{color:#9bd8ff;margin-right:8px}
+@media(max-width:850px){.eg-board{grid-template-columns:1fr}#eg-detail{max-height:none}}
+</style>
+<div class="eg-head"><h2>Patient results map</h2><b id="eg-count">Loading results…</b><small id="eg-time" role="status"></small></div>
+<div class="eg-tools">
+<label>Layout <select id="eg-layout"><option value="cluster">By cluster</option><option value="galaxy">Galaxy</option></select></label>
+<label>Cohort <select id="eg-filter"><option value="">All patients</option><option value="dataset-labeled polyp">Labeled polyp</option><option value="dataset-labeled no polyp">Labeled no polyp</option><option value="other lower-GI annotation">Other lower-GI</option></select></label>
+<label>Patient <select id="eg-patient"></select></label><label><input id="eg-flags" type="checkbox"> Model flagged</label>
+</div><p>Large nodes are fictional patients. Each satellite is one model run. Green means a saved result is available.</p>
+<div class="eg-board"><svg id="eg-graph" viewBox="0 0 990 460" role="group" aria-label="Interactive patient and model run graph"></svg><div id="eg-detail"></div></div>
+</section>
     <section id="tab-setup">
       <h2>Clinical Session Setup & Mobile Pairing</h2>
       <p class="sub">Configure model, threshold, and L4 compute. Scan the QR code or enter the 6-digit code on the phone capture page. Overlays activate only when the doctor clicks Start.</p>
@@ -107,7 +134,7 @@ html.dark .badge-danger{background:#7f1d1d;color:#fecaca}
           </div>
           <div style="display:flex;gap:6px;margin-bottom:14px">
             <button class="btn" style="flex:1" onclick="mintRoom()">New 6-Digit Code</button>
-            <button class="btn ghost" style="width:auto" onclick="openQrModal()">📱 Show QR</button>
+            <button class="btn ghost" style="width:auto;display:inline-flex;align-items:center;gap:5px" onclick="openQrModal()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>Show QR</button>
             <button class="btn ghost" style="width:auto" onclick="copyCode()">Copy</button>
           </div>
           <div class="row"><span>Procedure ID</span><b id="procId">--</b></div>
@@ -217,14 +244,14 @@ html.dark .badge-danger{background:#7f1d1d;color:#fecaca}
           <p class="sub" style="margin-bottom:12px">Searchable ledger of all CADe/CADx inference executions, benchmark video evaluations, and live Doctor procedures.</p>
         </div>
         <div style="display:flex;gap:8px">
-          <button class="btn ghost" style="width:auto;padding:8px 14px" onclick="loadRuns()">↻ Refresh Runs</button>
+          <button class="btn ghost" style="width:auto;padding:8px 14px" onclick="loadRuns()">Refresh Runs</button>
           <button class="btn ok" style="width:auto;padding:8px 14px" onclick="switchToReviewTab()">Open Review & Curation ↗</button>
         </div>
       </div>
 
       <div class="card" style="margin-bottom:16px;padding:14px 18px">
         <div style="display:flex;gap:12px;align-items:center">
-          <input id="runSearchInput" placeholder="🔍 Search runs by ID, input clip, model, worker, or status..." style="flex:1" oninput="filterRunsTable()">
+          <input id="runSearchInput" placeholder="Search runs by ID, input clip, model, worker, or status..." style="flex:1" oninput="filterRunsTable()">
           <select id="runStatusFilter" style="width:180px" onchange="filterRunsTable()">
             <option value="all">All Review Statuses</option>
             <option value="accepted">Accepted (FL-Eligible)</option>
@@ -265,14 +292,17 @@ html.dark .badge-danger{background:#7f1d1d;color:#fecaca}
           <h2>7. Clinician Review & Federated Learning Curation</h2>
           <p class="sub" style="margin-bottom:12px">Adjudicate automated AI polyp detections. Clinician-accepted runs are marked FL-eligible and exported into zero-PHI training manifests for distributed hospital model rounds.</p>
         </div>
-        <button class="btn ok" style="width:auto;padding:8px 16px" onclick="exportFlManifest()">📥 Export FL Dataset Manifest (.jsonl)</button>
+        <button class="btn ok" style="width:auto;padding:8px 16px;display:inline-flex;align-items:center;gap:6px" onclick="exportFlManifest()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Export FL Dataset Manifest (.jsonl)</span>
+        </button>
       </div>
 
       <div class="card" style="margin-bottom:16px;padding:14px 18px">
         <div style="display:flex;gap:12px;align-items:center">
           <label style="margin:0;font-weight:600;white-space:nowrap">Select Backend Run:</label>
           <select id="reviewRunSel" style="flex:1" onchange="onReviewRunSelect()"></select>
-          <button class="btn ghost" style="width:auto;padding:8px 14px" onclick="loadReviewTab()">↻ Refresh</button>
+          <button class="btn ghost" style="width:auto;padding:8px 14px" onclick="loadReviewTab()">Refresh</button>
         </div>
       </div>
 
@@ -329,8 +359,8 @@ html.dark .badge-danger{background:#7f1d1d;color:#fecaca}
             <textarea id="reviewReason" rows="3" style="width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);font-size:13px;font-family:inherit;resize:vertical" placeholder="Enter clinical rationale (e.g. 'True positive Paris 0-Is mucosal elevation verified in cecum; high quality candidate for FL round')..."></textarea>
             
             <div style="display:flex;gap:10px;margin-top:12px">
-              <button class="btn ok" style="flex:1" onclick="submitRunReview('accepted')">✓ Accept Run (FL-Eligible)</button>
-              <button class="btn" style="flex:1;background:#dc2626;color:#fff" onclick="submitRunReview('dismissed')">✕ Dismiss Run</button>
+              <button class="btn ok" style="flex:1" onclick="submitRunReview('accepted')">Accept Run (FL-Eligible)</button>
+              <button class="btn" style="flex:1;background:#dc2626;color:#fff" onclick="submitRunReview('dismissed')">Dismiss Run</button>
             </div>
             <div id="reviewFeedback" style="margin-top:10px;font-size:12.5px;font-weight:500"></div>
           </div>
@@ -338,23 +368,80 @@ html.dark .badge-danger{background:#7f1d1d;color:#fecaca}
       </div>
     </section>
   </div>
+
+  <footer class="clinical-footer">
+    <div>
+      <span>CHAKRA AI Clinical OS (V2) · Non-SaMD Clinical Documentation & Adjunctive CADe Prototype</span>
+      · <span>CDSCO Class B Positioning</span>
+    </div>
+    <div style="display:flex;gap:14px">
+      <button class="footer-link" onclick="openModal('privacyModal')">Privacy & DPDP Notice</button>
+      <button class="footer-link" onclick="openModal('termsModal')">Terms of Use (Non-SaMD Prototype)</button>
+    </div>
+  </footer>
 </div>
 
 <!-- Mobile Pairing QR Code Pop-Up Modal -->
 <div id="qrModal" class="modalBg" style="display:none">
-  <div class="card" style="max-width:380px;width:100%;text-align:center;padding:24px;border-radius:24px">
+  <div class="card" style="max-width:380px;width:100%;text-align:center;padding:24px;border-radius:18px">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-      <h3 style="margin:0;font-size:17px">📱 Scan with Mobile Scope</h3>
-      <button class="btn ghost" style="width:auto;padding:4px 10px" onclick="closeQrModal()">✕</button>
+      <h3 style="margin:0;font-size:16px;display:flex;align-items:center;gap:8px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        <span>Scan with Mobile Scope</span>
+      </h3>
+      <button class="btn ghost" style="width:auto;padding:4px 8px" onclick="closeQrModal()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
     <p style="font-size:12.5px;color:var(--muted);margin:0 0 16px">Open your phone camera to pair live scope stream instantly with Room <b id="qrRoomCode" style="color:var(--accent)">------</b></p>
-    <div id="qrModalBox" style="background:#fff;padding:14px;border-radius:16px;display:inline-block;border:1px solid var(--line)"></div>
+    <div id="qrModalBox" style="background:#fff;padding:14px;border-radius:14px;display:inline-block;border:1px solid var(--line)"></div>
     <div id="qrUrlLabel" style="font-family:monospace;font-size:11px;color:var(--muted);margin-top:14px;word-break:break-all"></div>
+  </div>
+</div>
+
+<!-- Privacy & DPDP Notice Modal -->
+<div id="privacyModal" class="modalBg" style="display:none">
+  <div class="footer-modal">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;border-bottom:1px solid var(--line);padding-bottom:10px">
+      <h3 style="margin:0;font-size:16px">CHAKRA Privacy & DPDP Act 2023 Notice</h3>
+      <button class="btn ghost" style="width:auto;padding:4px 8px" onclick="closeModal('privacyModal')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div style="font-size:12.5px;color:var(--text);line-height:1.55;display:flex;flex-direction:column;gap:10px">
+      <p style="margin:0"><b>1. Zero-PHI Architecture:</b> Patient identifiable data (Aadhaar 12-digit numbers, 10-digit mobile numbers, explicit names, and UHID identifiers) are irreversibly scrubbed client-side and at API ingestion prior to Gemini processing or BigQuery analytics insertion.</p>
+      <p style="margin:0"><b>2. MeitY Sovereign Hosting:</b> All longitudinal procedure records, clinical narratives, and ABDM FHIR R4 DiagnosticReportRecord bundles reside exclusively within the Google Cloud asia-south1 (Mumbai) boundary.</p>
+      <p style="margin:0"><b>3. Tenant Isolation:</b> Inter-hospital access is strictly blocked at the API gateway via cryptographic X-Hospital-ID verification, preventing cross-tenant information disclosure.</p>
+      <p style="margin:0"><b>4. Federated Learning Curation:</b> Exported FL manifests (.jsonl) strip all institutional and clinician identifiable signatures, publishing purely zero-PHI weight telemetry.</p>
+    </div>
+    <button class="btn" style="width:100%;margin-top:16px" onclick="closeModal('privacyModal')">Acknowledge & Close</button>
+  </div>
+</div>
+
+<!-- Terms of Use Modal -->
+<div id="termsModal" class="modalBg" style="display:none">
+  <div class="footer-modal">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;border-bottom:1px solid var(--line);padding-bottom:10px">
+      <h3 style="margin:0;font-size:16px">Terms of Use — Non-SaMD Research Prototype</h3>
+      <button class="btn ghost" style="width:auto;padding:4px 8px" onclick="closeModal('termsModal')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div style="font-size:12.5px;color:var(--text);line-height:1.55;display:flex;flex-direction:column;gap:10px">
+      <p style="margin:0"><b>1. CDSCO Class B Scope:</b> CHAKRA V2 is an investigational software prototype designed for clinical research and workflow augmentation. It does not replace clinician judgment.</p>
+      <p style="margin:0"><b>2. Non-Diagnostic CADe Positioning:</b> Real-time bounding box annotations generated by NVIDIA L4 workers represent visual prompts only. The system does not assert definitive histological diagnosis or optical biopsy classification.</p>
+      <p style="margin:0"><b>3. Histopathology Mandate:</b> All polyp detections remain provisionally labeled as PENDING_HISTOPATHOLOGY until formalin-fixed specimen evaluation is completed and signed off.</p>
+      <p style="margin:0"><b>4. Attested Sign-Off:</b> The attending gastroenterologist maintains sole legal and clinical accountability for all recorded Boston Bowel Prep Scale (BBPS) scores and surveillance intervals.</p>
+    </div>
+    <button class="btn" style="width:100%;margin-top:16px" onclick="closeModal('termsModal')">Acknowledge & Close</button>
   </div>
 </div>
 
 <script>
 let roomCode=null, ws=null;
+
+function openModal(id){ const el=document.getElementById(id); if(el) el.style.display='flex'; }
+function closeModal(id){ const el=document.getElementById(id); if(el) el.style.display='none'; }
 
 function initTheme(){
   const saved=localStorage.getItem('chakra_theme')||'light';
@@ -369,7 +456,11 @@ function toggleTheme(){
 function updateThemeIcon(isDark){
   const el=document.getElementById('themeIcon');
   const lbl=document.getElementById('themeLabel');
-  if(el) el.textContent=isDark?'🌙':'☀️';
+  if(el){
+    el.innerHTML = isDark
+      ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
+      : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+  }
   if(lbl) lbl.textContent=isDark?'Dark Mode':'Light Mode';
 }
 initTheme();
@@ -387,19 +478,21 @@ function tab(id,el){
 async function loadPatientHistory(pId){
   histSecurityMsg.textContent = 'Loading patient history...';
   histSecurityMsg.style.color = 'var(--accent)';
+  histContent.classList.remove('hide');
+  encountersList.innerHTML = '<div class="card skeleton skeleton-card"></div><div class="card skeleton skeleton-card"></div>';
   try {
     const res = await fetch(`/api/v2/patients/${pId}/history`, {
       headers: { 'X-Hospital-ID': 'HOSP-CHENNAI-01' }
     });
     if(!res.ok){
       const err = await res.json();
-      histSecurityMsg.textContent = `❌ ${err.detail}`;
+      histSecurityMsg.textContent = `Error: ${err.detail}`;
       histSecurityMsg.style.color = '#dc2626';
       histContent.classList.add('hide');
       return;
     }
     const data = await res.json();
-    histSecurityMsg.textContent = `✓ Successfully verified patient records within tenant boundary (${data.hospital_id})`;
+    histSecurityMsg.textContent = `Verified: Patient records secured within tenant boundary (${data.hospital_id})`;
     histSecurityMsg.style.color = 'var(--ok)';
     histContent.classList.remove('hide');
     histPatId.textContent = data.patient_id;
@@ -464,7 +557,7 @@ async function simulatePathologyArrival(){
     });
     const d = await res.json();
     if(res.ok){
-      pathReconcileResult.innerHTML = `<span style="color:var(--ok)">✓ Reconciled finding ${fId} with signed pathology! Preserved earlier decision: <b>${d.earlier_decision_preserved}</b>. Surveillance updated to: <b>${d.finding.surveillance_recommendation}</b></span>`;
+      pathReconcileResult.innerHTML = `<span style="color:var(--ok)">Reconciled finding ${fId} with signed pathology. Preserved earlier decision: <b>${d.earlier_decision_preserved}</b>. Surveillance updated to: <b>${d.finding.surveillance_recommendation}</b></span>`;
       await loadPatientHistory('DEMO-PATIENT-01');
     } else {
       pathReconcileResult.innerHTML = `<span style="color:#dc2626">Error: ${d.detail}</span>`;
@@ -558,6 +651,7 @@ async function runAdminTest(){
   loadRuns();
 }
 async function loadAnalytics(){
+  bqWrap.innerHTML='<div class="card skeleton skeleton-card"></div><div class="card skeleton skeleton-card"></div>';
   const d=await (await fetch('/api/v2/analytics')).json();
   if(!d.metrics||!d.metrics.length){ bqWrap.innerHTML='<div class="card">No signed-off procedures in BigQuery yet. Complete a Doctor HUD sign-off to populate live metrics.</div>'; return; }
   bqWrap.innerHTML=d.metrics.map(r=>`<div class="card"><h3>${r.endoscopist_id}</h3>
@@ -641,8 +735,8 @@ function renderRunsTable(runs){
 
   runsTableBody.innerHTML=runs.map(r=>{
     let stBadge='<span class="badge badge-warn">Pending</span>';
-    if(r.review_status==='accepted') stBadge='<span class="badge badge-ok">✓ Accepted (FL)</span>';
-    else if(r.review_status==='dismissed') stBadge='<span class="badge badge-danger">✕ Dismissed</span>';
+    if(r.review_status==='accepted') stBadge='<span class="badge badge-ok">Accepted (FL)</span>';
+    else if(r.review_status==='dismissed') stBadge='<span class="badge badge-danger">Dismissed</span>';
 
     const ts=r.timestamp?(new Date(r.timestamp).toLocaleString()):'--';
     const clip=r.input_clip||'Live Feed';
@@ -722,11 +816,11 @@ function displayRunInReview(runId){
 
   if(document.getElementById('sumFlStatus')){
     if(run.fl_eligible||run.review_status==='accepted'){
-      sumFlStatus.innerHTML='<span class="badge badge-ok">✓ FL-ELIGIBLE</span>';
+      sumFlStatus.innerHTML='<span class="badge badge-ok">FL-ELIGIBLE</span>';
     }else if(run.review_status==='dismissed'){
-      sumFlStatus.innerHTML='<span class="badge badge-danger">✕ DISMISSED</span>';
+      sumFlStatus.innerHTML='<span class="badge badge-danger">DISMISSED</span>';
     }else{
-      sumFlStatus.innerHTML='<span class="badge badge-warn">⏳ AWAITING CLINICIAN REVIEW</span>';
+      sumFlStatus.innerHTML='<span class="badge badge-warn">AWAITING REVIEW</span>';
     }
   }
 
@@ -812,7 +906,7 @@ async function submitRunReview(decision){
     });
     const d=await res.json();
     if(res.ok){
-      reviewFeedback.innerHTML=`<span style="color:var(--ok)">✓ Run ${selectedRunId} successfully recorded as <b>${decision.toUpperCase()}</b> (FL-eligible: true)!</span>`;
+      reviewFeedback.innerHTML=`<span style="color:var(--ok)">Run ${selectedRunId} successfully recorded as <b>${decision.toUpperCase()}</b> (FL-eligible: true).</span>`;
       await loadReviewTab();
       await loadRuns();
     }else{
@@ -842,4 +936,4 @@ async function exportFlManifest(){
 }
 
 warmup(); loadCatalog(); loadClips(); mintRoom(); loadRuns();
-</script></body></html>
+</script><footer style="padding:16px;text-align:center"><details><summary>Privacy &amp; DPDP Notice</summary><p>This buildathon demo uses synthetic records. Use demo media only. Review actions can be stored in Google Cloud.</p></details><details><summary>Terms of Use (Non-SaMD Prototype)</summary><p>Research demonstration only. Clinical decisions require an independent clinician assessment.</p></details></footer><script src="/v2/assets/evaluation-galaxy.js"></script><script>if(!location.hash || location.hash==="#results") tab("galaxy",document.getElementById("galaxyNav"));</script></body></html>

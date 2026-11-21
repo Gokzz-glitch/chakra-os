@@ -1,0 +1,7 @@
+steps:
+- name: gcr.io/cloud-builders/docker
+  args: ['build', '-t', 'asia-southeast1-docker.pkg.dev/girpolypposframesrealcolon/cloud-run-source-deploy/chakra-evaluation:mixed-v1', '.']
+images:
+- asia-southeast1-docker.pkg.dev/girpolypposframesrealcolon/cloud-run-source-deploy/chakra-evaluation:mixed-v1
+options:
+  logging: CLOUD_LOGGING_ONLY

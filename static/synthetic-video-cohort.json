@@ -1,0 +1,422 @@
+[
+  {
+    "patient_id": "SIM-001",
+    "video": "9e3f0999-0279-44c2-ad4a-e3940df9991c.avi",
+    "procedure_id": "SIM-VISIT-001",
+    "source": "HyperKvasir",
+    "bytes": 2839552
+  },
+  {
+    "patient_id": "SIM-002",
+    "video": "44c8c58b-e226-4f10-adf4-b8f91b71c476.avi",
+    "procedure_id": "SIM-VISIT-002",
+    "source": "HyperKvasir",
+    "bytes": 2856448
+  },
+  {
+    "patient_id": "SIM-003",
+    "video": "a0c1ba13-04d5-4f64-86ba-b21c5cfe5bbb.avi",
+    "procedure_id": "SIM-VISIT-003",
+    "source": "HyperKvasir",
+    "bytes": 2856448
+  },
+  {
+    "patient_id": "SIM-004",
+    "video": "16e7e461-a9a7-4b04-8d2c-155de3eb1c90.avi",
+    "procedure_id": "SIM-VISIT-004",
+    "source": "HyperKvasir",
+    "bytes": 4644864
+  },
+  {
+    "patient_id": "SIM-005",
+    "video": "29ce8d04-c184-42fa-ac05-322d3a2d37bd.avi",
+    "procedure_id": "SIM-VISIT-005",
+    "source": "HyperKvasir",
+    "bytes": 5704704
+  },
+  {
+    "patient_id": "SIM-006",
+    "video": "7d8e1601-a407-426f-aded-8ed1d60dac8e.avi",
+    "procedure_id": "SIM-VISIT-006",
+    "source": "HyperKvasir",
+    "bytes": 7638016
+  },
+  {
+    "patient_id": "SIM-007",
+    "video": "18399b93-7750-41ca-ad6d-5712d996f039.avi",
+    "procedure_id": "SIM-VISIT-007",
+    "source": "HyperKvasir",
+    "bytes": 9129472
+  },
+  {
+    "patient_id": "SIM-008",
+    "video": "fe683132-a4c7-4254-93ff-6fe44524cf53.avi",
+    "procedure_id": "SIM-VISIT-008",
+    "source": "HyperKvasir",
+    "bytes": 10395136
+  },
+  {
+    "patient_id": "SIM-009",
+    "video": "c0c92730-bf69-4ee1-a625-f5a31c153034.avi",
+    "procedure_id": "SIM-VISIT-009",
+    "source": "HyperKvasir",
+    "bytes": 11577856
+  },
+  {
+    "patient_id": "SIM-010",
+    "video": "beb5da9c-d536-4f00-992b-fd45e6df66bd.avi",
+    "procedure_id": "SIM-VISIT-010",
+    "source": "HyperKvasir",
+    "bytes": 11650048
+  },
+  {
+    "patient_id": "SIM-011",
+    "video": "73bad003-9b4b-43b7-a8bf-04b6a66ecb1e.avi",
+    "procedure_id": "SIM-VISIT-011",
+    "source": "HyperKvasir",
+    "bytes": 11890688
+  },
+  {
+    "patient_id": "SIM-012",
+    "video": "20be5f51-60c9-4d65-bc4a-1fbd3197c0ef.avi",
+    "procedure_id": "SIM-VISIT-012",
+    "source": "HyperKvasir",
+    "bytes": 13076480
+  },
+  {
+    "patient_id": "SIM-013",
+    "video": "b0ec04ba-7538-4cf1-a75b-9e70e2f866e4.avi",
+    "procedure_id": "SIM-VISIT-013",
+    "source": "HyperKvasir",
+    "bytes": 14410240
+  },
+  {
+    "patient_id": "SIM-014",
+    "video": "f7329df7-81e1-4e06-aa74-fdabc2ebd00b.avi",
+    "procedure_id": "SIM-VISIT-014",
+    "source": "HyperKvasir",
+    "bytes": 15787008
+  },
+  {
+    "patient_id": "SIM-015",
+    "video": "5b2f37fb-8365-4b75-85c1-731e5ce120e6.avi",
+    "procedure_id": "SIM-VISIT-015",
+    "source": "HyperKvasir",
+    "bytes": 16057344
+  },
+  {
+    "patient_id": "SIM-016",
+    "video": "aaba39c3-8037-4178-82c8-b89a657f981c.avi",
+    "procedure_id": "SIM-VISIT-016",
+    "source": "HyperKvasir",
+    "bytes": 16844800
+  },
+  {
+    "patient_id": "SIM-017",
+    "video": "b8262217-516d-4590-a55a-88e53ee65345.avi",
+    "procedure_id": "SIM-VISIT-017",
+    "source": "HyperKvasir",
+    "bytes": 16941568
+  },
+  {
+    "patient_id": "SIM-018",
+    "video": "d6d48664-0d4f-48a1-a88f-c58e167f5212.avi",
+    "procedure_id": "SIM-VISIT-018",
+    "source": "HyperKvasir",
+    "bytes": 18874368
+  },
+  {
+    "patient_id": "SIM-019",
+    "video": "e2089c8c-effc-4406-a8a0-0d6ae6da9b9b.avi",
+    "procedure_id": "SIM-VISIT-019",
+    "source": "HyperKvasir",
+    "bytes": 18874368
+  },
+  {
+    "patient_id": "SIM-020",
+    "video": "a5b1fd4d-b6bd-40d6-9b9a-f22d36b0b113.avi",
+    "procedure_id": "SIM-VISIT-020",
+    "source": "HyperKvasir",
+    "bytes": 19525120
+  },
+  {
+    "patient_id": "SIM-021",
+    "video": "5af764dc-dee3-43f3-9e26-46291d1074a1.avi",
+    "procedure_id": "SIM-VISIT-021",
+    "source": "HyperKvasir",
+    "bytes": 19955712
+  },
+  {
+    "patient_id": "SIM-022",
+    "video": "344e28c1-90cc-4f7f-afa9-165e1688840f.avi",
+    "procedure_id": "SIM-VISIT-022",
+    "source": "HyperKvasir",
+    "bytes": 20162560
+  },
+  {
+    "patient_id": "SIM-023",
+    "video": "4c0cae22-4945-4f17-a60b-23688b485d91.avi",
+    "procedure_id": "SIM-VISIT-023",
+    "source": "HyperKvasir",
+    "bytes": 20971520
+  },
+  {
+    "patient_id": "SIM-024",
+    "video": "da5d2629-3a74-4ec0-9ace-57dbc6ebddad.avi",
+    "procedure_id": "SIM-VISIT-024",
+    "source": "HyperKvasir",
+    "bytes": 21263360
+  },
+  {
+    "patient_id": "SIM-025",
+    "video": "9bdfbfa0-7497-40cb-8a71-d4ed5279ad49.avi",
+    "procedure_id": "SIM-VISIT-025",
+    "source": "HyperKvasir",
+    "bytes": 21740544
+  },
+  {
+    "patient_id": "SIM-026",
+    "video": "ced5f4a7-a68a-4133-be88-2f1f6dd1ea1b.avi",
+    "procedure_id": "SIM-VISIT-026",
+    "source": "HyperKvasir",
+    "bytes": 22084608
+  },
+  {
+    "patient_id": "SIM-027",
+    "video": "1f17e901-9ba3-4536-abfe-d6a9a039e983.avi",
+    "procedure_id": "SIM-VISIT-027",
+    "source": "HyperKvasir",
+    "bytes": 22723584
+  },
+  {
+    "patient_id": "SIM-028",
+    "video": "d556e781-6776-4d40-b8cb-53c08063aafa.avi",
+    "procedure_id": "SIM-VISIT-028",
+    "source": "HyperKvasir",
+    "bytes": 22727168
+  },
+  {
+    "patient_id": "SIM-029",
+    "video": "f5511ad9-43d7-4365-ad97-7af052a2697d.avi",
+    "procedure_id": "SIM-VISIT-029",
+    "source": "HyperKvasir",
+    "bytes": 22727168
+  },
+  {
+    "patient_id": "SIM-030",
+    "video": "6ab427b7-ba71-442c-be78-0f5a97f3f6eb.avi",
+    "procedure_id": "SIM-VISIT-030",
+    "source": "HyperKvasir",
+    "bytes": 22921728
+  },
+  {
+    "patient_id": "SIM-031",
+    "video": "fc79c489-b358-4368-b965-330615af73d4.avi",
+    "procedure_id": "SIM-VISIT-031",
+    "source": "HyperKvasir",
+    "bytes": 24132608
+  },
+  {
+    "patient_id": "SIM-032",
+    "video": "a2c5a1b0-c21b-4f9c-a39b-6268ccab9d08.avi",
+    "procedure_id": "SIM-VISIT-032",
+    "source": "HyperKvasir",
+    "bytes": 25095168
+  },
+  {
+    "patient_id": "SIM-033",
+    "video": "5aebb6b7-2e9d-4454-b0bd-dcacad732950.avi",
+    "procedure_id": "SIM-VISIT-033",
+    "source": "HyperKvasir",
+    "bytes": 25643520
+  },
+  {
+    "patient_id": "SIM-034",
+    "video": "164c76bd-cf72-46f6-a643-ddfecb6448d7.avi",
+    "procedure_id": "SIM-VISIT-034",
+    "source": "HyperKvasir",
+    "bytes": 26159104
+  },
+  {
+    "patient_id": "SIM-035",
+    "video": "b2071b4e-cce5-4a92-becc-3b4d81f23516.avi",
+    "procedure_id": "SIM-VISIT-035",
+    "source": "HyperKvasir",
+    "bytes": 27380736
+  },
+  {
+    "patient_id": "SIM-036",
+    "video": "0ecac639-6e57-4bab-8281-9d6feebe9599.avi",
+    "procedure_id": "SIM-VISIT-036",
+    "source": "HyperKvasir",
+    "bytes": 28370432
+  },
+  {
+    "patient_id": "SIM-037",
+    "video": "3efa7595-36f6-40a7-8d1f-96a59a069937.avi",
+    "procedure_id": "SIM-VISIT-037",
+    "source": "HyperKvasir",
+    "bytes": 28826624
+  },
+  {
+    "patient_id": "SIM-038",
+    "video": "f9a29376-1672-4b6f-97c7-8ed490a58390.avi",
+    "procedure_id": "SIM-VISIT-038",
+    "source": "HyperKvasir",
+    "bytes": 29158400
+  },
+  {
+    "patient_id": "SIM-039",
+    "video": "f04c62cf-982d-46f0-b840-f46d9116d344.avi",
+    "procedure_id": "SIM-VISIT-039",
+    "source": "HyperKvasir",
+    "bytes": 29466112
+  },
+  {
+    "patient_id": "SIM-040",
+    "video": "b0024c29-1d51-48f9-81ba-afd01d962cae.avi",
+    "procedure_id": "SIM-VISIT-040",
+    "source": "HyperKvasir",
+    "bytes": 29994496
+  },
+  {
+    "patient_id": "SIM-041",
+    "video": "11305ea5-389a-46c8-95f3-94a1af84247d.avi",
+    "procedure_id": "SIM-VISIT-041",
+    "source": "HyperKvasir",
+    "bytes": 30918144
+  },
+  {
+    "patient_id": "SIM-042",
+    "video": "b22ba031-fee7-4a03-9dfb-32dfdc6c30f5.avi",
+    "procedure_id": "SIM-VISIT-042",
+    "source": "HyperKvasir",
+    "bytes": 32772096
+  },
+  {
+    "patient_id": "SIM-043",
+    "video": "58bf0b01-3e57-41b0-a13e-52c7b013bfe4.avi",
+    "procedure_id": "SIM-VISIT-043",
+    "source": "HyperKvasir",
+    "bytes": 34342400
+  },
+  {
+    "patient_id": "SIM-044",
+    "video": "8cd6d308-4ac1-4ac3-9c4c-7c252af0bc65.avi",
+    "procedure_id": "SIM-VISIT-044",
+    "source": "HyperKvasir",
+    "bytes": 34639360
+  },
+  {
+    "patient_id": "SIM-045",
+    "video": "b45b8a86-1ce9-418c-bf91-272bb4fa157b.avi",
+    "procedure_id": "SIM-VISIT-045",
+    "source": "HyperKvasir",
+    "bytes": 34639360
+  },
+  {
+    "patient_id": "SIM-046",
+    "video": "87d49154-15cd-48f0-96ce-a732c78f3dca.avi",
+    "procedure_id": "SIM-VISIT-046",
+    "source": "HyperKvasir",
+    "bytes": 35058176
+  },
+  {
+    "patient_id": "SIM-047",
+    "video": "8a1d3d3c-a05f-4837-9c79-de38ecb4ac2e.avi",
+    "procedure_id": "SIM-VISIT-047",
+    "source": "HyperKvasir",
+    "bytes": 35058176
+  },
+  {
+    "patient_id": "SIM-048",
+    "video": "a50ea18d-3898-4fb7-ba15-ba69aba93cf0.avi",
+    "procedure_id": "SIM-VISIT-048",
+    "source": "HyperKvasir",
+    "bytes": 35285504
+  },
+  {
+    "patient_id": "SIM-049",
+    "video": "b2a7dc0f-9f5a-439b-beca-0c516a021935.avi",
+    "procedure_id": "SIM-VISIT-049",
+    "source": "HyperKvasir",
+    "bytes": 35285504
+  },
+  {
+    "patient_id": "SIM-050",
+    "video": "1de3ef0f-d54d-49e3-98a1-a919c5552a64.avi",
+    "procedure_id": "SIM-VISIT-050",
+    "source": "HyperKvasir",
+    "bytes": 35361280
+  },
+  {
+    "patient_id": "SIM-051",
+    "video": "12ebca74-2378-4498-b2c1-44e0a3ae9f9f.avi",
+    "procedure_id": "SIM-VISIT-051",
+    "source": "HyperKvasir",
+    "bytes": 35671040
+  },
+  {
+    "patient_id": "SIM-052",
+    "video": "a025fe0b-a144-4932-b693-a0691d21fa56.avi",
+    "procedure_id": "SIM-VISIT-052",
+    "source": "HyperKvasir",
+    "bytes": 35671040
+  },
+  {
+    "patient_id": "SIM-053",
+    "video": "c43fc1d8-16d8-4650-890a-6d7435f3be41.avi",
+    "procedure_id": "SIM-VISIT-053",
+    "source": "HyperKvasir",
+    "bytes": 35702784
+  },
+  {
+    "patient_id": "SIM-054",
+    "video": "f1dfa843-1e53-4a5d-b3b1-d29dc08e968a.avi",
+    "procedure_id": "SIM-VISIT-054",
+    "source": "HyperKvasir",
+    "bytes": 35836928
+  },
+  {
+    "patient_id": "SIM-055",
+    "video": "7b70dd34-e7a9-4422-828e-911d65755689.avi",
+    "procedure_id": "SIM-VISIT-055",
+    "source": "HyperKvasir",
+    "bytes": 35916800
+  },
+  {
+    "patient_id": "SIM-056",
+    "video": "42158aee-22ca-4e44-84df-4592f58fd43b.avi",
+    "procedure_id": "SIM-VISIT-056",
+    "source": "HyperKvasir",
+    "bytes": 36408832
+  },
+  {
+    "patient_id": "SIM-057",
+    "video": "65f4a966-f6ac-4c71-a2f1-c5428f13ad8b.avi",
+    "procedure_id": "SIM-VISIT-057",
+    "source": "HyperKvasir",
+    "bytes": 36449280
+  },
+  {
+    "patient_id": "SIM-058",
+    "video": "b2ce7754-73b2-472e-99be-201c6105bbd1.avi",
+    "procedure_id": "SIM-VISIT-058",
+    "source": "HyperKvasir",
+    "bytes": 36998144
+  },
+  {
+    "patient_id": "SIM-059",
+    "video": "d711a386-407f-4200-a355-f14fd3f0af83.avi",
+    "procedure_id": "SIM-VISIT-059",
+    "source": "HyperKvasir",
+    "bytes": 37221376
+  },
+  {
+    "patient_id": "SIM-060",
+    "video": "36350ec5-b735-4f44-89d7-c9e24c1bb773.avi",
+    "procedure_id": "SIM-VISIT-060",
+    "source": "HyperKvasir",
+    "bytes": 38350848
+  }
+]

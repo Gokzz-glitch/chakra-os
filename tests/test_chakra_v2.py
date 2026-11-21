@@ -1,9 +1,11 @@
 import base64
 import concurrent.futures
 import io
+import os
+import uuid
 import pytest
 from fastapi.testclient import TestClient
-from clinical_pipeline import scrub_phi, evaluate_bbps, surveillance_years
+from clinical_pipeline import scrub_phi, evaluate_bbps, surveillance_years, parse_voice_note
 import main
 
 client = TestClient(main.app)
@@ -336,13 +338,13 @@ def test_runs_enumeration_and_preseeded_history():
 
 def test_runs_auto_append_and_clinician_fl_review():
     """Verify auto-appending of new runs on test-frame and clinician review marking FL-eligible."""
-    # Create room and post test frame
     room = client.post("/api/v2/rooms").json()
     code = room["code"]
 
     runs_before = len(client.get("/api/v2/runs").json()["runs"])
 
-    file_payload = {"file": ("test_auto_run.jpg", io.BytesIO(TINY_JPEG_BYTES), "image/jpeg")}
+    unique_clip_name = f"test_auto_{uuid.uuid4().hex[:6]}.jpg"
+    file_payload = {"file": (unique_clip_name, io.BytesIO(TINY_JPEG_BYTES), "image/jpeg")}
     tf_res = client.post(f"/api/v2/rooms/{code}/admin-test-frame", files=file_payload)
     assert tf_res.status_code == 200
 
@@ -350,7 +352,7 @@ def test_runs_auto_append_and_clinician_fl_review():
     assert len(runs_after) == runs_before + 1
 
     # Find the newly created run
-    new_run = [r for r in runs_after if r.get("input_clip") == "test_auto_run.jpg"][0]
+    new_run = [r for r in runs_after if r.get("input_clip") == unique_clip_name][0]
     new_run_id = new_run["run_id"]
     assert new_run["review_status"] == "pending"
     assert new_run["fl_eligible"] is False
@@ -392,4 +394,58 @@ def test_export_fl_manifest():
         assert "evidence_uris" in item
         assert "anonymized_metadata" in item
         assert item["anonymized_metadata"]["zero_phi"] is True
+
+
+def test_security_headers_present():
+    """Verify HTTP security headers are injected on API responses."""
+    res = client.get("/api/v2/catalog")
+    assert res.status_code == 200
+    assert res.headers.get("X-Content-Type-Options") == "nosniff"
+    assert res.headers.get("X-Frame-Options") == "DENY"
+    assert res.headers.get("Referrer-Policy") == "strict-origin-when-cross-origin"
+    assert "max-age=63072000" in res.headers.get("Strict-Transport-Security", "")
+
+
+def test_docs_disabled_in_production(monkeypatch):
+    """Verify /docs, /redoc, and /openapi.json are disabled (404) in production."""
+    monkeypatch.setenv("ENV", "production")
+    for doc_path in ("/docs", "/redoc", "/openapi.json"):
+        res = client.get(doc_path)
+        assert res.status_code == 404
+
+
+def test_oversized_transcript_input_rejection():
+    """Verify transcripts exceeding 2000 characters are rejected with 400 or 422."""
+    oversized = "A" * 2050
+    room = client.post("/api/v2/rooms").json()
+    code = room["code"]
+
+    res = client.post(f"/api/v2/rooms/{code}/voice-note", json={"transcript": oversized})
+    assert res.status_code in (400, 422)
+
+    # Standalone endpoint rejection
+    res2 = client.post("/api/v2/voice-parse", json={"transcript": oversized})
+    assert res2.status_code in (400, 422)
+
+    # Pipeline validation exception
+    with pytest.raises(ValueError, match="exceeds maximum allowed length"):
+        parse_voice_note(oversized)
+
+
+def test_per_ip_rate_limiting_429(monkeypatch):
+    """Verify per-IP rate limiting enforces maximum 30 requests/min and returns HTTP 429."""
+    monkeypatch.setattr(main, "parse_voice_note", lambda t: {"clinical_note": t})
+    test_ip = f"198.51.100.{uuid.uuid4().int % 200 + 10}"
+    headers = {"X-Forwarded-For": test_ip}
+
+    # Execute 30 valid requests
+    for _ in range(30):
+        r = client.post("/api/v2/voice-parse", json={"transcript": "BBPS 3 3 2"}, headers=headers)
+        assert r.status_code == 200
+
+    # 31st request must trigger 429
+    r_blocked = client.post("/api/v2/voice-parse", json={"transcript": "BBPS 3 3 2"}, headers=headers)
+    assert r_blocked.status_code == 429
+    assert "Rate limit exceeded" in r_blocked.json()["detail"]
+    assert r_blocked.headers.get("Retry-After") == "60"
 

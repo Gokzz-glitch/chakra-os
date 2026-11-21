@@ -195,7 +195,7 @@ def create_presentation():
         "Sterile Workflow Friction",
         [
             "Endoscopists cannot touch keyboards or mice in sterile procedure suites.",
-            "Handwritten or dictaphone documentation delayed hours post-procedure.",
+            "Handwritten or dictaphone documentation delayed hours post-procedure (3-8 min/case burden).",
             "Bowel Prep (BBPS) scores often unrecorded or subjectively estimated.",
             "Quality indicators (ADR, PDR) rarely tracked in structured databases.",
         ],
@@ -231,7 +231,7 @@ def create_presentation():
             "Histopathology Safeguard: System outputs strictly state [Pathology: PENDING_HISTOPATHOLOGY].",
             "Fail-Closed HITL Gate: Clinician must review and attest accepted findings before BigQuery commit.",
             "Standby Gate: Video feed and AI overlays remain locked until clinician clicks 'Start Procedure'.",
-            "Scale-to-Zero Efficiency: Compute costs under $0.01 per colonoscopy procedure.",
+            "Scale-to-Zero Efficiency: ~$0.21-$0.30/case on Cloud Run L4, compressing to ₹12-₹19 ($0.13-$0.21) in production.",
         ],
         badge="REAL-TIME L4 VISION"
     )
@@ -408,15 +408,15 @@ def create_presentation():
     # SLIDE 8: Market Viability & Unit Economics
     # ==========================================
     slide8 = prs.slides.add_slide(blank_layout)
-    add_slide_header(slide8, "Market Viability: Sub-Cent Economics vs Proprietary Towers")
+    add_slide_header(slide8, "Market Viability: Accessible Unit Economics vs Proprietary Towers")
 
     add_card(
         slide8, Inches(0.8), Inches(1.8), Inches(3.7), Inches(5.0),
         "Cost Comparison",
         [
             "Medtronic GI Genius: ~$20,000-$30,000/yr SaaS or ~$40,000-$50,000 CapEx per tower.",
-            "CHAKRA V2: < $0.01 per colonoscopy procedure on Cloud Run scale-to-zero.",
-            ">99% Capital Savings: Eliminates dedicated hardware maintenance contracts.",
+            "CHAKRA V2: ~$0.21-$0.30/procedure on live Cloud Run L4 (10-min withdrawal), compressing to ₹12-₹19 ($0.13-$0.21) in hybrid edge-cloud production.",
+            ">90% Cost Reduction: Eliminates expensive proprietary vendor hardware maintenance.",
             "Zero Idle Drain: Compute spins up during withdrawal and scales to zero post-signoff.",
         ],
         badge="UNIT ECONOMICS"
@@ -426,9 +426,9 @@ def create_presentation():
         slide8, Inches(4.8), Inches(1.8), Inches(3.7), Inches(5.0),
         "Target Addressable Market",
         [
-            "India: 5M+ colonoscopies annually; rapidly growing screening programs.",
-            "Southeast Asia: 15M+ annual colonoscopies across public and private hospitals.",
-            ">85% of endoscopy units lack real-time AI assistance or automated quality audit software.",
+            "India: ~1.2M estimated annual colonoscopies within a 50M-107M global market.",
+            "Market Gap: >85% of emerging-market units lack AI or structured quality audits.",
+            "Clinical Efficiency: Cuts documentation from 3-8 min/case down to <60s review.",
             "Immediate fit for government healthcare (Ayushman Bharat) and private chains.",
         ],
         badge="MARKET SIZE"
@@ -458,7 +458,7 @@ def create_presentation():
         [
             "Gokul Rajasekar (Founder & Owner): Lead system architect; endoscopy procedural workflow & clinical OS design.",
             "Varsha (Co-Founder): Clinical workflow design, ergonomics, and physician-in-the-loop validation.",
-            "Girupa (Co-Founder): AI dataset curator (girpolypposframesrealcolon); L4 vision deployment & CADe model tuning.",
+            "Girupa (Co-Founder): Curator of the girpolypposframesrealcolon polyp-positive training pipeline built on open-access colonoscopy corpora (including Biffi et al.'s CC BY 4.0 REAL-Colon); L4 vision deployment & CADe tuning.",
             "Jayasri (Co-Founder): Health informatics, ABDM FHIR R4 compliance, and hospital EMR interoperability.",
             "Complementary Execution: Uniting deep clinical GI suite realities with modern Google Cloud infrastructure.",
         ],
@@ -469,7 +469,7 @@ def create_presentation():
         slide9, Inches(6.8), Inches(1.8), Inches(5.7), Inches(5.0),
         "Domain Grounding & India Health Stack",
         [
-            "Author of girpolypposframesrealcolon: Real colonoscopy polyp dataset powering verified visual aids.",
+            "Curator of girpolypposframesrealcolon: Polyp-positive training pipeline built on open-access corpora (incl. Biffi et al.'s REAL-Colon).",
             "Clinical Safety First: Refuses to make unverified optical malignancy claims; strictly enforces histopathology-first.",
             "Ayushman Bharat Digital Mission (ABDM): Native compliance with NHA standards & NRCeS FHIR R4.",
             "Bilingual Patient Inclusivity: Tamil and English spoken discharge bridging post-sedation comprehension gaps.",

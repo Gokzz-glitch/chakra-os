@@ -65,18 +65,18 @@ flowchart TB
 ### 1. Founder Profile & Founding Team
 - **Gokul Rajasekar (Founder & Lead Architect):** Overall clinical OS architecture, endoscopy procedural workflow, and cloud systems engineering.
 - **Varsha (Co-Founder & Clinical Operations):** Clinical workflow ergonomics, physician usability validation, and procedural safety protocols.
-- **Girupa (Co-Founder & AI Systems):** Lead creator & curator of the `girpolypposframesrealcolon` real-world colonoscopy polyp detection dataset; NVIDIA L4 edge model deployment and CADe optimization.
+- **Girupa (Co-Founder & AI Systems):** Curator of the girpolypposframesrealcolon polyp-positive training pipeline built on open-access colonoscopy corpora (including Biffi et al.'s CC BY 4.0 REAL-Colon); NVIDIA L4 edge model deployment and CADe optimization.
 - **Jayasri (Co-Founder & Healthcare Compliance):** Ayushman Bharat Digital Mission (ABDM) integration, NRCeS FHIR R4 `DiagnosticReportRecord` schemas, and patient de-identification compliance.
 - **Deep Clinical Reality Grounding:** Understands clinical ergonomics—endoscopists cannot look away from surgical monitors, cannot touch physical keyboards in sterile suites, and will reject systems that generate false-positive optical malignancy claims.
 - **India Health Stack Alignment:** Implements Ayushman Bharat Digital Mission (ABDM) standards, NRCeS FHIR R4 `DiagnosticReportRecord` schemas, and patient de-identification via ABHA pseudonyms.
 
 ### 2. Product Potential & Regulatory Navigation
 - **De-risked SaMD Strategy:** Bypasses the multi-year Software-as-a-Medical-Device (SaMD) regulatory delay by delivering a Day-1 deployable, Non-SaMD clinical documentation OS (voice copilot, BBPS scoring, bilingual discharge, and quality audits) while isolating real-time white-light CADe as an adjunctive visual aid where pathology is strictly **PENDING_HISTOPATHOLOGY**.
-- **Scope-Agnostic Universal Hardware:** Works with existing legacy Olympus, Pentax, and Fujifilm endoscopy towers via any smartphone or tablet bridge without requiring $100,000 capital equipment purchases.
+- **Scope-Agnostic Universal Hardware:** Works with existing legacy Olympus, Pentax, and Fujifilm endoscopy towers via any smartphone or tablet bridge without requiring $100,000 capital equipment purchases; reduces clinical reporting burden from 3-8 minutes/case (1-2 cumulative hours/day) down to <60 seconds of clinician review.
 
 ### 3. Market Viability & Unit Economics
-- **Sub-Cent Unit Economics:** Google Cloud Run scale-to-zero compute (NVIDIA L4 in `asia-southeast1` + lightweight OS in `asia-south1`) costs **< $0.01 per colonoscopy**, contrasting sharply with Medtronic GI Genius proprietary pricing (~$20,000-$30,000/yr SaaS or ~$40,000-$50,000 CapEx).
-- **Enormous Addressable Market:** Over 20 million colonoscopies are performed annually across India and Southeast Asia; >85% of endoscopy centers have zero AI detection tools and rely on error-prone handwritten notes.
+- **Accessible Unit Economics:** Google Cloud Run scale-to-zero compute costs **~$0.21-$0.30/procedure on live Cloud Run L4 (10-min withdrawal), compressing to ₹12-₹19 ($0.13-$0.21) in hybrid edge-cloud production**, contrasting sharply with Medtronic GI Genius proprietary pricing (~$20,000-$30,000/yr SaaS or ~$40,000-$50,000 CapEx).
+- **Target Addressable Market:** ~1.2M estimated annual colonoscopies in India within a 50M-107M global market where >85% of emerging-market units lack AI; replaces error-prone documentation with automated quality tracking while cutting reporting burden from 3-8 minutes/case (1-2 cumulative hours/day) down to <60 seconds of clinician review.
 
 ### 4. Technical Architecture Excellence
 - **Zero-Key Least Privilege IAM:** Runtime executes exclusively under `chakra-review-runtime@girpolypposframesrealcolon.iam.gserviceaccount.com` without hardcoded API keys.

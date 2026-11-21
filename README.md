@@ -162,9 +162,9 @@ uvicorn main:app --host 0.0.0.0 --port 8080 --reload
 
 | Rubric Criteria | CHAKRA Implementation |
 | :--- | :--- |
-| **Founder Profile** | **Gokul Rajasekar** (Founder & Lead Architect); Co-Founders: **Varsha** (Clinical Ops), **Girupa** (AI Systems & `girpolypposframesrealcolon` dataset author), **Jayasri** (Compliance & ABDM FHIR R4); deep clinical GI workflow grounding; India MeitY data sovereignty integration. |
-| **Product Potential** | Day-1 deployable Non-SaMD documentation OS de-risking regulatory pathways while isolating white-light visual CADe; scope-agnostic universal camera bridge. |
-| **Market Viability** | Sub-cent unit economics (<$0.01/procedure) on Cloud Run scale-to-zero vs ~$20,000-$30,000/yr SaaS (~$40,000-$50,000 CapEx) proprietary hardware; addressable market of 20M+ colonoscopies in India and SE Asia. |
+| **Founder Profile** | **Gokul Rajasekar** (Founder & Lead Architect); Co-Founders: **Varsha** (Clinical Ops), **Girupa** (Curator of the girpolypposframesrealcolon polyp-positive training pipeline built on open-access colonoscopy corpora, including Biffi et al.'s CC BY 4.0 REAL-Colon), **Jayasri** (Compliance & ABDM FHIR R4); deep clinical GI workflow grounding; India MeitY data sovereignty integration. |
+| **Product Potential** | Day-1 deployable Non-SaMD documentation OS de-risking regulatory pathways while isolating white-light visual CADe; scope-agnostic universal camera bridge; cuts reporting burden from 3-8 minutes/case (1-2 cumulative hours/day) down to <60 seconds of clinician review. |
+| **Market Viability** | Accessible unit economics (~$0.21-$0.30/procedure on live Cloud Run L4 for 10-min withdrawal, compressing to ₹12-₹19 / $0.13-$0.21 in hybrid edge-cloud production) vs ~$20,000-$30,000/yr SaaS (~$40,000-$50,000 CapEx) proprietary hardware; addressable market of ~1.2M estimated annual colonoscopies in India within a 50M-107M global market where >85% of emerging-market units lack AI. |
 | **Technical Architecture** | Zero-key least-privilege IAM runtime; dual-region MeitY compliance (`asia-south1`) + NVIDIA L4 GPU (`asia-southeast1`); depth-1 non-blocking WebSocket pipeline; Range/206 streaming with OpenCV fallback. |
 | **Use of Google AI** | Vertex AI Gemini 3.8 Flash zero-PHI voice parsing; Gemini 3.8 Flash Lite TTS bilingual audio discharge (EN/TA); Cloud Run NVIDIA L4 CADe; BigQuery MCP quality warehouse. |
 
