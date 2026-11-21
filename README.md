@@ -135,7 +135,7 @@ python -m pytest -v tests/test_chakra_v2.py
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/girupa19official/chakra-os.git
+git clone https://github.com/Gokzz-glitch/chakra-os.git
 cd chakra-os
 
 # 2. Install dependencies
