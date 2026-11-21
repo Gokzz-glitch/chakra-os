@@ -331,10 +331,10 @@ async def v1_analyze(
     return {"vision": vision, "report": report}
 
 @app.post("/api/signoff/{proc_id}")
-def v1_signoff(proc_id: str):
+def v1_signoff(proc_id: str, request: Request):
     if proc_id not in SESSIONS_V1:
         raise HTTPException(404, "Procedure ID not found")
-    payload = SESSIONS_V1[proc_id]
+    payload = dict(SESSIONS_V1[proc_id], signed_by=request.state.clinician_email)
     final_report = build_clinical_report(payload, hitl_approved=True)
     return {"report": final_report, "bigquery": commit_and_query_bq(payload, final_report, hitl_approved=True)}
 
@@ -362,6 +362,12 @@ class TtsReq(BaseModel):
 
 class SignoffReq(BaseModel):
     hitl_attested: bool
+
+class PatientConsentReq(BaseModel):
+    aware_of_procedure: bool = True
+    consent_data_sharing: bool = True
+    patient_signature: Optional[str] = "PATIENT_VERIFIED"
+    language: str = "en"
 
 # ---- Standalone Public AI/GPU Endpoints ----
 @app.post("/api/v2/voice-parse")
@@ -490,6 +496,14 @@ def create_room():
         "patient_anonymized_id": f"ABHA-HASH-{code}",
         "patient_label": "DEMO-PATIENT-01",
         "endoscopist_id": "DR-GOKUL-R",
+        "patient_consent": {
+            "verified": False,
+            "aware_of_procedure": False,
+            "consent_data_sharing": False,
+            "consent_id": None,
+            "verified_at": None,
+            "hospital_id": "HOSP-CHENNAI-01",
+        },
         "model": "yolovit_yolo",
         "conf": 0.45,
         "worker": "cloud_run_l4",
@@ -516,6 +530,43 @@ def get_room(code: str):
         raise HTTPException(404, "Pairing code not found")
     r = ROOMS[code]
     return {k: v for k, v in r.items() if k != "in_flight"}
+
+@app.post("/api/v2/rooms/{code}/patient-consent")
+async def verify_patient_consent(code: str, req: PatientConsentReq):
+    if code not in ROOMS:
+        raise HTTPException(404, "Pairing code not found")
+    if not req.aware_of_procedure or not req.consent_data_sharing:
+        raise HTTPException(
+            400,
+            detail="Patient must verify awareness of the procedure and consent to data sharing to proceed."
+        )
+    r = ROOMS[code]
+    consent_id = f"DPDP-{uuid.uuid4().hex[:8].upper()}"
+    now_iso = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    consent_record = {
+        "verified": True,
+        "aware_of_procedure": True,
+        "consent_data_sharing": True,
+        "consent_id": consent_id,
+        "verified_at": now_iso,
+        "patient_signature": req.patient_signature or "PATIENT_VERIFIED",
+        "patient_anonymized_id": r["patient_anonymized_id"],
+        "hospital_id": "HOSP-CHENNAI-01",
+        "language": req.language,
+        "standard": "India DPDP Act 2023 & ABDM FHIR R4 Consent",
+    }
+    r["patient_consent"] = consent_record
+    await _broadcast(code, ["admin", "doctor", "phone"], {
+        "type": "patient_consent_updated",
+        "patient_consent": consent_record
+    })
+    return {"ok": True, "patient_consent": consent_record}
+
+@app.get("/api/v2/rooms/{code}/patient-consent")
+def get_patient_consent(code: str):
+    if code not in ROOMS:
+        raise HTTPException(404, "Pairing code not found")
+    return {"ok": True, "patient_consent": ROOMS[code].get("patient_consent", {"verified": False})}
 
 @app.patch("/api/v2/rooms/{code}/config")
 async def update_config(code: str, cfg: RoomConfigUpdate):
@@ -620,6 +671,7 @@ async def end_and_generate_report(code: str):
         "procedure_id": r["procedure_id"],
         "endoscopist_id": r["endoscopist_id"],
         "patient_anonymized_id": r["patient_anonymized_id"],
+        "patient_consent": r.get("patient_consent", {}),
         "withdrawal_time_seconds": r["withdrawal_sec"],
         "bbps_scores": r["bbps_scores"],
         "approved_findings": [{k: v for k, v in f.items() if k != "thumb_b64"} for f in approved],
@@ -643,7 +695,7 @@ def room_tts(code: str, req: TtsReq):
     return synthesize_discharge_audio(req.text, req.voice_name)
 
 @app.post("/api/v2/rooms/{code}/signoff")
-async def room_signoff(code: str, req: SignoffReq):
+async def room_signoff(code: str, req: SignoffReq, request: Request):
     if code not in ROOMS:
         raise HTTPException(404, "Pairing code not found")
     if not req.hitl_attested:
@@ -651,6 +703,7 @@ async def room_signoff(code: str, req: SignoffReq):
     r = ROOMS[code]
     if not r.get("last_payload"):
         raise HTTPException(400, "Generate report before sign-off")
+    r["last_payload"]["signed_by"] = request.state.clinician_email
     final_report = build_clinical_report(r["last_payload"], hitl_approved=True)
     bq_res = commit_and_query_bq(r["last_payload"], final_report, hitl_approved=True)
     await _broadcast(code, ["admin", "doctor"], {"type": "signed_off", "bigquery": bq_res})
@@ -865,14 +918,16 @@ def get_patient_history(
     return patient
 
 @app.post("/api/v2/findings/{finding_id}/pathology")
-def sign_pathology_result(finding_id: str, req: PathologySignoffReq):
+def sign_pathology_result(finding_id: str, req: PathologySignoffReq, request: Request):
     for p_id, p_data in PATIENT_REGISTRY.items():
+        if p_data.get("hospital_id") != "HOSP-CHENNAI-01":
+            continue
         for enc in p_data.get("encounters", []):
             for f in enc.get("findings", []):
                 if f["finding_id"] == finding_id:
                     f["pathology_status"] = "SIGNED"
                     f["pathology_result"] = {
-                        "signed_by": req.signed_by,
+                        "signed_by": request.state.clinician_email,
                         "signed_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
                         "diagnosis": req.diagnosis,
                         "dysplasia_grade": req.dysplasia_grade,
@@ -1169,7 +1224,7 @@ def get_run(run_id: str):
     return RUN_LOGS[run_id]
 
 @app.post("/api/v2/runs/{run_id}/review")
-def review_run(run_id: str, req: RunReviewReq):
+def review_run(run_id: str, req: RunReviewReq, request: Request):
     if run_id not in RUN_LOGS:
         raise HTTPException(status_code=404, detail=f"Run '{run_id}' not found")
     decision = req.decision.lower().strip()
@@ -1177,7 +1232,7 @@ def review_run(run_id: str, req: RunReviewReq):
         raise HTTPException(status_code=400, detail="Decision must be 'accepted' or 'dismissed'")
     r = RUN_LOGS[run_id]
     clean_notes = scrub_phi(req.reason or "")
-    clean_reviewer = scrub_phi(req.reviewer_id or "DR-GOKUL-R")
+    clean_reviewer = request.state.clinician_email
     r["review_status"] = decision
     r["clinician_label"] = decision
     r["clinician_notes"] = clean_notes
@@ -1189,3 +1244,6 @@ def review_run(run_id: str, req: RunReviewReq):
 
 from evaluation_map import router as evaluation_map_router
 app.include_router(evaluation_map_router)
+
+from clinical_access import ClinicalAccess
+app.add_middleware(ClinicalAccess)

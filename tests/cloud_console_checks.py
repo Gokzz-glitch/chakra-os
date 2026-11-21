@@ -5,6 +5,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
+from urllib.error import HTTPError
 from urllib.request import urlopen
 
 PROJECT = "girpolypposframesrealcolon"
@@ -46,7 +47,7 @@ def main():
     check("CPU service can scale to zero", minimum == 0, f"configured minimum {minimum}")
 
     broad = any(b["role"] == "roles/run.invoker" and
-                set(b["members"]) & {"allUsers", "allAuthenticatedUsers"} for b in policy["bindings"])
+                set(b["members"]) & {"allUsers", "allAuthenticatedUsers"} for b in policy.get("bindings", []))
     private = not broad and annotations.get("run.googleapis.com/invoker-iam-disabled") != "true"
     iap = annotations.get("run.googleapis.com/iap-enabled") == "true"
     check("Real-patient release gate: restricted platform entry", private or iap,
@@ -58,8 +59,16 @@ def main():
             check("Public synthetic doctor page renders", response.status == 200 and
                   "text/html" in response.headers.get("Content-Type", "") and "chakra" in content,
                   f"HTTP {response.status}")
+    elif private and not iap:
+        for endpoint in [status["url"]] + [t["url"] for t in status["traffic"] if t.get("url")]:
+            try:
+                with urlopen(endpoint + "/v2/doctor", timeout=30) as response:
+                    code = response.status
+            except HTTPError as error:
+                code = error.code
+            check("Anonymous doctor-page access denied", code in (401, 403), f"{endpoint} HTTP {code}")
     else:
-        print("NOT RUN | Doctor page requires a signed-in browser")
+        print("NOT RUN | Verify the IAP sign-in flow in a browser")
     return 0 if all(checks) else 1
 
 

@@ -181,6 +181,7 @@ html.dark .badge-danger{background:#7f1d1d;color:#fecaca}
             <button class="btn ghost" style="width:auto" onclick="copyCode()">Copy</button>
           </div>
           <div class="row"><span>Procedure ID</span><b id="procId">--</b></div>
+          <div class="row"><span>Patient Consent</span><b id="consentStatus" style="color:var(--warn)">Awaiting Patient</b></div>
           <div class="row"><span>Phone Feed</span><b id="phoneState">Not paired</b></div>
           <div class="row"><span>Doctor HUD Gate</span><b id="docState">Standby (Locked)</b></div>
           <div class="row"><span>Frames Processed</span><b id="frameCnt">0</b></div>
@@ -625,6 +626,8 @@ async function mintRoom(){
   roomCode=r.code;
   codeBox.textContent=roomCode;
   procId.textContent=r.procedure_id;
+  consentStatus.textContent = (r.patient_consent && r.patient_consent.verified) ? (r.patient_consent.consent_id || 'DPDP Verified') : 'Awaiting Patient';
+  consentStatus.style.color = (r.patient_consent && r.patient_consent.verified) ? '#059669' : 'var(--warn)';
   docLink.href='/v2/doctor?code='+roomCode;
   phoneLink.href='/v2/phone?code='+roomCode;
   renderQr(roomCode);
@@ -657,6 +660,10 @@ function connectWs(){
   ws=new WebSocket(`${proto}//${location.host}/ws/v2/${roomCode}/admin`);
   ws.onmessage=e=>{
     const m=JSON.parse(e.data);
+    if(m.type==='patient_consent_updated'){
+      consentStatus.textContent = m.patient_consent.consent_id || 'DPDP Verified';
+      consentStatus.style.color = '#059669';
+    }
     if(m.type==='phone_status'){
       phoneDot.className='dot'+(m.connected?' ok':'');
       phoneTxt.textContent=m.connected?'Phone: Paired Live':'Phone: Waiting';

@@ -58,6 +58,27 @@ body{width:100%;max-width:clamp(480px,70vw,800px);padding:clamp(10px,2vw,22px)}
   <div id="status" class="stat">Disconnected</div>
 </div>
 
+<div class="card" id="consentCard">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+    <h2 style="font-size:15.5px;margin:0">Patient Procedure & Data Consent</h2>
+    <span id="consentBadge" class="pill" style="font-size:11px;background:#fef3c7;color:#92400e">Awaiting Verification</span>
+  </div>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:12px">India DPDP Act 2023 & Ayushman Bharat Digital Mission (ABDM) Informed Verification.</p>
+  
+  <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;color:var(--text);margin-bottom:10px;cursor:pointer">
+    <input type="checkbox" id="chkAware" style="width:16px;height:16px;margin-top:2px" checked>
+    <span><b>I am aware of this procedure:</b> I understand the purpose, preparation, and scope of this endoscopic examination.</span>
+  </label>
+
+  <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;color:var(--text);margin-bottom:12px;cursor:pointer">
+    <input type="checkbox" id="chkDataSharing" style="width:16px;height:16px;margin-top:2px" checked>
+    <span><b>Data sharing verification:</b> I verify and consent to zero-PHI video streaming and de-identified clinical telemetry sharing for AI quality auditing and Federated Learning curation.</span>
+  </label>
+
+  <button class="btn ok" id="btnVerifyConsent" onclick="submitPatientConsent()" style="margin-top:4px">Verify Patient Consent</button>
+  <div id="consentMsg" style="font-size:11.5px;margin-top:8px"></div>
+</div>
+
 <div class="card">
   <h2 style="font-size:16px">Stream Source</h2>
   <button class="btn" onclick="startCamera()">Use Live Phone Camera</button>
@@ -112,6 +133,61 @@ let ws=null, timer=null, sourceMode='live', sent=0;
 const params=new URLSearchParams(location.search);
 if(params.get('code')) codeIn.value=params.get('code');
 
+async function checkConsentStatus(code){
+  try {
+    const res = await fetch(`/api/v2/rooms/${code}/patient-consent`);
+    if(res.ok){
+      const d = await res.json();
+      updateConsentUi(d.patient_consent);
+    }
+  } catch(e){}
+}
+
+function updateConsentUi(c){
+  if(c && c.verified){
+    consentBadge.textContent = 'DPDP Verified · ' + (c.consent_id || 'DPDP-OK');
+    consentBadge.style.background = '#d1fae5';
+    consentBadge.style.color = '#065f46';
+    chkAware.checked = true;
+    chkDataSharing.checked = true;
+    chkAware.disabled = true;
+    chkDataSharing.disabled = true;
+    btnVerifyConsent.disabled = true;
+    btnVerifyConsent.textContent = 'Consent Verified & Active';
+    consentMsg.innerHTML = `<span style="color:var(--ok)">Verified under DPDP Act 2023 (${c.consent_id}). Zero-PHI streaming unlocked.</span>`;
+  }
+}
+
+async function submitPatientConsent(){
+  const code = codeIn.value.trim();
+  if(!code) return alert('Enter or pair a 6-digit room code first');
+  if(!chkAware.checked || !chkDataSharing.checked){
+    return alert('Please verify both Procedure Awareness and Data Sharing consent to proceed.');
+  }
+  consentMsg.textContent = 'Recording patient verification...';
+  try {
+    const res = await fetch(`/api/v2/rooms/${code}/patient-consent`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        aware_of_procedure: chkAware.checked,
+        consent_data_sharing: chkDataSharing.checked,
+        patient_signature: 'PATIENT_VERIFIED',
+        language: 'en'
+      })
+    });
+    const d = await res.json();
+    if(res.ok){
+      updateConsentUi(d.patient_consent);
+      chakraFeedback.emit("success", "Patient consent verified");
+    } else {
+      consentMsg.innerHTML = `<span style="color:#dc2626">Error: ${d.detail}</span>`;
+    }
+  } catch(e){
+    consentMsg.innerHTML = `<span style="color:#dc2626">Failed to record verification: ${e}</span>`;
+  }
+}
+
 function pair(){
   const c=codeIn.value.trim(); if(c.length!==6) return alert('Enter the 6-digit code');
   if(ws) ws.close();
@@ -120,6 +196,13 @@ function pair(){
   ws.onopen=()=>{ chakraFeedback.emit("success","Phone connected"); 
     const el=document.getElementById('status');
     if(el){ el.textContent='Paired to Room '+c+' · Ready to stream'; el.style.color='#059669'; }
+    checkConsentStatus(c);
+  };
+  ws.onmessage=(e)=>{
+    try {
+      const m = JSON.parse(e.data);
+      if(m.type==='patient_consent_updated') updateConsentUi(m.patient_consent);
+    } catch(err){}
   };
   ws.onclose=()=>{ chakraFeedback.emit("error","Phone disconnected"); 
     const el=document.getElementById('status');
@@ -188,7 +271,7 @@ function beginLoop(){
   },260);
 }
 loadClips();
-if(codeIn.value.length===6) pair();
+if(codeIn.value.length===6) { pair(); checkConsentStatus(codeIn.value.trim()); }
 </script>
 
 <footer class="clinical-footer">

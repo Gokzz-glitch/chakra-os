@@ -453,3 +453,49 @@ def test_per_ip_rate_limiting_429(monkeypatch):
     assert "Rate limit exceeded" in r_blocked.json()["detail"]
     assert r_blocked.headers.get("Retry-After") == "60"
 
+
+def test_patient_consent_verification_workflow():
+    """Verify patient procedure awareness and data sharing consent lifecycle."""
+    room = client.post("/api/v2/rooms").json()
+    code = room["code"]
+
+    # Initial state: consent unverified
+    c_init = client.get(f"/api/v2/rooms/{code}/patient-consent").json()
+    assert c_init["ok"] is True
+    assert c_init["patient_consent"]["verified"] is False
+
+    # Incomplete consent rejection (missing data sharing or awareness)
+    r_bad = client.post(
+        f"/api/v2/rooms/{code}/patient-consent",
+        json={"aware_of_procedure": True, "consent_data_sharing": False}
+    )
+    assert r_bad.status_code == 400
+    assert "Patient must verify" in r_bad.json()["detail"]
+
+    # Valid consent verification
+    r_good = client.post(
+        f"/api/v2/rooms/{code}/patient-consent",
+        json={"aware_of_procedure": True, "consent_data_sharing": True, "language": "en"}
+    )
+    assert r_good.status_code == 200
+    c_data = r_good.json()["patient_consent"]
+    assert c_data["verified"] is True
+    assert c_data["aware_of_procedure"] is True
+    assert c_data["consent_data_sharing"] is True
+    assert c_data["consent_id"].startswith("DPDP-")
+    assert c_data["standard"] == "India DPDP Act 2023 & ABDM FHIR R4 Consent"
+
+    # Reflected in room state
+    room_state = client.get(f"/api/v2/rooms/{code}").json()
+    assert room_state["patient_consent"]["verified"] is True
+    assert room_state["patient_consent"]["consent_id"] == c_data["consent_id"]
+
+    # Included in generated procedure report
+    client.post(f"/api/v2/rooms/{code}/doctor-start")
+    end_res = client.post(f"/api/v2/rooms/{code}/end-report")
+    assert end_res.status_code == 200
+    rep = end_res.json()["report"]
+    assert rep["patient_consent"]["verified"] is True
+    assert rep["patient_consent"]["consent_id"] == c_data["consent_id"]
+    assert rep["abdm_fhir_r4"]["extension"][0]["valueString"] == c_data["consent_id"]
+

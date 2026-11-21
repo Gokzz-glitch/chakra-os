@@ -205,12 +205,14 @@ def build_clinical_report(payload: Dict[str, Any], hitl_approved: bool = False) 
             red_flag_precautions_english="Seek immediate emergency care if you experience severe abdominal pain, persistent rectal bleeding, high fever, or dizziness.",
         )
     status = "final" if hitl_approved else "preliminary"
+    consent_meta = payload.get("patient_consent", {"verified": False})
     return {
         "procedure_id": payload["procedure_id"],
         "model_used": GEMINI_MODEL,
         "status": status.upper(),
         "pathology_status": "PENDING_HISTOPATHOLOGY",
         "evidence_gcs_uri": payload.get("evidence_gcs_uri"),
+        "patient_consent": consent_meta,
         "bbps": {"total": sum(bbps.values()), "adequate": bbps_ok, "reason": bbps_reason, **bbps},
         "surveillance": {"years": surv_yr, "rationale": surv_reason, "provisional": True},
         "narrative": ai.model_dump(),
@@ -221,6 +223,12 @@ def build_clinical_report(payload: Dict[str, Any], hitl_approved: bool = False) 
             "status": status,
             "code": {"coding": [{"system": "http://snomed.info/sct", "code": "73761001", "display": "Colonoscopy"}]},
             "subject": {"reference": f"Patient/{payload['patient_anonymized_id']}"},
+            "extension": [
+                {
+                    "url": "https://nrces.in/ndhm/fhir/r4/StructureDefinition/ConsentRecord",
+                    "valueString": consent_meta.get("consent_id") or "DPDP-CONSENT-AWAITING"
+                }
+            ],
             "effectiveDateTime": datetime.datetime.now(datetime.timezone.utc).isoformat(),
             "performer": [{"display": payload["endoscopist_id"]}],
             "conclusion": f"{ai.snomed_conclusion} [Pathology: PENDING_HISTOPATHOLOGY]",

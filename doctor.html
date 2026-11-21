@@ -89,6 +89,7 @@ pre{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding
   <div><span class="lbl">Physician</span><b id="pDoc">DR-GOKUL-R</b></div>
   <div><span class="lbl">Phone Scope Feed</span><b id="pPhone" style="color:var(--warn)">Waiting...</b></div>
   <div><span class="lbl">Compute Telemetry</span><b id="pGpu" style="color:var(--accent)">Cloud Run L4 · Standby</b></div>
+  <div><span class="lbl">Patient Consent</span><b id="pConsent" style="color:var(--warn)">Awaiting Patient</b></div>
 </div>
 
 <main class="workspace">
@@ -209,12 +210,24 @@ async function connect(){
   }
   const r=await roomResponse.json();
   pAnon.textContent=r.patient_anonymized_id; pId.textContent=r.procedure_id; pDoc.textContent=r.endoscopist_id;
+  if(r.patient_consent && r.patient_consent.verified){
+    pConsent.textContent=r.patient_consent.consent_id || 'DPDP Verified';
+    pConsent.style.color='#059669';
+  } else {
+    pConsent.textContent='Awaiting Patient';
+    pConsent.style.color='var(--warn)';
+  }
   startBtn.disabled=false;
   if(ws) ws.close();
   const proto=location.protocol==='https:'?'wss:':'ws:';
   ws=new WebSocket(`${proto}//${location.host}/ws/v2/${code}/doctor`);
   ws.onmessage=e=>{
     const m=JSON.parse(e.data);
+    if(m.type==='patient_consent_updated'){
+      const c = m.patient_consent;
+      pConsent.textContent = c.consent_id || 'DPDP Verified';
+      pConsent.style.color = '#059669';
+    }
     if(m.type==='phone_status'||m.type==='standby_heartbeat'){
       const on=m.connected||m.phone_connected;
       pPhone.textContent=on?'Paired & Ready':'Disconnected'; pPhone.style.color=on?'#059669':'#d97706';
@@ -280,8 +293,11 @@ async function endAndReport(){
   const d=await (await chakraFeedback.request('Generate report',`/api/v2/rooms/${code}/end-report`,{method:'POST'})).json();
   lastReport=d.report;
   const n=lastReport.narrative;
+  const cBadge = lastReport.patient_consent && lastReport.patient_consent.verified 
+    ? `<span class="chip" style="background:#d1fae5;color:#065f46">DPDP Consent: ${lastReport.patient_consent.consent_id}</span>`
+    : `<span class="chip" style="background:#fef3c7;color:#92400e">DPDP Consent: Awaiting Patient</span>`;
   repBody.innerHTML=`
-    <p><span class="chip">${lastReport.status}</span> <span class="chip">Pathology: ${lastReport.pathology_status}</span> <span class="chip">Surveillance: ${lastReport.surveillance.years} yr</span></p>
+    <p><span class="chip">${lastReport.status}</span> <span class="chip">Pathology: ${lastReport.pathology_status}</span> ${cBadge} <span class="chip">Surveillance: ${lastReport.surveillance.years} yr</span></p>
     <p><b>Clinical Summary:</b> ${n.findings_summary}</p>
     <p><b>Patient Discharge (English):</b> ${n.patient_discharge_english}</p>
     <p><b>Patient Discharge (Tamil):</b> ${n.patient_discharge_tamil}</p>
