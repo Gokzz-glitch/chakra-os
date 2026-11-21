@@ -447,33 +447,35 @@ def create_presentation():
     )
 
     # ==========================================
-    # SLIDE 9: Founder Profile & Clinical Grounding
+    # SLIDE 9: Founder Profile & Core Team
     # ==========================================
     slide9 = prs.slides.add_slide(blank_layout)
-    add_slide_header(slide9, "Founder Profile: Endoscopy Grounding & India Health Stack")
+    add_slide_header(slide9, "Founding Team & Clinical Grounding")
 
     add_card(
         slide9, Inches(0.8), Inches(1.8), Inches(5.6), Inches(5.0),
-        "Deep Endoscopy & Surgical Grounding",
+        "Founding Team Structure",
         [
-            "Author of girpolypposframesrealcolon: Creator of real colonoscopy polyp detection dataset.",
-            "Direct Clinical Ergonomics: Understands procedural realities—surgeons cannot glance at secondary monitors or unsterile inputs.",
-            "Clinical Safety First: Refuses to make optical malignancy claims; strictly enforces histopathology-first principles.",
-            "Built with Indian Clinical Reality in Mind: Fast-paced suites with high patient volume and mixed linguistic needs.",
+            "Gokul Rajasekar (Founder & Owner): Lead system architect; endoscopy procedural workflow & clinical OS design.",
+            "Varsha (Co-Founder): Clinical workflow design, ergonomics, and physician-in-the-loop validation.",
+            "Girupa (Co-Founder): AI dataset curator (girpolypposframesrealcolon); L4 vision deployment & CADe model tuning.",
+            "Jayasri (Co-Founder): Health informatics, ABDM FHIR R4 compliance, and hospital EMR interoperability.",
+            "Complementary Execution: Uniting deep clinical GI suite realities with modern Google Cloud infrastructure.",
         ],
-        badge="DOMAIN EXPERTISE"
+        badge="FOUNDING LEADERSHIP"
     )
 
     add_card(
         slide9, Inches(6.8), Inches(1.8), Inches(5.7), Inches(5.0),
-        "India Digital Health Integration",
+        "Domain Grounding & India Health Stack",
         [
-            "Ayushman Bharat Digital Mission (ABDM): Conforms to National Health Authority (NHA) protocols.",
-            "NRCeS FHIR R4 DiagnosticReportRecord: Native output bundles with SNOMED CT terminology.",
-            "Bilingual Patient Inclusivity: Tamil and English spoken discharge bridging post-sedation communication gaps.",
-            "MeitY Compliance: Localized data hosting in asia-south1 protecting Indian patient sovereignty.",
+            "Author of girpolypposframesrealcolon: Real colonoscopy polyp dataset powering verified visual aids.",
+            "Clinical Safety First: Refuses to make unverified optical malignancy claims; strictly enforces histopathology-first.",
+            "Ayushman Bharat Digital Mission (ABDM): Native compliance with NHA standards & NRCeS FHIR R4.",
+            "Bilingual Patient Inclusivity: Tamil and English spoken discharge bridging post-sedation comprehension gaps.",
+            "MeitY Data Sovereignty: Localized data hosting in asia-south1 protecting Indian patient sovereignty.",
         ],
-        badge="ABDM ALIGNMENT"
+        badge="CLINICAL EXCELLENCE"
     )
 
     # ==========================================

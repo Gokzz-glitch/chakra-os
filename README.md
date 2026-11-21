@@ -162,7 +162,7 @@ uvicorn main:app --host 0.0.0.0 --port 8080 --reload
 
 | Rubric Criteria | CHAKRA Implementation |
 | :--- | :--- |
-| **Founder Profile** | Endoscopy dataset author (`girpolypposframesrealcolon`); deep clinical GI workflow grounding; India ABDM / MeitY data sovereignty integration. |
+| **Founder Profile** | **Gokul Rajasekar** (Founder & Lead Architect); Co-Founders: **Varsha** (Clinical Ops), **Girupa** (AI Systems & `girpolypposframesrealcolon` dataset author), **Jayasri** (Compliance & ABDM FHIR R4); deep clinical GI workflow grounding; India MeitY data sovereignty integration. |
 | **Product Potential** | Day-1 deployable Non-SaMD documentation OS de-risking regulatory pathways while isolating white-light visual CADe; scope-agnostic universal camera bridge. |
 | **Market Viability** | Sub-cent unit economics (<$0.01/procedure) on Cloud Run scale-to-zero vs ~$20,000-$30,000/yr SaaS (~$40,000-$50,000 CapEx) proprietary hardware; addressable market of 20M+ colonoscopies in India and SE Asia. |
 | **Technical Architecture** | Zero-key least-privilege IAM runtime; dual-region MeitY compliance (`asia-south1`) + NVIDIA L4 GPU (`asia-southeast1`); depth-1 non-blocking WebSocket pipeline; Range/206 streaming with OpenCV fallback. |

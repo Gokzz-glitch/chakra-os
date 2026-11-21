@@ -62,9 +62,12 @@ flowchart TB
 
 ## 3. Evaluator Rubric Mapping
 
-### 1. Founder Profile & Domain Grounding
-- **Endoscopy Dataset Author:** Founded and curated by the author of the `girpolypposframesrealcolon` real-world colonoscopy polyp detection dataset.
-- **Deep Clinical Reality Awareness:** Understands clinical ergonomics—endoscopists cannot look away from surgical monitors, cannot touch physical keyboards in sterile suites, and will reject systems that generate false-positive optical malignancy claims.
+### 1. Founder Profile & Founding Team
+- **Gokul Rajasekar (Founder & Lead Architect):** Overall clinical OS architecture, endoscopy procedural workflow, and cloud systems engineering.
+- **Varsha (Co-Founder & Clinical Operations):** Clinical workflow ergonomics, physician usability validation, and procedural safety protocols.
+- **Girupa (Co-Founder & AI Systems):** Lead creator & curator of the `girpolypposframesrealcolon` real-world colonoscopy polyp detection dataset; NVIDIA L4 edge model deployment and CADe optimization.
+- **Jayasri (Co-Founder & Healthcare Compliance):** Ayushman Bharat Digital Mission (ABDM) integration, NRCeS FHIR R4 `DiagnosticReportRecord` schemas, and patient de-identification compliance.
+- **Deep Clinical Reality Grounding:** Understands clinical ergonomics—endoscopists cannot look away from surgical monitors, cannot touch physical keyboards in sterile suites, and will reject systems that generate false-positive optical malignancy claims.
 - **India Health Stack Alignment:** Implements Ayushman Bharat Digital Mission (ABDM) standards, NRCeS FHIR R4 `DiagnosticReportRecord` schemas, and patient de-identification via ABHA pseudonyms.
 
 ### 2. Product Potential & Regulatory Navigation
