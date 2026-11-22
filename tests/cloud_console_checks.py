@@ -6,7 +6,8 @@ import shutil
 import subprocess
 import sys
 from urllib.error import HTTPError
-from urllib.request import urlopen
+from urllib.parse import urlsplit
+from urllib.request import HTTPRedirectHandler, build_opener, urlopen
 
 PROJECT = "girpolypposframesrealcolon"
 SERVICE = "chakra-os"
@@ -68,7 +69,19 @@ def main():
                 code = error.code
             check("Anonymous doctor-page access denied", code in (401, 403), f"{endpoint} HTTP {code}")
     else:
-        print("NOT RUN | Verify the IAP sign-in flow in a browser")
+        class NoRedirect(HTTPRedirectHandler):
+            def redirect_request(self, *args):
+                return None
+
+        opener = build_opener(NoRedirect())
+        try:
+            with opener.open(status["url"] + "/v2/doctor", timeout=30) as response:
+                code, location = response.status, ""
+        except HTTPError as error:
+            code, location = error.code, error.headers.get("Location", "")
+        check("IAP redirects anonymous browser to Google sign-in",
+              code in (302, 303, 307) and urlsplit(location).hostname == "accounts.google.com",
+              f"HTTP {code}. An approved account must also complete the browser flow.")
     return 0 if all(checks) else 1
 
 

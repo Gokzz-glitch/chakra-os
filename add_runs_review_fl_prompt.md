@@ -13,6 +13,6 @@
 3. TEST, DEPLOY & PUSH:
    - Run `python -m pytest -v tests/test_chakra_v2.py` to confirm 100% pass.
    - Copy admin.html, doctor.html, and phone.html to templates/ so all templates stay synced.
-   - Redeploy chakra-os to asia-south1 (`--service-account=chakra-review-runtime@girpolypposframesrealcolon.iam.gserviceaccount.com --max-instances=1 --timeout=3600 --allow-unauthenticated`).
+   - Redeploy chakra-os to asia-south1 (`--service-account=chakra-review-runtime@girpolypposframesrealcolon.iam.gserviceaccount.com --max-instances=1 --timeout=3600 --no-allow-unauthenticated`).
    - Curl-verify GET /api/v2/runs and GET /api/v2/runs/export-fl-manifest on the live URL.
    - Commit and push to https://github.com/Gokzz-glitch/chakra-os (main).
