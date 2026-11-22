@@ -13,6 +13,8 @@ MODELS = {
     "sepnet": "models/sepnet/Weight_of_SEPNet.pth",
 }
 def run(model_key, weights, video, dest, limit=None):
+    from checkpoint_integrity import verify_checkpoint
+    verify_checkpoint(model_key, weights)
     from shutil import which
     import torch.nn.functional as F
     accelerator=os.getenv("EVAL_DEVICE","cuda")
@@ -78,7 +80,7 @@ def run(model_key, weights, video, dest, limit=None):
     return dict(compute_device=str(device),frames=count,skipped=0,flagged_frames=flags,fps=fps,elapsed_seconds=time.monotonic()-start,width=w,height=h,threshold=.70,comparison="strict_greater_than",mode="all_frames",checkpoint_sha256=hashlib.sha256(weights.read_bytes()).hexdigest())
 def cloud():
     from google.cloud import storage
-    bucket=storage.Client().bucket("girpolypposframesrealcolon-chakra-models")
+    bucket=storage.Client().bucket(os.environ["GCS_BUCKET"])
     rows=json.loads(bucket.blob("evaluation-runs/cohorts/mixed-v1.json").download_as_bytes())
     index=int(os.environ["CLOUD_RUN_TASK_INDEX"])
     if os.getenv("TASK_MAP"):

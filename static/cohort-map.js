@@ -3,7 +3,7 @@
   const dialog = document.getElementById('historyDialog');
   if (!holder || !dialog) return;
   const note = document.getElementById('patient'), detail = document.getElementById('visits');
-  const bucket = 'girpolypposframesrealcolon-chakra-models';
+  let deployment;
   const make = (tag, value) => {
     const element = document.createElement(tag); element.textContent = value; return element;
   };
@@ -14,7 +14,7 @@
     selected = row;
     for (const b of holder.querySelectorAll('button')) b.setAttribute('aria-pressed', String(b.textContent === row.patient_id));
     const folder = make('a', 'Open private run history in Google Cloud');
-    folder.href = 'https://console.cloud.google.com/storage/browser/' + bucket + '/evaluation-runs/' + row.patient_id + '?project=girpolypposframesrealcolon';
+    folder.href = 'https://console.cloud.google.com/storage/browser/' + encodeURIComponent(deployment.media_bucket) + '/evaluation-runs/' + row.patient_id + '?project=' + encodeURIComponent(deployment.project);
     folder.target = '_blank'; folder.rel = 'noopener';
     detail.replaceChildren(make('h3', row.patient_id), make('p', 'Synthetic hospital UHID · ' + row.demo_uhid), make('p', 'Synthetic ABHA · ' + row.demo_abha), make('p', row.source + ' · ' + row.annotation),
       make('p', row.frames.toLocaleString() + ' original frames · ' + row.fps.toFixed(2) + ' fps'),
@@ -49,6 +49,7 @@
     select(selected || cohort[0]);
   }
   async function load() {
+    deployment = await (await fetch('/api/v2/session')).json();
     note.textContent = 'Loading cohort…';
     try {
       const response = await fetch('/v2/assets/cohort-index.json');

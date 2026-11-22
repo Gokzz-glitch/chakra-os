@@ -1,8 +1,8 @@
 import pytest
-from fastapi.testclient import TestClient
+from conftest import WorkflowClient
 import main
 
-client = TestClient(main.app)
+client = WorkflowClient(main.app)
 
 
 def test_returning_patient_history_and_pathology_lookup():
@@ -134,7 +134,6 @@ def test_cross_hospital_security_boundary_isolation():
     assert blocked_res.status_code == 403
     assert "Cross-hospital data boundary violation" in blocked_res.json()["detail"]
 
-    # Authorized hospital query succeeds
+    # A caller-supplied tenant cannot change the identity binding
     allowed_res = client.get("/api/v2/patients/PATIENT-MUMBAI-99/history", headers={"X-Hospital-ID": "HOSP-MUMBAI-02"})
-    assert allowed_res.status_code == 200
-    assert allowed_res.json()["patient_id"] == "PATIENT-MUMBAI-99"
+    assert allowed_res.status_code == 403

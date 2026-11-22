@@ -8,6 +8,7 @@ import re
 from threading import Lock
 import time
 
+from security_settings import MEDIA_BUCKET, PROJECT
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import FileResponse, JSONResponse
 from google.cloud import storage
@@ -43,7 +44,7 @@ def live():
     with lock:
         if snapshot is None or time.monotonic()-last_check>=4:
             try:
-                bucket=storage.Client().bucket(os.getenv("GCS_BUCKET","girpolypposframesrealcolon-chakra-models"))
+                bucket=storage.Client().bucket(MEDIA_BUCKET)
                 blobs=[b for b in bucket.list_blobs(prefix="evaluation-runs/SIM-",match_glob="**/complete.json",
                              fields="items(name,generation),nextPageToken",timeout=12)
                        if receipt_path.fullmatch(b.name) and receipt_path.fullmatch(b.name)[1] in patients]
@@ -51,7 +52,7 @@ def live():
                 with ThreadPoolExecutor(max_workers=16) as pool:
                     for b,result in zip(missing,pool.map(read_receipt,missing)):
                         cache[b.name,b.generation]=result
-                snapshot={"patients":cohort,"models":models,"batch":batch,"bucket":bucket.name,
+                snapshot={"patients":cohort,"models":models,"batch":batch,"bucket":bucket.name,"project":PROJECT,
                           "runs":[cache[b.name,b.generation] for b in blobs],
                           "checked":datetime.datetime.now(datetime.timezone.utc).isoformat()}
                 last_check=time.monotonic()

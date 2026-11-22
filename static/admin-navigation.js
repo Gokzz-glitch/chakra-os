@@ -1,0 +1,1 @@
+(()=>{const nav=[...document.querySelectorAll('.side button.nav')],menu=document.querySelector('.mobile-sections');if(!menu)return;nav.forEach((b,i)=>{menu.add(new Option(b.textContent,i));b.addEventListener('click',()=>menu.value=i)});menu.selectedIndex=Math.max(0,nav.findIndex(b=>b.classList.contains('active')));menu.onchange=()=>nav[menu.selectedIndex].click()})();

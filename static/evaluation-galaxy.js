@@ -61,7 +61,7 @@
        const help=element('details','');help.append(element('summary','File access'));
        help.append(element('p','Choose the Google account that can view this project. A 403 means Google denied this request. If it persists, check access with the project owner.'));
        const folder=element('a','View run in Cloud Console');
-       folder.href='https://console.cloud.google.com/storage/browser/'+data.bucket+'/evaluation-runs/'+selected+'/'+m+'/'+data.batch+'?project=girpolypposframesrealcolon';
+       folder.href='https://console.cloud.google.com/storage/browser/'+data.bucket+'/evaluation-runs/'+selected+'/'+m+'/'+data.batch+ '?project=' + encodeURIComponent(data.project);
        folder.target='_blank';folder.rel='noopener';help.append(folder);box.append(help);
      }
      const note = p.run_notes?.[m];

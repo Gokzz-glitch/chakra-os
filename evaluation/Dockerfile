@@ -2,5 +2,7 @@ FROM asia-southeast1-docker.pkg.dev/girpolypposframesrealcolon/cloud-run-source-
 WORKDIR /eval
 RUN pip install --no-cache-dir timm google-cloud-storage imageio-ffmpeg einops
 COPY vendor vendor
-COPY worker.py replay_validation.py ./
+COPY worker.py checkpoint_hashes.json checkpoint_integrity.py replay_validation.py ./
+RUN useradd --system --create-home appuser
+USER appuser
 CMD ["python","-u","worker.py"]

@@ -1,3 +1,4 @@
+from security_settings import TENANT, REGION, PROJECT as PROJECT_ID, MEDIA_BUCKET as GCS_BUCKET
 import base64, datetime, io, json, os, re, wave
 from typing import Any, Dict, List, Optional, Tuple
 from google import genai
@@ -5,11 +6,9 @@ from google.genai import types
 from google.cloud import bigquery, storage
 from pydantic import BaseModel
 
-PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT", "girpolypposframesrealcolon")
 VERTEX_LOCATION = os.getenv("VERTEX_LOCATION", "global")
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
 TTS_MODEL = os.getenv("TTS_MODEL", "gemini-3.8-flash-lite-tts")
-GCS_BUCKET = os.getenv("GCS_BUCKET", "girpolypposframesrealcolon-chakra-models")
 BQ_DATASET = f"{PROJECT_ID}.chakra_clinical_dw"
 BQ_TABLE = f"{BQ_DATASET}.procedures"
 
@@ -31,7 +30,10 @@ class VoiceExtraction(BaseModel):
     clinical_note: str
 
 def scrub_phi(text: str) -> str:
-    """Zero-PHI scrubber complying with India DPDP Act 2023 and HIPAA Safe Harbor."""
+    """Redact common identifier formats in free text."""
+    text = re.sub(r"(?i)\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", "[REDACTED]", text)
+    text = re.sub(r"(?i)\b(?:SSN|social security(?: number)?)\s*[:#-]?\s*\d{3}[- ]?\d{2}[- ]?\d{4}\b", "[REDACTED]", text)
+    text = re.sub(r"(?i)\bpassport(?:\s+(?:no\.?|number|id))?\s*[:#-]?\s*[A-Z0-9]{6,12}\b", "[REDACTED]", text)
     # 1. 12-digit Indian National ID / Aadhaar patterns
     text = re.sub(r"\b\d{4}[\s-]?\d{4}[\s-]?\d{4}\b", "[ID-REDACTED]", text)
     # 2. 10-digit Indian Mobile phone numbers
@@ -42,10 +44,16 @@ def scrub_phi(text: str) -> str:
     text = re.sub(r"\b\d{2}-\d{4}-\d{4}-\d{4}\b", "[ABHA-REDACTED]", text)
     # 4. Medical Record Numbers (MRN / UHID / PID)
     text = re.sub(r"\b(MRN|UHID|PID)[-:\s]*[A-Za-z0-9]+\b", "[MRN-REDACTED]", text, flags=re.IGNORECASE)
-    # 5. Date of Birth patterns
-    text = re.sub(r"\b(DOB|dob|Date of Birth)[-:\s]*\d{1,2}[/-]\d{1,2}[/-]\d{2,4}\b", "[DOB-REDACTED]", text)
+    text = re.sub(r"(?i)\b(?:DOB|date of birth|born)\s*[:=-]?\s*(?:\d{1,4}[-/.]\d{1,2}[-/.]\d{1,4}|\d{1,2}\s+[a-z]+\s+\d{4}|[a-z]+\s+\d{1,2},?\s+\d{4})", "[DOB-REDACTED]", text)
     # 6. Explicit patient name headers
     text = re.sub(r"\b(Patient|Pt|Patient Name|Name)[-:\s]+([A-Z][a-z]+(\s+[A-Z][a-z]+)*)\b", r"\1: [NAME-REDACTED]", text)
+    for pattern in (
+        r"\b\d{3}-\d{2}-\d{4}\b",
+        r"\b\d{3}[ -]?\d{3}[ -]?\d{4}\b",
+        r"\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b",
+        r"\b[A-Z]\d{7}\b",
+    ):
+        text = re.sub(pattern, "[REDACTED]", text)
     return text.strip()
 
 def evaluate_bbps(r: int, t: int, l: int) -> Tuple[bool, str]:
@@ -166,6 +174,8 @@ def synthesize_discharge_audio(text: str, voice_name: str = "Kore") -> Dict[str,
     return {"error": last_err or "audio_unavailable"}
 
 def build_clinical_report(payload: Dict[str, Any], hitl_approved: bool = False) -> Dict[str, Any]:
+    timer = payload.get('withdrawal_time_seconds')
+    timer_text = 'incomplete' if timer is None else f'{timer/60:.1f} min'
     bbps = payload["bbps_scores"]
     bbps_ok, bbps_reason = evaluate_bbps(bbps["right"], bbps["transverse"], bbps["left"])
 
@@ -180,7 +190,7 @@ def build_clinical_report(payload: Dict[str, Any], hitl_approved: bool = False) 
         "post-procedure discharge notes in clear English and natural Tamil strictly grounded in the "
         "de-identified telemetry below (ZERO PHI). Explicitly note that histopathology is PENDING "
         "and never claim optical malignancy diagnosis. Include clear emergency return precautions.\n"
-        f"BBPS: {bbps_reason}. Withdrawal time: {payload['withdrawal_time_seconds']/60:.1f} min.\n"
+        f"BBPS: {bbps_reason}. Withdrawal time: {timer_text}.\n"
         f"Clinician-accepted candidates: {len(approved)}. Surveillance guidance: {surv_yr} yrs ({surv_reason}).\n"
         f"Doctor voice notes: {json.dumps(voice_notes)}\n"
         f"Telemetry JSON: {json.dumps(approved[:8])}"
@@ -237,7 +247,7 @@ def build_clinical_report(payload: Dict[str, Any], hitl_approved: bool = False) 
 
 def _ensure_bq_table(bq: bigquery.Client):
     ds = bigquery.Dataset(BQ_DATASET)
-    ds.location = "asia-south1"
+    ds.location = REGION
     bq.create_dataset(ds, exists_ok=True)
     schema = [
         bigquery.SchemaField("procedure_id", "STRING"),
@@ -264,7 +274,7 @@ def _ensure_bq_table(bq: bigquery.Client):
     bq.create_table(bigquery.Table(BQ_TABLE, schema=schema), exists_ok=True)
 
 def get_bq_analytics() -> Dict[str, Any]:
-    bq = bigquery.Client(project=PROJECT_ID, location="asia-south1")
+    bq = bigquery.Client(project=PROJECT_ID, location=REGION)
     _ensure_bq_table(bq)
     sql = f"""
       SELECT endoscopist_id, COUNT(DISTINCT procedure_id) AS total_procedures,
@@ -272,20 +282,20 @@ def get_bq_analytics() -> Dict[str, Any]:
              ROUND(100.0 * COUNTIF(polyps_detected_total > 0) / COUNT(DISTINCT procedure_id), 1) AS pdr_pct,
              ROUND(AVG(withdrawal_time_seconds / 60.0), 2) AS mean_withdrawal_min,
              ROUND(AVG(edge_mean_latency_ms), 1) AS mean_gpu_ms
-      FROM `{BQ_TABLE}` GROUP BY endoscopist_id ORDER BY total_procedures DESC LIMIT 10
+      FROM `{BQ_TABLE}` WHERE hospital_id = @tenant GROUP BY endoscopist_id ORDER BY total_procedures DESC LIMIT 10
     """
-    rows = [dict(r) for r in bq.query(sql).result()]
+    rows = [dict(r) for r in bq.query(sql, job_config=bigquery.QueryJobConfig(query_parameters=[bigquery.ScalarQueryParameter("tenant", "STRING", TENANT)])).result()]
     return {"table": BQ_TABLE, "mcp_endpoint": "https://bigquery.googleapis.com/mcp", "metrics": rows}
 
 def commit_and_query_bq(payload: Dict[str, Any], report: Dict[str, Any], hitl_approved: bool = False) -> Dict[str, Any]:
     if not hitl_approved:
         raise ValueError("Mandatory clinician HITL attestation required before BigQuery commit")
-    bq = bigquery.Client(project=PROJECT_ID, location="asia-south1")
+    bq = bigquery.Client(project=PROJECT_ID, location=REGION)
     _ensure_bq_table(bq)
     approved = payload.get("approved_findings", [])
     row = {
         "procedure_id": payload["procedure_id"],
-        "hospital_id": payload.get("hospital_id", "HOSP-CHENNAI-01"),
+        "hospital_id": TENANT,
         "department_id": "GASTRO-SUITE-B",
         "endoscopist_id": payload["endoscopist_id"],
         "patient_anonymized_id": payload["patient_anonymized_id"],

@@ -26,7 +26,7 @@ async def socket(ws: WebSocket, role: str):
 def test_http_grants_and_revocation():
     client = TestClient(app)
     assert client.post("/review").status_code == 401
-    signed = {"x-goog-iap-jwt-assertion": "synthetic"}
+    signed = {"origin":"http://testserver", "x-goog-iap-jwt-assertion": "synthetic"}
     with patch("clinical_access.identify", return_value=("test@example.invalid","clinician")) as identity:
         assert client.post("/review", headers=signed).json()["actor"] == "test@example.invalid"
         assert client.get("/review", headers={**signed,"x-hospital-id":"OTHER"}).status_code == 403
@@ -39,5 +39,5 @@ def test_http_grants_and_revocation():
 def test_websocket_role_enforced():
     with patch("clinical_access.identify", return_value=("test@example.invalid","operator")):
         with pytest.raises(WebSocketDisconnect):
-            with TestClient(app).websocket_connect("/ws/v2/example/doctor",headers={"x-goog-iap-jwt-assertion":"synthetic"}):
+            with TestClient(app).websocket_connect("/ws/v2/example/doctor",headers={"origin":"http://testserver","x-goog-iap-jwt-assertion":"synthetic"}):
                 pass

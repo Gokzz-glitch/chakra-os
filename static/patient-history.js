@@ -19,7 +19,7 @@ function renderGraph(data){
   const links=shape('g',{'stroke':'#617993','stroke-width':2},svg);
   const nodes=shape('g',{},svg);
   function node(x,y,r,color,label,action){
-    const group=shape('g',{role:'button',tabindex:'0','aria-label':label,style:'cursor:pointer'},nodes);
+    const group=shape('g',{role:'button',tabindex:'0','aria-label':label},nodes);
     shape('circle',{cx:x,cy:y,r,fill:color,stroke:'#d4deef','stroke-width':1.5},group);
     const caption=shape('text',{x,y:y+r+17,fill:'#f3f5ff','text-anchor':'middle','font-size':13},group);
     caption.textContent=label;
@@ -76,6 +76,9 @@ async function load(){
         card.append(el('p','Pathology: '+(f.pathology_status||'Unrecorded')));
         if(f.pathology_status==='SIGNED' && lab){
           card.append(el('p',lab.diagnosis||'Diagnosis unavailable'),el('small','Signed by '+(lab.signed_by||'unknown')+' · '+(lab.signed_at||'time unavailable')));
+        }
+        for (const entry of f.pathology_addenda || []) {
+          card.append(el('p', 'Addendum: '+entry.diagnosis), el('small', entry.signed_at));
         }
         section.append(card);
       }

@@ -1,4 +1,9 @@
-import asyncio, base64, datetime, io, json, os, random, re, tempfile, time, uuid
+import secrets, logging, binascii
+import pathology_journal
+import security_windows
+from security_settings import HEADERS, TENANT, REGION, PROJECT, MEDIA_BUCKET as GCS_BUCKET, VISION_URL, browser_origins
+import asyncio, base64, datetime, io, json, os, re, tempfile, time, uuid
+from typing import Literal
 from collections import OrderedDict, deque
 from ipaddress import ip_address
 from typing import Any, Dict, List, Optional
@@ -7,7 +12,7 @@ from fastapi import FastAPI, File, Form, Header, HTTPException, Request, Respons
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, RedirectResponse, StreamingResponse, FileResponse, JSONResponse
 from google.cloud import storage
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, StrictBool
 from clinical_pipeline import (
     build_clinical_report,
     commit_and_query_bq,
@@ -28,16 +33,7 @@ app = FastAPI(
     openapi_url=None if is_prod else "/openapi.json",
 )
 
-ALLOWED_ORIGINS = [
-    "https://chakra-os-219670109842.asia-south1.run.app",
-    "https://chakra-os-m7s24zsk6q-el.a.run.app",
-    "https://chakra-vision-219670109842.asia-southeast1.run.app",
-    "http://localhost:8080",
-    "http://127.0.0.1:8080",
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "http://testserver",
-]
+ALLOWED_ORIGINS = sorted(browser_origins())
 
 app.add_middleware(
     CORSMiddleware,
@@ -53,7 +49,7 @@ async def global_exception_handler(request: Request, exc: Exception):
         return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
     req_id = uuid.uuid4().hex[:8]
     return JSONResponse(
-        status_code=500,
+        status_code=500, headers=HEADERS,
         content={
             "detail": "An internal clinical OS error occurred. Please contact systems administrator.",
             "request_id": req_id,
@@ -61,8 +57,60 @@ async def global_exception_handler(request: Request, exc: Exception):
         }
     )
 
+pairing_failures = OrderedDict()
+paired_actors = {}
+
+
+def pairing_expired(actor, room):
+    return (time.monotonic() >= room["pairing_expires_at"]
+            and not (room.get("started_ts") is not None and actor in paired_actors.get(room["code"], set())))
+
+
 request_windows = OrderedDict()
+
+
+async def window_blocked(kind, actor, seconds, limit, record=True):
+    if is_prod:
+        try:
+            return await asyncio.to_thread(security_windows.blocked, kind, actor, seconds, limit, record)
+        except Exception:
+            logging.getLogger("clinical").warning('{"event":"security_counter_unavailable"}')
+            return True
+    windows = pairing_failures if kind == "pairing" else request_windows
+    now = time.monotonic()
+    entries = windows.setdefault(actor, deque())
+    windows.move_to_end(actor)
+    if len(windows) > 8192:
+        windows.popitem(last=False)
+    while entries and entries[0] <= now - seconds:
+        entries.popleft()
+    if len(entries) >= limit:
+        return True
+    if record:
+        entries.append(now)
+    return False
+
+
+async def pairing_locked(actor, code):
+    invalid = code not in ROOMS or pairing_expired(actor, ROOMS[code])
+    return await window_blocked("pairing", actor, 900, 5, invalid)
+
+
 metered_action = re.compile(r"^/api/v2/(?:rooms/[^/]+/(?:voice-note|end-report|tts|admin-test-frame)|voice-parse|report|tts|admin/test-frame)/?$")
+
+def rate_identity(request):
+    email = getattr(request.state, "clinician_email", None)
+    if email:
+        return email
+    peer = request.client.host if request.client else "unknown"
+    trusted = {ip.strip() for ip in os.getenv("TRUSTED_PROXY_IPS", "").split(",")}
+    if peer in trusted:
+        try:
+            return str(ip_address(request.headers.get("x-forwarded-for", "").split(",")[-1].strip()))
+        except ValueError:
+            pass
+    return peer
+
 
 @app.middleware("http")
 async def security_and_rate_limit_middleware(request: Request, call_next):
@@ -70,31 +118,18 @@ async def security_and_rate_limit_middleware(request: Request, call_next):
     if env_curr == "production" and request.url.path in ("/docs", "/redoc", "/openapi.json"):
         return Response(content=json.dumps({"detail": "Not Found"}), status_code=404, media_type="application/json")
 
+    room_match = re.fullmatch(r"/api/v2/rooms/([^/]+)(?:/.*)?", request.url.path.rstrip("/"))
+    if room_match and await pairing_locked(request.state.clinician_email, room_match[1]):
+        return JSONResponse({"detail": "Too many unsuccessful pairing attempts"}, status_code=429)
+    if room_match and room_match[1] in ROOMS and pairing_expired(request.state.clinician_email, ROOMS[room_match[1]]):
+        return JSONResponse({"detail":"Pairing expired"}, status_code=404)
+    if room_match and room_match[1] in ROOMS:
+        paired_actors.setdefault(room_match[1], set()).add(request.state.clinician_email)
     limited = False
-    if request.method == "POST" and metered_action.fullmatch(request.url.path):
-        client = request.client.host if request.client else "unknown"
-        fwd = request.headers.get("x-forwarded-for", "").strip()
-        if fwd:
-            first_ip = fwd.split(",")[0].strip()
-            try:
-                client = str(ip_address(first_ip))
-            except ValueError:
-                client = first_ip
-        now = time.time()
-        window = request_windows.get(client)
-        if window is None:
-            if len(request_windows) >= 8192:
-                request_windows.popitem(last=False)
-            window = request_windows[client] = deque()
-
-        while window and window[0] <= now - 60:
-            window.popleft()
-
-        if len(window) >= 30:
-            limited = True
-        else:
-            window.append(now)
-            request_windows.move_to_end(client)
+    path = request.url.path.rstrip("/")
+    if (metered_action.fullmatch(path) or path == "/api/analyze" or path == "/api/v2/rooms"
+            or path.startswith("/api/v2/patients/") or path.endswith("/signoff")):
+        limited = await window_blocked("requests", rate_identity(request), 60, 30)
 
     if limited:
         response = Response(
@@ -111,6 +146,16 @@ async def security_and_rate_limit_middleware(request: Request, call_next):
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
     response.headers["Strict-Transport-Security"] = "max-age=63072000; includeSubDomains"
     return response
+
+@app.get("/static/{asset}")
+def page_asset(asset: str):
+    if not re.fullmatch(r"[a-zA-Z0-9_.-]+\.(?:js|css)", asset):
+        raise HTTPException(404, "Unknown asset")
+    filename = os.path.join("static", asset)
+    if not os.path.isfile(filename):
+        raise HTTPException(404, "Unknown asset")
+    return FileResponse(filename)
+
 
 @app.get("/v2/doctor/history", response_class=HTMLResponse)
 def doctor_history_map():
@@ -132,8 +177,6 @@ def cohort_script():
 def patient_history_script():
     return FileResponse("static/patient-history.js", media_type="text/javascript")
 
-VISION_URL = os.getenv("VISION_URL", "https://chakra-vision-219670109842.asia-southeast1.run.app").rstrip("/")
-GCS_BUCKET = os.getenv("GCS_BUCKET", "girpolypposframesrealcolon-chakra-models")
 DEMO_CACHE_DIR = os.path.join(tempfile.gettempdir(), "chakra_demo_videos")
 
 SESSIONS_V1: Dict[str, Any] = {}
@@ -165,6 +208,31 @@ async def _broadcast(code: str, roles: List[str], message: Dict[str, Any]):
             room_socks[role].remove(ws)
 
 # ---- Helper Functions: Video Security, Zero-Disk Direct Streaming & Ephemeral Frame Extraction ----
+MAX_IMAGE_BYTES = 5 * 1024 * 1024
+
+
+def validate_image(raw):
+    if len(raw) > MAX_IMAGE_BYTES:
+        raise HTTPException(413, "Frame exceeds 5 MiB")
+    if not raw.startswith((b"\xff\xd8\xff", b"\x89PNG\r\n\x1a\n")):
+        raise HTTPException(415, "Expected JPEG or PNG")
+    return raw
+
+
+def safe_filename(filename):
+    basename = (filename or "frame").replace("\\", "/").rsplit("/", 1)[-1]
+    return re.sub(r"[^A-Za-z0-9._-]", "_", basename)[:128].strip(".") or "frame"
+
+
+def decode_frame(value):
+    if not isinstance(value, str) or len(value) > 4 * ((MAX_IMAGE_BYTES + 2) // 3) + 32:
+        raise HTTPException(413, "Invalid frame length")
+    try:
+        return validate_image(base64.b64decode(value.split(",", 1)[-1], validate=True))
+    except (ValueError, binascii.Error):
+        raise HTTPException(400, "Invalid frame encoding")
+
+
 def _sanitize_video_name(name: str) -> str:
     if not name or ".." in name or "/" in name or "\\" in name or "\x00" in name:
         raise HTTPException(status_code=400, detail="Invalid video name: path traversal blocked")
@@ -177,7 +245,7 @@ def _stream_video_direct(clean_name: str, range_header: Optional[str], media_typ
     from google.api_core.exceptions import NotFound
     local_path = os.path.join(DEMO_CACHE_DIR, clean_name)
     try:
-        client = storage.Client(project=os.getenv("GOOGLE_CLOUD_PROJECT", "girpolypposframesrealcolon"))
+        client = storage.Client(project=PROJECT)
         blob = client.bucket(GCS_BUCKET).blob(f"demo_videos/{clean_name}")
         blob.reload()
         size = blob.size
@@ -235,7 +303,7 @@ def _extract_video_frame(clean_name: str, frame_idx: int = 0) -> bytes:
     downloaded_tmp = False
     if not os.path.exists(vid_tmp_path) or os.path.getsize(vid_tmp_path) == 0:
         try:
-            st = storage.Client(project=os.getenv("GOOGLE_CLOUD_PROJECT", "girpolypposframesrealcolon"))
+            st = storage.Client(project=PROJECT)
             blob = st.bucket(GCS_BUCKET).blob(f"demo_videos/{clean_name}")
             blob.download_to_filename(vid_tmp_path)
             downloaded_tmp = True
@@ -311,16 +379,15 @@ async def warmup():
 
 @app.post("/api/analyze")
 async def v1_analyze(
-    file: UploadFile = File(...),
-    bbps_r: int = Form(3), bbps_t: int = Form(3), bbps_l: int = Form(2),
-    withdrawal_sec: int = Form(540), endoscopist: str = Form("DR-GOKUL-R")
+    request: Request, file: UploadFile = File(...),
+    bbps_r: int = Form(..., ge=0, le=3), bbps_t: int = Form(..., ge=0, le=3), bbps_l: int = Form(..., ge=0, le=3),
+    withdrawal_sec: int = Form(..., ge=0)
 ):
-    img_bytes = await file.read()
-    vr = await HTTP_CLIENT.post(f"{VISION_URL}/detect", files={"file": (file.filename, img_bytes, file.content_type)})
-    vision = vr.json()
+    img_bytes = validate_image(await file.read(MAX_IMAGE_BYTES + 1))
+    vision = await detect_image(img_bytes, safe_filename(file.filename))
     proc_id = f"PROC-{datetime.date.today().strftime('%Y%m%d')}-{uuid.uuid4().hex[:6].upper()}"
     payload = {
-        "procedure_id": proc_id, "endoscopist_id": endoscopist,
+        "procedure_id": proc_id, "endoscopist_id": request.state.clinician_email,
         "patient_anonymized_id": f"ABHA-HASH-{uuid.uuid4().hex[:6].upper()}",
         "withdrawal_time_seconds": withdrawal_sec,
         "bbps_scores": {"right": bbps_r, "transverse": bbps_t, "left": bbps_l},
@@ -330,8 +397,13 @@ async def v1_analyze(
     SESSIONS_V1[proc_id] = payload
     return {"vision": vision, "report": report}
 
+class SignoffReq(BaseModel):
+    hitl_attested: StrictBool
+
 @app.post("/api/signoff/{proc_id}")
-def v1_signoff(proc_id: str, request: Request):
+def v1_signoff(proc_id: str, request: Request, attestation: "SignoffReq"):
+    if not attestation.hitl_attested:
+        raise HTTPException(400, "Clinician attestation required")
     if proc_id not in SESSIONS_V1:
         raise HTTPException(404, "Procedure ID not found")
     payload = dict(SESSIONS_V1[proc_id], signed_by=request.state.clinician_email)
@@ -345,23 +417,20 @@ class RoomConfigUpdate(BaseModel):
     worker: str = "cloud_run_l4"
     endoscopist_id: str = "DR-GOKUL-R"
     patient_label: str = "DEMO-PATIENT-01"
-    bbps_right: int = 3
-    bbps_transverse: int = 3
-    bbps_left: int = 2
+    bbps_right: Optional[int] = Field(None, ge=0, le=3)
+    bbps_transverse: Optional[int] = Field(None, ge=0, le=3)
+    bbps_left: Optional[int] = Field(None, ge=0, le=3)
 
 class VoiceNoteReq(BaseModel):
     transcript: str = Field(..., max_length=2000)
 
 class FindingReviewReq(BaseModel):
     finding_id: str
-    decision: str  # "accepted" | "dismissed"
+    decision: Literal["accepted", "dismissed"]
 
 class TtsReq(BaseModel):
     text: str
     voice_name: str = "Kore"
-
-class SignoffReq(BaseModel):
-    hitl_attested: bool
 
 class PatientConsentReq(BaseModel):
     aware_of_procedure: bool = True
@@ -383,19 +452,41 @@ def standalone_report(payload: Dict[str, Any]):
 
 @app.post("/api/v2/tts")
 def standalone_tts(req: TtsReq):
-    audio_bytes = synthesize_discharge_audio(req.text, req.voice_name)
-    return StreamingResponse(io.BytesIO(audio_bytes), media_type="audio/wav")
+    result = synthesize_discharge_audio(req.text, req.voice_name)
+    if not result.get("audio_b64"):
+        raise HTTPException(503, "Speech synthesis unavailable")
+    return Response(base64.b64decode(result["audio_b64"], validate=True), media_type="audio/wav")
 
 @app.post("/api/v2/admin/test-frame")
 async def standalone_admin_test_frame(file: UploadFile = File(...)):
-    raw = await file.read()
-    return {
-        "device": "Cloud Run NVIDIA L4 (Preview)",
-        "latency_ms": 22.4,
-        "count": 0,
-        "detections": [],
-        "overlay_jpg_b64": base64.b64encode(raw).decode(),
-    }
+    raw = validate_image(await file.read(MAX_IMAGE_BYTES + 1))
+    return await detect_image(raw, safe_filename(file.filename))
+
+
+async def detect_image(raw, filename, confidence=None, timeout=10):
+    try:
+        if not VISION_URL:
+            raise ValueError("Inference service is unconfigured")
+        response = await HTTP_CLIENT.post(
+            f"{VISION_URL}/detect", params={"conf": confidence} if confidence is not None else {},
+            files={"file": (filename, raw, "image/png" if raw.startswith(b"\x89PNG") else "image/jpeg")},
+            timeout=timeout)
+        response.raise_for_status()
+        result = response.json()
+        if not isinstance(result.get("detections"), list) or type(result.get("count")) is not int:
+            raise ValueError("Incomplete inference result")
+        if result["count"] != len(result["detections"]):
+            raise ValueError("Inconsistent detection count")
+        return result
+    except (httpx.HTTPError, OSError, ValueError, AttributeError) as exc:
+        raise HTTPException(503, "Inference is unavailable") from exc
+
+
+@app.get("/api/v2/session")
+def session_context(request: Request):
+    return {"role": request.state.role, "tenant": TENANT, "region": REGION, "project": PROJECT,
+            "vision_region": os.getenv("VISION_REGION"), "media_bucket": GCS_BUCKET}
+
 
 @app.get("/api/v2/catalog")
 def get_catalog():
@@ -413,7 +504,7 @@ def analytics():
 def list_demo_videos():
     videos = []
     try:
-        st = storage.Client(project=os.getenv("GOOGLE_CLOUD_PROJECT", "girpolypposframesrealcolon"))
+        st = storage.Client(project=PROJECT)
         bucket = st.bucket(GCS_BUCKET)
         blobs = list(st.list_blobs(bucket, prefix="demo_videos/"))
         for b in blobs:
@@ -485,12 +576,20 @@ def get_demo_video_frame(name: str, idx: int = 0):
     )
 
 @app.post("/api/v2/rooms")
-def create_room():
-    code = str(random.randint(100000, 999999))
+async def create_room():
+    for old_code, old_room in list(ROOMS.items()):
+        if old_room["pairing_expires_at"] <= time.monotonic() and not old_room.get("started_ts") and not any(SOCKETS.get(old_code, {}).values()):
+            paired_actors.pop(old_code, None)
+            ROOMS.pop(old_code)
+            SOCKETS.pop(old_code, None)
+    if len(ROOMS) >= 4096:
+        raise HTTPException(503, "Room capacity reached")
+    code = str(100000 + secrets.randbelow(900000))
     while code in ROOMS:
-        code = str(random.randint(100000, 999999))
+        code = str(100000 + secrets.randbelow(900000))
     proc_id = f"PROC-{datetime.date.today().strftime('%Y%m%d')}-{code}"
     ROOMS[code] = {
+        "pairing_expires_at": time.monotonic() + 900,
         "code": code,
         "procedure_id": proc_id,
         "patient_anonymized_id": f"ABHA-HASH-{code}",
@@ -502,7 +601,7 @@ def create_room():
             "consent_data_sharing": False,
             "consent_id": None,
             "verified_at": None,
-            "hospital_id": "HOSP-CHENNAI-01",
+            "hospital_id": TENANT,
         },
         "model": "yolovit_yolo",
         "conf": 0.45,
@@ -510,25 +609,29 @@ def create_room():
         "phone_connected": False,
         "doctor_started": False,
         "started_ts": None,
-        "withdrawal_sec": 0,
-        "bbps_scores": {"right": 3, "transverse": 3, "left": 2},
+        "withdrawal_sec": None,
+        "bbps_scores": dict.fromkeys(("right", "transverse", "left")),
         "frames_processed": 0,
         "latencies": [],
         "in_flight": False,
         "findings": [],
         "voice_notes": [],
         "suspected_location": "Cecum / Ascending",
-        "max_mm": 6.0,
+        "max_mm": None,
         "last_report": None,
     }
     SOCKETS[code] = {"admin": [], "phone": [], "doctor": []}
     return ROOMS[code]
 
 @app.get("/api/v2/rooms/{code}")
-def get_room(code: str):
+def get_room(code: str, request: Request):
     if code not in ROOMS:
         raise HTTPException(404, "Pairing code not found")
     r = ROOMS[code]
+    if request.state.role == "operator":
+        return {key: r[key] for key in (
+            "code", "procedure_id", "model", "conf", "worker", "endoscopist_id", "patient_label",
+            "phone_connected", "doctor_started", "frames_processed")}
     return {k: v for k, v in r.items() if k != "in_flight"}
 
 @app.post("/api/v2/rooms/{code}/patient-consent")
@@ -551,7 +654,7 @@ async def verify_patient_consent(code: str, req: PatientConsentReq):
         "verified_at": now_iso,
         "patient_signature": req.patient_signature or "PATIENT_VERIFIED",
         "patient_anonymized_id": r["patient_anonymized_id"],
-        "hospital_id": "HOSP-CHENNAI-01",
+        "hospital_id": TENANT,
         "language": req.language,
         "standard": "India DPDP Act 2023 & ABDM FHIR R4 Consent",
     }
@@ -569,25 +672,48 @@ def get_patient_consent(code: str):
     return {"ok": True, "patient_consent": ROOMS[code].get("patient_consent", {"verified": False})}
 
 @app.patch("/api/v2/rooms/{code}/config")
-async def update_config(code: str, cfg: RoomConfigUpdate):
+async def update_config(code: str, cfg: RoomConfigUpdate, request: Request):
     if code not in ROOMS:
         raise HTTPException(404, "Pairing code not found")
     r = ROOMS[code]
+    r["last_payload"] = None
     r["model"] = cfg.model
     r["conf"] = max(0.1, min(0.95, cfg.conf))
     r["worker"] = cfg.worker
     r["endoscopist_id"] = cfg.endoscopist_id
     r["patient_label"] = cfg.patient_label
-    r["bbps_scores"] = {"right": cfg.bbps_right, "transverse": cfg.bbps_transverse, "left": cfg.bbps_left}
     await _broadcast(code, ["admin", "doctor", "phone"], {"type": "config_updated", "config": cfg.model_dump()})
-    return {"ok": True, "room": get_room(code)}
+    return {"ok": True, "room": get_room(code, request)}
+
+class ClinicalMeasurements(BaseModel):
+    right: int = Field(ge=0, le=3)
+    transverse: int = Field(ge=0, le=3)
+    left: int = Field(ge=0, le=3)
+    max_mm: float = Field(ge=0, allow_inf_nan=False)
+
+
+@app.post("/api/v2/rooms/{code}/measurements")
+async def confirm_measurements(code: str, entry: ClinicalMeasurements):
+    if code not in ROOMS:
+        raise HTTPException(404, "Room unavailable")
+    room = ROOMS[code]
+    room["bbps_scores"] = entry.model_dump(exclude={"max_mm"})
+    room["max_mm"] = entry.max_mm
+    room["measurements_confirmed"] = True
+    room["last_payload"] = None
+    return {"ok": True}
+
 
 @app.post("/api/v2/rooms/{code}/doctor-start")
 async def doctor_start(code: str):
     if code not in ROOMS:
         raise HTTPException(404, "Pairing code not found")
     r = ROOMS[code]
+    if r["doctor_started"]:
+        return {"ok": True, "doctor_started": True}
+    r["last_payload"] = None
     r["doctor_started"] = True
+    r["withdrawal_sec"] = None
     r["started_ts"] = time.time()
     r["in_flight"] = False
     await _broadcast(code, ["admin", "doctor", "phone"], {"type": "procedure_started", "started_ts": r["started_ts"]})
@@ -600,9 +726,10 @@ async def review_finding(code: str, req: FindingReviewReq):
     r = ROOMS[code]
     for f in r["findings"]:
         if f["id"] == req.finding_id:
+            r["last_payload"] = None
             f["status"] = req.decision
             break
-    await _broadcast(code, ["admin", "doctor"], {"type": "findings_updated", "findings": r["findings"]})
+    await _broadcast(code, ["doctor"], {"type": "findings_updated", "findings": r["findings"]})
     return {"ok": True, "findings": r["findings"]}
 
 @app.post("/api/v2/rooms/{code}/voice-note")
@@ -613,13 +740,15 @@ async def add_voice_note(code: str, req: VoiceNoteReq):
         raise HTTPException(400, "Transcript exceeds maximum allowed length of 2,000 characters")
     r = ROOMS[code]
     parsed = parse_voice_note(req.transcript)
+    r["measurements_confirmed"] = False
+    r["last_payload"] = None
     if parsed.get("bbps_right") is not None: r["bbps_scores"]["right"] = int(parsed["bbps_right"])
     if parsed.get("bbps_transverse") is not None: r["bbps_scores"]["transverse"] = int(parsed["bbps_transverse"])
     if parsed.get("bbps_left") is not None: r["bbps_scores"]["left"] = int(parsed["bbps_left"])
     if parsed.get("suspected_location"): r["suspected_location"] = parsed["suspected_location"]
     if parsed.get("suspected_size_mm"): r["max_mm"] = float(parsed["suspected_size_mm"])
     r["voice_notes"].append(parsed["clinical_note"])
-    await _broadcast(code, ["admin", "doctor"], {
+    await _broadcast(code, ["doctor"], {
         "type": "voice_parsed", "parsed": parsed, "bbps_scores": r["bbps_scores"],
         "suspected_location": r["suspected_location"], "voice_notes": r["voice_notes"]
     })
@@ -630,28 +759,11 @@ async def admin_test_frame(code: str, file: UploadFile = File(...)):
     if code not in ROOMS:
         raise HTTPException(404, "Pairing code not found")
     r = ROOMS[code]
-    raw = await file.read()
-    res = None
-    if r.get("worker") == "cloud_run_l4" and VISION_URL:
-        try:
-            vr = await HTTP_CLIENT.post(
-                f"{VISION_URL}/detect",
-                params={"conf": r["conf"]},
-                files={"file": (file.filename or "test.jpg", raw, file.content_type or "image/jpeg")},
-                timeout=10.0,
-            )
-            res = vr.json()
-        except Exception:
-            pass
-    if res is None:
-        res = {
-            "device": "CPU Preview Mode",
-            "latency_ms": 14.0,
-            "count": 0,
-            "detections": [],
-            "overlay_jpg_b64": base64.b64encode(raw).decode(),
-        }
-    _record_test_frame_run(r, file.filename or "admin_test_frame.jpg", res)
+    raw = validate_image(await file.read(MAX_IMAGE_BYTES + 1))
+    if r["worker"] != "cloud_run_l4":
+        raise HTTPException(503, "Selected worker does not support inference")
+    res = await detect_image(raw, safe_filename(file.filename), r["conf"])
+    _record_test_frame_run(r, safe_filename(file.filename) or "admin_test_frame.jpg", res)
     return res
 
 @app.post("/api/v2/rooms/{code}/end-report")
@@ -660,8 +772,8 @@ async def end_and_generate_report(code: str):
         raise HTTPException(404, "Pairing code not found")
     r = ROOMS[code]
     r["doctor_started"] = False
-    elapsed = int(time.time() - r["started_ts"]) if r["started_ts"] else 390
-    r["withdrawal_sec"] = max(elapsed, 60)
+    if r["withdrawal_sec"] is None and r["started_ts"] is not None:
+        r["withdrawal_sec"] = max(0, int(time.time() - r["started_ts"]))
     approved = [f for f in r["findings"] if f.get("status") == "accepted"]
     gcs_uri = None
     if approved and approved[0].get("thumb_b64"):
@@ -681,6 +793,8 @@ async def end_and_generate_report(code: str):
         "edge_model": f"{r['model']} ({r['worker']})",
         "evidence_gcs_uri": gcs_uri,
     }
+    if any(v is None for v in r["bbps_scores"].values()):
+        raise HTTPException(409, "Enter all three bowel preparation scores")
     report = build_clinical_report(payload, hitl_approved=False)
     r["last_payload"] = payload
     r["last_report"] = report
@@ -701,12 +815,16 @@ async def room_signoff(code: str, req: SignoffReq, request: Request):
     if not req.hitl_attested:
         raise HTTPException(400, "Mandatory clinician HITL attestation required before BigQuery commit")
     r = ROOMS[code]
+    if not r.get("measurements_confirmed") or r.get("withdrawal_sec") is None:
+        raise HTTPException(409, "Confirm clinical measurements and record withdrawal time before sign-off")
     if not r.get("last_payload"):
         raise HTTPException(400, "Generate report before sign-off")
+    if any(f.get("status") not in {"accepted", "dismissed"} for f in r["findings"]):
+        raise HTTPException(409, "Review pending findings before sign-off")
     r["last_payload"]["signed_by"] = request.state.clinician_email
     final_report = build_clinical_report(r["last_payload"], hitl_approved=True)
     bq_res = commit_and_query_bq(r["last_payload"], final_report, hitl_approved=True)
-    await _broadcast(code, ["admin", "doctor"], {"type": "signed_off", "bigquery": bq_res})
+    await _broadcast(code, ["doctor"], {"type": "signed_off", "bigquery": bq_res})
     return {"report": final_report, "bigquery": bq_res}
 
 # ---- Real-Time WebSocket Room (Depth-1 Non-Blocking L4 Relay) ----
@@ -718,34 +836,10 @@ async def _process_phone_frame(code: str, msg: Dict[str, Any]):
         return
     try:
         raw_b64 = msg.get("image_b64", "")
-        if not raw_b64:
-            return
-        raw = base64.b64decode(raw_b64.split(",")[-1])
-        if r["worker"] == "cloud_run_l4" and VISION_URL:
-            try:
-                vr = await HTTP_CLIENT.post(
-                    f"{VISION_URL}/detect",
-                    params={"conf": r["conf"]},
-                    files={"file": ("frame.jpg", raw, "image/jpeg")},
-                    timeout=3.0,
-                )
-                vision = vr.json()
-            except Exception:
-                vision = {
-                    "device": "NVIDIA L4 (Timeout Fallback)",
-                    "latency_ms": 28.0,
-                    "count": 0,
-                    "detections": [],
-                    "overlay_jpg_b64": raw_b64.split(",")[-1],
-                }
-        else:
-            vision = {
-                "device": "CPU Preview Mode",
-                "latency_ms": 12.0,
-                "count": 0,
-                "detections": [],
-                "overlay_jpg_b64": raw_b64.split(",")[-1],
-            }
+        raw = decode_frame(raw_b64)
+        if r["worker"] != "cloud_run_l4" or not VISION_URL:
+            raise RuntimeError("Inference backend unavailable")
+        vision = await detect_image(raw, "frame", r["conf"], timeout=3)
 
         r["frames_processed"] += 1
         lat = float(vision.get("latency_ms", 0.0))
@@ -762,12 +856,13 @@ async def _process_phone_frame(code: str, msg: Dict[str, Any]):
                     "location": r["suspected_location"],
                     "morphology": "Candidate Polyp (CADe Only)",
                     "pathology": "PENDING",
-                    "status": "accepted",
+                    "status": "pending",
                     "thumb_b64": vision.get("overlay_jpg_b64", ""),
                 })
-                await _broadcast(code, ["admin", "doctor"], {"type": "findings_updated", "findings": r["findings"]})
+                await _broadcast(code, ["doctor"], {"type": "findings_updated", "findings": r["findings"]})
 
-        await _broadcast(code, ["doctor", "admin"], {
+        await _broadcast(code, ["admin"], {"type": "frame_status", "frames_processed": r["frames_processed"], "latency_ms": lat})
+        await _broadcast(code, ["doctor"], {
             "type": "hud_frame",
             "overlay_jpg_b64": vision.get("overlay_jpg_b64", ""),
             "device": vision.get("device", "NVIDIA L4"),
@@ -777,17 +872,22 @@ async def _process_phone_frame(code: str, msg: Dict[str, Any]):
             "frames_processed": r["frames_processed"],
             "source": msg.get("source", "live"),
         })
-    except Exception:
-        pass
+    except Exception as exc:
+        logging.getLogger("clinical").warning(json.dumps({"event": "ai_degraded", "error_type": type(exc).__name__}))
+        await _broadcast(code, ["doctor", "admin"], {"type": "ai_degraded", "message": "AI unavailable. Review the live feed manually."})
     finally:
         if r:
             r["in_flight"] = False
 
 @app.websocket("/ws/v2/{code}/{role}")
 async def ws_room(ws: WebSocket, code: str, role: str):
-    if code not in ROOMS or role not in ("admin", "phone", "doctor"):
+    if await pairing_locked(ws.state.clinician_email, code):
+        await ws.close(code=1008)
+        return
+    if code not in ROOMS or pairing_expired(ws.state.clinician_email, ROOMS[code]) or role not in ("admin", "phone", "doctor"):
         await ws.close(code=4004)
         return
+    paired_actors.setdefault(code, set()).add(ws.state.clinician_email)
     await ws.accept()
     SOCKETS[code][role].append(ws)
     r = ROOMS[code]
@@ -799,6 +899,11 @@ async def ws_room(ws: WebSocket, code: str, role: str):
             msg = await ws.receive_json()
             if role == "phone" and msg.get("type") == "frame":
                 # Strict rule: Live feed & AI overlay run ONLY after Doctor clicks Start
+                try:
+                    decode_frame(msg.get("image_b64"))
+                except HTTPException:
+                    await ws.close(code=1009)
+                    return
                 if not r["doctor_started"]:
                     await _broadcast(code, ["admin", "doctor"], {"type": "standby_heartbeat", "phone_connected": True})
                     continue
@@ -818,24 +923,23 @@ async def ws_room(ws: WebSocket, code: str, role: str):
 
 # ---- Phase 2: Longitudinal Patient History & Pathology Reconciliation Registry ----
 class PathologySignoffReq(BaseModel):
-    signed_by: str = "DR-PATH-RAMESH-V"
-    diagnosis: str = "Tubular Adenoma with Low-Grade Dysplasia"
-    dysplasia_grade: str = "Low-Grade"
-    margins: str = "Negative / Clear (R0 Resection)"
-    icd_o_code: Optional[str] = "8211/0"
+    diagnosis: str = Field(min_length=1, max_length=2000)
+    dysplasia_grade: Optional[str] = Field(None, max_length=100)
+    margins: Optional[str] = Field(None, max_length=200)
+    icd_o_code: Optional[str] = Field(None, max_length=32)
 
 PATIENT_REGISTRY: Dict[str, Dict[str, Any]] = {
     "DEMO-PATIENT-01": {
         "patient_id": "DEMO-PATIENT-01",
         "abha_id": "ABHA-HASH-677466",
-        "hospital_id": "HOSP-CHENNAI-01",
+        "hospital_id": TENANT,
         "encounters": [
             {
                 "encounter_id": "ENC-2025-0814",
                 "procedure_id": "PROC-20250814-118240",
                 "date": "2025-08-14",
                 "endoscopist_id": "DR-GOKUL-R",
-                "hospital_id": "HOSP-CHENNAI-01",
+                "hospital_id": TENANT,
                 "indication": "Screening Colonoscopy (Age 50)",
                 "withdrawal_time_seconds": 580,
                 "bbps_scores": {"right": 3, "transverse": 3, "left": 2, "total": 8, "adequate": True},
@@ -868,12 +972,12 @@ PATIENT_REGISTRY: Dict[str, Dict[str, Any]] = {
     "DEMO-PATIENT-02": {
         "patient_id": "DEMO-PATIENT-02",
         "abha_id": "ABHA-HASH-DEMO-02",
-        "hospital_id": "HOSP-CHENNAI-01",
+        "hospital_id": TENANT,
         "encounters": [{
             "encounter_id": "ENC-DEMO-02",
             "procedure_id": "PROC-DEMO-02",
             "date": "2025-09-02",
-            "hospital_id": "HOSP-CHENNAI-01",
+            "hospital_id": TENANT,
             "findings": [],
         }],
     },
@@ -898,35 +1002,28 @@ PATIENT_REGISTRY: Dict[str, Dict[str, Any]] = {
 @app.get("/api/v2/patients/{patient_id}/history")
 def get_patient_history(
     patient_id: str,
-    x_hospital_id: Optional[str] = Header("HOSP-CHENNAI-01")
+    x_hospital_id: Optional[str] = Header(TENANT)
 ):
     if patient_id not in PATIENT_REGISTRY:
-        PATIENT_REGISTRY[patient_id] = {
-            "patient_id": patient_id,
-            "abha_id": f"ABHA-HASH-{patient_id[-6:]}",
-            "hospital_id": x_hospital_id or "HOSP-CHENNAI-01",
-            "encounters": []
-        }
-
+        raise HTTPException(404, "Patient not found")
     patient = PATIENT_REGISTRY[patient_id]
     if patient["hospital_id"] != x_hospital_id:
         raise HTTPException(
             status_code=403,
-            detail=f"Cross-hospital data boundary violation: patient records for hospital '{patient['hospital_id']}' are isolated from querying tenant '{x_hospital_id}'"
+            detail="Cross-hospital data boundary violation"
         )
 
-    return patient
+    return pathology_journal.entries(patient)
 
 @app.post("/api/v2/findings/{finding_id}/pathology")
 def sign_pathology_result(finding_id: str, req: PathologySignoffReq, request: Request):
     for p_id, p_data in PATIENT_REGISTRY.items():
-        if p_data.get("hospital_id") != "HOSP-CHENNAI-01":
+        if p_data.get("hospital_id") != TENANT:
             continue
         for enc in p_data.get("encounters", []):
             for f in enc.get("findings", []):
                 if f["finding_id"] == finding_id:
-                    f["pathology_status"] = "SIGNED"
-                    f["pathology_result"] = {
+                    entry = {
                         "signed_by": request.state.clinician_email,
                         "signed_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
                         "diagnosis": req.diagnosis,
@@ -935,11 +1032,15 @@ def sign_pathology_result(finding_id: str, req: PathologySignoffReq, request: Re
                         "icd_o_code": req.icd_o_code,
                     }
                     if "adenoma" in req.diagnosis.lower():
-                        f["surveillance_recommendation"] = "7-10 years (USMSTF 2020: 1-2 small adenomas <10mm, histology confirmed)"
+                        recommendation = "7-10 years (USMSTF 2020: 1-2 small adenomas <10mm, histology confirmed)"
                     elif "hyperplastic" in req.diagnosis.lower() or "serrated" in req.diagnosis.lower():
-                        f["surveillance_recommendation"] = "10 years (USMSTF 2020: hyperplastic/serrated polyp <10mm)"
+                        recommendation = "10 years (USMSTF 2020: hyperplastic/serrated polyp <10mm)"
                     else:
-                        f["surveillance_recommendation"] = "5-10 years (histology confirmed)"
+                        recommendation = "5-10 years (histology confirmed)"
+                    pathology_journal.append(p_data, f, entry, recommendation)
+                    saved = pathology_journal.entries(p_data)
+                    f = next(item for visit in saved["encounters"] for item in visit["findings"]
+                             if item["finding_id"] == finding_id)
                     return {
                         "ok": True,
                         "finding_id": finding_id,
@@ -970,7 +1071,7 @@ PRESEEDED_RUNS: List[Dict[str, Any]] = [
         "review_status": "accepted",
         "fl_eligible": True,
         "media_url": "/api/v2/demo-videos/ldpolyp_clip01.mp4",
-        "hospital_id": "HOSP-CHENNAI-01",
+        "hospital_id": TENANT,
         "clinician_label": "accepted",
         "clinician_notes": "High fidelity mucosal boundary segmentation on ascending colon polyp.",
         "reviewer_id": "DR-GOKUL-R",
@@ -999,7 +1100,7 @@ PRESEEDED_RUNS: List[Dict[str, Any]] = [
         "review_status": "pending",
         "fl_eligible": False,
         "media_url": "/api/v2/demo-videos/sun_seg_seq01.mp4",
-        "hospital_id": "HOSP-CHENNAI-01",
+        "hospital_id": TENANT,
         "clinician_label": None,
         "clinician_notes": None,
         "reviewer_id": None,
@@ -1026,7 +1127,7 @@ PRESEEDED_RUNS: List[Dict[str, Any]] = [
         "review_status": "accepted",
         "fl_eligible": True,
         "media_url": "/api/v2/demo-videos/1_35.avi",
-        "hospital_id": "HOSP-CHENNAI-01",
+        "hospital_id": TENANT,
         "clinician_label": "accepted",
         "clinician_notes": "Sharp delineation of Paris 0-Is flat lesion; optimal candidate for FL round 3.",
         "reviewer_id": "DR-GOKUL-R",
@@ -1047,14 +1148,14 @@ def _init_run_logs():
     for r in PRESEEDED_RUNS:
         RUN_LOGS[r["run_id"]] = dict(r)
     try:
-        st = storage.Client(project=os.getenv("GOOGLE_CLOUD_PROJECT", "girpolypposframesrealcolon"))
+        st = storage.Client(project=PROJECT)
         bucket = st.bucket(GCS_BUCKET)
         blobs = list(st.list_blobs(bucket, prefix="run_logs/"))
         for b in blobs:
             if b.name.endswith(".json"):
                 try:
                     data = json.loads(b.download_as_text())
-                    if "run_id" in data:
+                    if "run_id" in data and data.get("hospital_id") == TENANT:
                         RUN_LOGS[data["run_id"]] = data
                 except Exception:
                     pass
@@ -1067,7 +1168,7 @@ def _save_run_log(run: Dict[str, Any]):
     run_id = run["run_id"]
     RUN_LOGS[run_id] = run
     try:
-        st = storage.Client(project=os.getenv("GOOGLE_CLOUD_PROJECT", "girpolypposframesrealcolon"))
+        st = storage.Client(project=PROJECT)
         blob = st.bucket(GCS_BUCKET).blob(f"run_logs/{run_id}.json")
         blob.upload_from_string(json.dumps(run, indent=2), content_type="application/json")
     except Exception:
@@ -1096,7 +1197,7 @@ def _record_test_frame_run(room: Dict[str, Any], filename: str, result: Dict[str
         "review_status": "pending",
         "fl_eligible": False,
         "media_url": media_url,
-        "hospital_id": "HOSP-CHENNAI-01",
+        "hospital_id": TENANT,
         "clinician_label": None,
         "clinician_notes": None,
         "reviewer_id": None,
@@ -1141,7 +1242,7 @@ def _record_procedure_run(room: Dict[str, Any], approved: List[Dict[str, Any]], 
         "review_status": "accepted" if approved else "pending",
         "fl_eligible": True if approved else False,
         "media_url": gcs_uri,
-        "hospital_id": "HOSP-CHENNAI-01",
+        "hospital_id": TENANT,
         "procedure_id": room["procedure_id"],
         "clinician_label": "accepted" if approved else None,
         "clinician_notes": f"Procedure {room['procedure_id']} ended with {len(approved)} approved findings.",
@@ -1164,19 +1265,22 @@ def _record_procedure_run(room: Dict[str, Any], approved: List[Dict[str, Any]], 
 
 @app.get("/api/v2/runs")
 def get_runs():
-    return {"runs": list(RUN_LOGS.values()), "total": len(RUN_LOGS)}
+    runs = [r for r in RUN_LOGS.values() if r.get("hospital_id") == TENANT]
+    return {"runs": runs, "total": len(runs)}
 
 @app.get("/api/v2/runs/export-fl-manifest")
-def export_fl_manifest(hospital_id: Optional[str] = "HOSP-CHENNAI-01"):
+def export_fl_manifest(hospital_id: Optional[str] = TENANT):
+    if hospital_id != TENANT:
+        raise HTTPException(403, "Tenant mismatch")
     lines = []
     for r in RUN_LOGS.values():
         if r.get("fl_eligible") or r.get("review_status") in ("accepted", "dismissed"):
-            if hospital_id and r.get("hospital_id") and r.get("hospital_id") != hospital_id:
+            if r.get("hospital_id") != TENANT:
                 continue
             media_uri = r.get("gcs_media_uri") or f"gs://{GCS_BUCKET}/demo_videos/{r.get('input_clip') or (r['run_id'] + '.mp4')}"
             manifest_item = {
                 "run_id": r["run_id"],
-                "hospital_id": r.get("hospital_id", "HOSP-CHENNAI-01"),
+                "hospital_id": r.get("hospital_id", TENANT),
                 "timestamp": r.get("timestamp"),
                 "model_id": r.get("model"),
                 "decision": r.get("review_status") or r.get("clinician_label") or "accepted",
@@ -1192,7 +1296,7 @@ def export_fl_manifest(hospital_id: Optional[str] = "HOSP-CHENNAI-01"):
                 ],
                 "anonymized_metadata": {
                     "zero_phi": True,
-                    "reviewer_id": r.get("reviewer_id", "DR-GOKUL-R"),
+                    "reviewed": bool(r.get("reviewer_id")),
                     "fl_curation_round": "FL-CYCLE-2026-Q1",
                 },
             }
@@ -1212,20 +1316,23 @@ def export_fl_manifest(hospital_id: Optional[str] = "HOSP-CHENNAI-01"):
 def get_run(run_id: str):
     if run_id not in RUN_LOGS:
         try:
-            st = storage.Client(project=os.getenv("GOOGLE_CLOUD_PROJECT", "girpolypposframesrealcolon"))
+            st = storage.Client(project=PROJECT)
             blob = st.bucket(GCS_BUCKET).blob(f"run_logs/{run_id}.json")
             if blob.exists():
                 data = json.loads(blob.download_as_text())
-                RUN_LOGS[run_id] = data
-                return data
+                if data.get("hospital_id") == TENANT and data.get("run_id") == run_id:
+                    RUN_LOGS[run_id] = data
+                    return data
         except Exception:
             pass
         raise HTTPException(status_code=404, detail=f"Run '{run_id}' not found")
+    if RUN_LOGS[run_id].get("hospital_id") != TENANT:
+        raise HTTPException(404, "Unknown run")
     return RUN_LOGS[run_id]
 
 @app.post("/api/v2/runs/{run_id}/review")
 def review_run(run_id: str, req: RunReviewReq, request: Request):
-    if run_id not in RUN_LOGS:
+    if RUN_LOGS.get(run_id, {}).get("hospital_id") != TENANT:
         raise HTTPException(status_code=404, detail=f"Run '{run_id}' not found")
     decision = req.decision.lower().strip()
     if decision not in ("accepted", "dismissed"):

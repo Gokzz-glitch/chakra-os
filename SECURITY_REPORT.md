@@ -1,5 +1,7 @@
 # CHAKRA GI Clinical OS (V2) — Pre-Launch Security & Verification Report
 
+> Historical pre-hardening report. For current controls, configuration and verification scope, see [Security and clinical safety verification](SECURITY_HARDENING.md).
+
 **Date:** November 2026  
 **Target Environment:** Google Cloud Run (`asia-south1` / `asia-southeast1`)  
 **Project:** `girpolypposframesrealcolon`  

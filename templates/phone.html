@@ -1,45 +1,10 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CHAKRA V2 — Phone Capture</title>
-<style>
-:root{
-  --bg:#F6F8FC;--panel:#FFFFFF;--panel-elevated:#F0F4F9;--line:#E0E3EB;--text:#1F1F1F;--muted:#5E5E5E;
-  --accent:#0B57D0;--accent-subtle:#EAF1FB;--ok:#059669;--warn:#D97706;--code-bg:#F8FAFC;--code-border:#D3E3FD;
-  --code-text:#0B57D0;--btn-bg:#1F1F1F;--btn-text:#FFFFFF;
-}
-html.dark{
-  --bg:#1F1F1F;--panel:#292A2D;--panel-elevated:#35363A;--line:#3C4043;--text:#E8EAED;--muted:#9AA0A6;
-  --accent:#A8C7FA;--accent-subtle:#004A77;--ok:#10B981;--warn:#F59E0B;--code-bg:#202124;--code-border:#5F6368;
-  --code-text:#A8C7FA;--btn-bg:#A8C7FA;--btn-text:#041E49;
-}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Google Sans",Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);padding:18px;max-width:480px;margin:0 auto;transition:background .2s,color .2s}
-.hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:16px;letter-spacing:.02em;color:var(--text)}
-.pill{font-size:11.5px;padding:6px 12px;border-radius:8px;background:var(--accent-subtle);border:1px solid var(--line);color:var(--text);display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-weight:500}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
-h2{margin:0 0 6px;font-size:19px;font-weight:700;letter-spacing:-.01em} p{color:var(--muted);font-size:13px;margin:0 0 14px;line-height:1.45}
-input[type=text]{width:100%;font-family:ui-monospace,SFMono-Regular,monospace;font-size:28px;letter-spacing:.2em;text-align:center;padding:12px;border-radius:12px;border:1.5px solid var(--code-border);background:var(--code-bg);color:var(--code-text)}
-.btn{width:100%;padding:11px;border-radius:8px;border:0;font-weight:600;font-size:13.5px;cursor:pointer;margin-top:10px;color:var(--btn-text);background:var(--btn-bg);transition:opacity .15s}
-.btn:hover{opacity:.9}
-.btn.ok{background:var(--ok);color:#fff} .btn.ghost{background:var(--accent-subtle);border:1px solid var(--line);color:var(--text)}
-select{width:100%;padding:10px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--line);color:var(--text);font-size:13px;font-family:inherit}
-video{width:100%;border-radius:12px;background:#000;margin-top:12px;max-height:280px;border:1px solid var(--line)}
-.stat{font-size:12px;color:var(--accent);margin-top:10px;text-align:center;font-weight:500}
-.clinical-footer{padding:14px 10px;border-top:1px solid var(--line);background:var(--panel);display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);flex-wrap:wrap;gap:8px;margin-top:16px;border-radius:12px}
-.footer-link{background:none;border:none;color:var(--accent);font-size:11px;cursor:pointer;padding:0;text-decoration:underline;font-family:inherit}
-.footer-link:hover{color:var(--text)}
-.modalBg{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;place-items:center;padding:16px;z-index:50;backdrop-filter:blur(3px)}
-.footer-modal{max-width:440px;width:100%;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 12px 36px rgba(0,0,0,0.18)}
-</style><style>
-body{width:100%;max-width:clamp(480px,70vw,800px);padding:clamp(10px,2vw,22px)}
-.hdr,.hdr>div,.card div[style*="display:flex"]{flex-wrap:wrap;gap:8px}
-.card,.card input,.card select,video,canvas,img{min-width:0;max-width:100%}
-@media(max-width:480px){.card{padding:14px}.clinical-footer{padding:10px}}
-</style><script src="/v2/assets/operation-feedback.js"></script></head><body>
+<script src="/v2/assets/operation-feedback.js"></script><link rel="stylesheet" href="/static/phone.css"><script src="/static/ui-dom.js"></script><link rel="stylesheet" href="/static/feedback.css"></head><body>
 <div class="hdr">
   <div class="brand">
-    <img src="/logo.png" alt="CHAKRA Logo" style="height:26px;width:auto;object-fit:contain" onerror="this.style.display='none';document.getElementById('svgLogo').style.display='block'">
-    <svg id="svgLogo" width="20" height="20" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="color:var(--accent);display:none">
+    <img src="/logo.png" alt="CHAKRA Logo" data-action="this-style-display-none" class="layout-2">
+    <svg id="svgLogo" width="20" height="20" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="layout-3">
       <circle cx="50" cy="50" r="44" stroke="currentColor" stroke-width="7" stroke-dasharray="6 3" opacity="0.85"/>
       <circle cx="50" cy="50" r="28" stroke="currentColor" stroke-width="6"/>
       <circle cx="50" cy="50" r="12" fill="currentColor"/>
@@ -47,273 +12,98 @@ body{width:100%;max-width:clamp(480px,70vw,800px);padding:clamp(10px,2vw,22px)}
     </svg>
     <span>CHAKRA Mobile Scope</span>
   </div>
-  <button id="themeToggle" class="pill" onclick="toggleTheme()"><span id="themeIcon" style="display:grid;place-items:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></span> <span id="themeLabel">Light</span></button>
+  <button id="themeToggle" class="pill" data-action="toggle-theme"><span id="themeIcon" class="layout-4"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></span> <span id="themeLabel">Light</span></button>
 </div>
 
 <div class="card">
   <h2>Mobile Scope Bridge</h2>
   <p>Scan the QR code from the Backend Console or enter the 6-digit code to pair your camera to the sterile Doctor HUD.</p>
   <input id="codeIn" type="text" maxlength="6" placeholder="000000">
-  <button class="btn ok" onclick="pair()">Connect to Backend Session</button>
+  <button class="btn ok" data-action="pair">Connect to Backend Session</button>
   <div id="status" class="stat">Disconnected</div>
 </div>
 
 <div class="card" id="consentCard">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-    <h2 style="font-size:15.5px;margin:0">Patient Procedure & Data Consent</h2>
-    <span id="consentBadge" class="pill" style="font-size:11px;background:#fef3c7;color:#92400e">Awaiting Verification</span>
+  <div class="layout-5">
+    <h2 class="layout-6">Patient Procedure & Data Consent</h2>
+    <span id="consentBadge" class="layout-7 pill">Awaiting Verification</span>
   </div>
-  <p style="font-size:12px;color:var(--muted);margin-bottom:12px">India DPDP Act 2023 & Ayushman Bharat Digital Mission (ABDM) Informed Verification.</p>
+  <p class="layout-8">India DPDP Act 2023 & Ayushman Bharat Digital Mission (ABDM) Informed Verification.</p>
   
-  <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;color:var(--text);margin-bottom:10px;cursor:pointer">
-    <input type="checkbox" id="chkAware" style="width:16px;height:16px;margin-top:2px" checked>
+  <label class="layout-9">
+    <input type="checkbox" id="chkAware" checked class="layout-10">
     <span><b>I am aware of this procedure:</b> I understand the purpose, preparation, and scope of this endoscopic examination.</span>
   </label>
 
-  <label style="display:flex;align-items:flex-start;gap:8px;font-size:12.5px;color:var(--text);margin-bottom:12px;cursor:pointer">
-    <input type="checkbox" id="chkDataSharing" style="width:16px;height:16px;margin-top:2px" checked>
+  <label class="layout-11">
+    <input type="checkbox" id="chkDataSharing" checked class="layout-12">
     <span><b>Data sharing verification:</b> I verify and consent to zero-PHI video streaming and de-identified clinical telemetry sharing for AI quality auditing and Federated Learning curation.</span>
   </label>
 
-  <button class="btn ok" id="btnVerifyConsent" onclick="submitPatientConsent()" style="margin-top:4px">Verify Patient Consent</button>
-  <div id="consentMsg" style="font-size:11.5px;margin-top:8px"></div>
+  <button class="layout-13 btn ok" id="btnVerifyConsent" data-action="submit-patient-consent">Verify Patient Consent</button>
+  <div id="consentMsg" class="layout-14"></div>
 </div>
 
 <div class="card">
-  <h2 style="font-size:16px">Stream Source</h2>
-  <button class="btn" onclick="startCamera()">Use Live Phone Camera</button>
+  <h2 class="layout-15">Stream Source</h2>
+  <button class="btn" data-action="start-camera">Use Live Phone Camera</button>
   
-  <label style="display:block;margin-top:14px;font-size:12px;font-weight:500;color:var(--muted)">Cloud Demo Clips (Range/206 & OpenCV Fallback):</label>
-  <div style="display:flex;gap:6px;margin-top:6px">
-    <select id="cloudClipSel" style="flex:1"></select>
-    <button class="btn ok" style="width:auto;margin:0" onclick="startCloudDemoVideo()">Stream Clip</button>
+  <label class="layout-16">Cloud Demo Clips (Range/206 & OpenCV Fallback):</label>
+  <div class="layout-17">
+    <select id="cloudClipSel" class="layout-18"></select>
+    <button class="layout-19 btn ok" data-action="start-cloud-demo-video">Stream Clip</button>
   </div>
 
-  <label style="display:block;margin-top:14px;font-size:12px;font-weight:500;color:var(--muted)">Or Upload Local Video File:</label>
-  <input id="vidFile" type="file" accept="video/*" style="width:100%;margin-top:6px;color:var(--text)" onchange="startUploadedVideo(this)">
+  <label class="layout-20">Or Upload Local Video File:</label>
+  <input id="vidFile" type="file" accept="video/*" data-action="start-uploaded-video" class="layout-21">
   
   <video id="vid" autoplay loop muted playsinline></video>
-  <canvas id="cvs" style="display:none"></canvas>
+  <canvas id="cvs" class="layout-22"></canvas>
   <div id="txStat" class="stat">Waiting for stream source...</div>
 </div>
 
-<script>
-// Prevent window.status collision in browser DOM
-Object.defineProperty(window, 'status', {
-  get() { return document.getElementById('status'); },
-  set(v) {},
-  configurable: true
-});
-
-function initTheme(){
-  const saved=localStorage.getItem('chakra_theme')||'light';
-  if(saved==='dark'){ document.documentElement.classList.add('dark'); updateThemeIcon(true); }
-  else { document.documentElement.classList.remove('dark'); updateThemeIcon(false); }
-}
-function toggleTheme(){
-  const isDark=document.documentElement.classList.toggle('dark');
-  localStorage.setItem('chakra_theme',isDark?'dark':'light');
-  updateThemeIcon(isDark);
-}
-function updateThemeIcon(isDark){
-  const el=document.getElementById('themeIcon');
-  const lbl=document.getElementById('themeLabel');
-  if(el){
-    el.innerHTML = isDark
-      ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
-      : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
-  }
-  if(lbl) lbl.textContent=isDark?'Dark':'Light';
-}
-function openModal(id){ const el=document.getElementById(id); if(el) el.style.display='grid'; }
-function closeModal(id){ const el=document.getElementById(id); if(el) el.style.display='none'; }
-initTheme();
-
-let ws=null, timer=null, sourceMode='live', sent=0;
-const params=new URLSearchParams(location.search);
-if(params.get('code')) codeIn.value=params.get('code');
-
-async function checkConsentStatus(code){
-  try {
-    const res = await fetch(`/api/v2/rooms/${code}/patient-consent`);
-    if(res.ok){
-      const d = await res.json();
-      updateConsentUi(d.patient_consent);
-    }
-  } catch(e){}
-}
-
-function updateConsentUi(c){
-  if(c && c.verified){
-    consentBadge.textContent = 'DPDP Verified · ' + (c.consent_id || 'DPDP-OK');
-    consentBadge.style.background = '#d1fae5';
-    consentBadge.style.color = '#065f46';
-    chkAware.checked = true;
-    chkDataSharing.checked = true;
-    chkAware.disabled = true;
-    chkDataSharing.disabled = true;
-    btnVerifyConsent.disabled = true;
-    btnVerifyConsent.textContent = 'Consent Verified & Active';
-    consentMsg.innerHTML = `<span style="color:var(--ok)">Verified under DPDP Act 2023 (${c.consent_id}). Zero-PHI streaming unlocked.</span>`;
-  }
-}
-
-async function submitPatientConsent(){
-  const code = codeIn.value.trim();
-  if(!code) return alert('Enter or pair a 6-digit room code first');
-  if(!chkAware.checked || !chkDataSharing.checked){
-    return alert('Please verify both Procedure Awareness and Data Sharing consent to proceed.');
-  }
-  consentMsg.textContent = 'Recording patient verification...';
-  try {
-    const res = await fetch(`/api/v2/rooms/${code}/patient-consent`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        aware_of_procedure: chkAware.checked,
-        consent_data_sharing: chkDataSharing.checked,
-        patient_signature: 'PATIENT_VERIFIED',
-        language: 'en'
-      })
-    });
-    const d = await res.json();
-    if(res.ok){
-      updateConsentUi(d.patient_consent);
-      chakraFeedback.emit("success", "Patient consent verified");
-    } else {
-      consentMsg.innerHTML = `<span style="color:#dc2626">Error: ${d.detail}</span>`;
-    }
-  } catch(e){
-    consentMsg.innerHTML = `<span style="color:#dc2626">Failed to record verification: ${e}</span>`;
-  }
-}
-
-function pair(){
-  const c=codeIn.value.trim(); if(c.length!==6) return alert('Enter the 6-digit code');
-  if(ws) ws.close();
-  const proto=location.protocol==='https:'?'wss:':'ws:';
-  ws=new WebSocket(`${proto}//${location.host}/ws/v2/${c}/phone`);
-  ws.onopen=()=>{ chakraFeedback.emit("success","Phone connected"); 
-    const el=document.getElementById('status');
-    if(el){ el.textContent='Paired to Room '+c+' · Ready to stream'; el.style.color='#059669'; }
-    checkConsentStatus(c);
-  };
-  ws.onmessage=(e)=>{
-    try {
-      const m = JSON.parse(e.data);
-      if(m.type==='patient_consent_updated') updateConsentUi(m.patient_consent);
-    } catch(err){}
-  };
-  ws.onclose=()=>{ chakraFeedback.emit("error","Phone disconnected"); 
-    const el=document.getElementById('status');
-    if(el){ el.textContent='Disconnected from room'; el.style.color='#d97706'; }
-  };
-}
-async function loadClips(){
-  try{
-    const d=await (await fetch('/api/v2/demo-videos')).json();
-    cloudClipSel.innerHTML=d.videos.map(v=>`<option value="${v.name}" data-url="${v.stream_url}" data-fmt="${v.format}">${v.name} (${(v.size_bytes/1024).toFixed(0)} KB)</option>`).join('');
-  }catch(e){}
-}
-async function startCloudDemoVideo(){
-  const opt=cloudClipSel.options[cloudClipSel.selectedIndex]; if(!opt) return;
-  const name=opt.value, fmt=opt.getAttribute('data-fmt'), url=opt.getAttribute('data-url');
-  sourceMode='cloud_demo:'+name;
-  if(fmt==='avi'){
-    txStat.textContent=`Streaming ${name} via OpenCV frame-extract fallback...`;
-    vid.style.display='none';
-    const img=new Image();
-    img.crossOrigin='anonymous';
-    img.src=`/api/v2/demo-videos/${name}/frame?idx=0`;
-    img.onload=()=>{
-      cvs.width=480; cvs.height=Math.round(480*(img.height/img.width||0.75));
-      cvs.getContext('2d').drawImage(img,0,0,cvs.width,cvs.height);
-      if(timer) clearInterval(timer);
-      timer=setInterval(()=>{
-        if(!ws||ws.readyState!==1) return;
-        ws.send(JSON.stringify({type:'frame',source:sourceMode,image_b64:cvs.toDataURL('image/jpeg',0.6)}));
-        sent++; txStat.textContent=`Streaming ${name} (OpenCV fallback) · Frames sent: ${sent}`;
-      },260);
-    };
-  } else {
-    vid.style.display='block';
-    vid.srcObject=null; vid.src=url; await vid.play(); beginLoop();
-  }
-}
-async function startCamera(){
-  sourceMode='camera';
-  try{
-    const devices=await navigator.mediaDevices.enumerateDevices();
-    const videoDevices=devices.filter(d=>d.kind==='videoinput'&&!d.label.toLowerCase().includes('obs virtual'));
-    const deviceId=videoDevices.length?videoDevices[0].deviceId:undefined;
-    const constraints={video:deviceId?{deviceId:{exact:deviceId},facingMode:'environment'}:{facingMode:'environment'},audio:false};
-    const stream=await navigator.mediaDevices.getUserMedia(constraints);
-    vid.style.display='block'; vid.srcObject=stream; await vid.play(); beginLoop();
-  }catch(e){
-    const stream=await navigator.mediaDevices.getUserMedia({video:true,audio:false});
-    vid.style.display='block'; vid.srcObject=stream; await vid.play(); beginLoop();
-  }
-}
-function startUploadedVideo(inp){
-  const f=inp.files[0]; if(!f) return;
-  sourceMode='simulated_live_video';
-  vid.style.display='block'; vid.srcObject=null; vid.src=URL.createObjectURL(f); vid.play(); beginLoop();
-}
-function beginLoop(){
-  if(timer) clearInterval(timer);
-  timer=setInterval(()=>{
-    if(!ws||ws.readyState!==1||!vid.videoWidth) return;
-    const w=480, h=Math.round(480*(vid.videoHeight/vid.videoWidth));
-    cvs.width=w; cvs.height=h;
-    cvs.getContext('2d').drawImage(vid,0,0,w,h);
-    ws.send(JSON.stringify({type:'frame',source:sourceMode,image_b64:cvs.toDataURL('image/jpeg',0.6)}));
-    sent++; txStat.textContent=`Streaming ${sourceMode} · Frames sent: ${sent}`;
-  },260);
-}
-loadClips();
-if(codeIn.value.length===6) { pair(); checkConsentStatus(codeIn.value.trim()); }
-</script>
+<script src="/static/phone.js"></script>
 
 <footer class="clinical-footer">
   <div>
     <span>CHAKRA Mobile Scope · Camera Bridge</span>
   </div>
-  <div style="display:flex;gap:10px">
-    <button class="footer-link" onclick="openModal('privacyModal')">Privacy Notice</button>
-    <button class="footer-link" onclick="openModal('termsModal')">Terms (Non-SaMD)</button>
+  <div class="layout-23">
+    <button class="footer-link" data-action="open-modal-privacy-modal">Privacy Notice</button>
+    <button class="footer-link" data-action="open-modal-terms-modal">Terms (Non-SaMD)</button>
   </div>
 </footer>
 
 <!-- Privacy & DPDP Notice Modal -->
 <div id="privacyModal" class="modalBg">
   <div class="footer-modal">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;border-bottom:1px solid var(--line);padding-bottom:8px">
-      <h3 style="margin:0;font-size:15px">Privacy & DPDP Notice</h3>
-      <button class="btn ghost" style="width:auto;margin:0;padding:4px 8px" onclick="closeModal('privacyModal')">
+    <div class="layout-24">
+      <h3 class="layout-25">Privacy & DPDP Notice</h3>
+      <button class="layout-26 btn ghost" data-action="close-modal-privacy-modal">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
-    <div style="font-size:12px;color:var(--text);line-height:1.5;display:flex;flex-direction:column;gap:8px">
-      <p style="margin:0"><b>Zero-PHI:</b> Video frames captured via camera are streamed ephemerally over encrypted WebSockets to the active procedure session and are not permanently retained unless flagged by the attending clinician.</p>
-      <p style="margin:0"><b>MeitY Sovereignty:</b> Data processing strictly bounded within Google Cloud asia-south1.</p>
+    <div class="layout-27">
+      <p class="layout-28"><b>Zero-PHI:</b> Video frames captured via camera are streamed ephemerally over encrypted WebSockets to the active procedure session and are not permanently retained unless flagged by the attending clinician.</p>
+      <p class="layout-29"><b>MeitY Sovereignty:</b> Data processing strictly bounded within Google Cloud asia-south1.</p>
     </div>
-    <button class="btn" style="margin-top:14px" onclick="closeModal('privacyModal')">Close</button>
+    <button class="layout-30 btn" data-action="action-10">Close</button>
   </div>
 </div>
 
 <!-- Terms of Use Modal -->
 <div id="termsModal" class="modalBg">
   <div class="footer-modal">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;border-bottom:1px solid var(--line);padding-bottom:8px">
-      <h3 style="margin:0;font-size:15px">Terms of Use (Non-SaMD)</h3>
-      <button class="btn ghost" style="width:auto;margin:0;padding:4px 8px" onclick="closeModal('termsModal')">
+    <div class="layout-31">
+      <h3 class="layout-32">Terms of Use (Non-SaMD)</h3>
+      <button class="layout-33 btn ghost" data-action="close-modal-terms-modal">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
-    <div style="font-size:12px;color:var(--text);line-height:1.5;display:flex;flex-direction:column;gap:8px">
-      <p style="margin:0"><b>Non-Diagnostic:</b> This software is an investigational prototype for video bridging. It does not provide medical diagnosis or replace standard endoscopy tower video recording.</p>
+    <div class="layout-34">
+      <p class="layout-35"><b>Non-Diagnostic:</b> This software is an investigational prototype for video bridging. It does not provide medical diagnosis or replace standard endoscopy tower video recording.</p>
     </div>
-    <button class="btn" style="margin-top:14px" onclick="closeModal('termsModal')">Close</button>
+    <button class="layout-36 btn" data-action="action-12">Close</button>
   </div>
 </div>
-</body></html>
+<script src="/static/phone-events.js"></script></body></html>

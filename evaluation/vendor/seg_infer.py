@@ -51,7 +51,6 @@ def build_model(arch, lib_parent):
     need = "chakranet.py" if arch == "chakranet" else "PraNet_Res2Net.py"
     if not (lib_parent / "lib" / need).is_file():
         sys.exit(f"ERROR: {lib_parent / 'lib' / need} not found.")
-    (lib_parent / "lib" / "__init__.py").touch()
     sys.path.insert(0, str(lib_parent))
 
     if arch == "chakranet":
@@ -79,10 +78,7 @@ def build_model(arch, lib_parent):
 def load_weights(model, path, device):
     import torch
 
-    try:
-        state = torch.load(path, map_location=device, weights_only=True)
-    except Exception:  # noqa: BLE001 - older torch, or a checkpoint wrapper with non-tensor extras
-        state = torch.load(path, map_location=device, weights_only=False)
+    state = torch.load(path, map_location=device, weights_only=True)
     for key in ("model_state_dict", "state_dict"):      # ChakraNet saves {'epoch','model_state_dict',...}
         if isinstance(state, dict) and key in state:
             state = state[key]

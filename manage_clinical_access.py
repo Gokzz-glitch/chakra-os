@@ -1,4 +1,4 @@
-"""Manage one account in CHAKRA's synthetic Chennai hospital, using operator Google credentials."""
+"""Manage one account in the configured CHAKRA tenant, using authorized IAM administrator credentials."""
 import argparse
 import hashlib
 import json
@@ -11,8 +11,10 @@ import subprocess
 from google.api_core.exceptions import NotFound
 from google.cloud import storage
 
-PROJECT = "girpolypposframesrealcolon"
-BUCKET = PROJECT + "-chakra-access"
+from security_settings import TENANT, REGION, setting
+
+PROJECT = setting("GOOGLE_CLOUD_PROJECT", "development")
+BUCKET = setting("CHAKRA_ACCESS_BUCKET", PROJECT + "-chakra-access")
 
 
 def main():
@@ -36,10 +38,10 @@ def main():
             pass
     verb = "add" if args.action == "grant" else "remove"
     subprocess.run([gcloud, "iap", "web", verb + "-iam-policy-binding", "--resource-type=cloud-run",
-                    "--service=chakra-os", "--region=asia-south1", "--project=" + PROJECT,
+                    "--service=chakra-os", "--region=" + REGION, "--project=" + PROJECT,
                     "--member=user:" + email, "--role=roles/iap.httpsResourceAccessor", "--quiet"], check=True)
     if args.action == "grant":
-        blob.upload_from_string(json.dumps({"email": email, "role": args.role, "hospital": "HOSP-CHENNAI-01"}),content_type="application/json")
+        blob.upload_from_string(json.dumps({"email": email, "role": args.role, "hospital": TENANT}),content_type="application/json")
     print("Updated CHAKRA backend account access.")
 
 

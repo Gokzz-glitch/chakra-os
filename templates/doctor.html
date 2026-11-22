@@ -1,67 +1,10 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CHAKRA AI — Doctor Clinical HUD</title>
-<style>
-:root{
-  --bg:#F6F8FC;--panel:#FFFFFF;--panel-elevated:#F0F4F9;--line:#E0E3EB;--text:#1F1F1F;--muted:#5E5E5E;
-  --accent:#0B57D0;--accent-subtle:#EAF1FB;--ok:#059669;--warn:#D97706;--red:#DC2626;--stage-bg:#000000;
-  --btn-bg:#1F1F1F;--btn-text:#FFFFFF;--top-bg:#FFFFFF;--chip-bg:#EAF1FB;--chip-text:#0B57D0;
-}
-html.dark{
-  --bg:#1F1F1F;--panel:#292A2D;--panel-elevated:#35363A;--line:#3C4043;--text:#E8EAED;--muted:#9AA0A6;
-  --accent:#A8C7FA;--accent-subtle:#004A77;--ok:#10B981;--warn:#F59E0B;--red:#EF4444;--stage-bg:#000000;
-  --btn-bg:#A8C7FA;--btn-text:#041E49;--top-bg:#292A2D;--chip-bg:#004A77;--chip-text:#A8C7FA;
-}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Google Sans",Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;transition:background .2s,color .2s}
-.hdr{padding:12px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;background:var(--top-bg)}
-.banner{margin:14px 24px 0;padding:12px 20px;border-radius:14px;background:var(--panel);border:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);gap:14px;font-size:12.5px;box-shadow:0 1px 3px rgba(0,0,0,0.03)}
-.lbl{color:var(--muted);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:3px}
-.workspace{flex:1;padding:14px 24px 22px;display:grid;grid-template-columns:2.4fr 1fr;gap:18px}
-.stage{background:var(--stage-bg);border:1px solid var(--line);border-radius:18px;position:relative;display:grid;place-items:center;min-height:480px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
-.stage img{max-width:100%;max-height:550px;display:none}
-.standby{text-align:center;padding:26px}
-.hudBadge{position:absolute;top:12px;right:12px;background:rgba(15,23,42,.85);border:1px solid #334155;padding:5px 12px;border-radius:100px;font-size:11px;color:#cbd5e1;font-weight:500}
-.hudWarn{position:absolute;bottom:10px;left:14px;right:14px;display:flex;justify-content:space-between;font-size:11px;color:#94a3b8}
-.col{display:flex;flex-direction:column;gap:14px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
-.card h4{margin:0 0 12px;font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
-.kv{display:flex;justify-content:space-between;align-items:center;padding:7px 0;font-size:13.5px}
-.val{font-weight:700;color:var(--text)} .val.cyan{color:var(--accent)} .val.ok{color:var(--ok)}
-.btn{width:100%;padding:11px 14px;border-radius:8px;border:0;font-weight:600;font-size:13px;cursor:pointer;color:var(--btn-text);background:var(--btn-bg);transition:opacity .15s}
-.btn:hover{opacity:.9}
-.btn.start{background:var(--ok);color:#fff;font-size:14px}
-.btn.end{background:var(--accent);color:#fff}
-.btn.ghost{background:var(--accent-subtle);border:1px solid var(--line);color:var(--text);font-size:12px;padding:8px 12px}
-.btn:disabled{opacity:.45;cursor:not-allowed}
-.pill{font-size:12px;padding:6px 12px;border-radius:8px;background:var(--accent-subtle);border:1px solid var(--line);color:var(--text);display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-weight:500}
-.fnd{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:8px;background:var(--bg);border:1px solid var(--line);margin-bottom:6px;font-size:12px}
-.modalBg{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;place-items:center;padding:20px;z-index:50;backdrop-filter:blur(3px)}
-.modal{background:var(--panel);border:1px solid var(--line);border-radius:18px;max-width:860px;width:100%;max-height:90vh;overflow:auto;padding:26px;color:var(--text);box-shadow:0 12px 36px rgba(0,0,0,0.2)}
-pre{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:11px;overflow:auto;max-height:190px;color:var(--accent);font-family:ui-monospace,SFMono-Regular,monospace}
-.chip{padding:4px 10px;border-radius:6px;font-size:11px;background:var(--chip-bg);color:var(--chip-text);font-weight:500}
-#historyDialog{width:min(56rem,94vw);max-height:80vh;box-sizing:border-box;overflow:auto;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:14px;padding:22px;margin:auto}
-#historyDialog::backdrop{background:rgba(10,20,30,.65)}
-#closeHistory{float:right}
-#historyDialog article{border-left:3px solid var(--accent);padding-left:12px;margin-top:18px}
-#historyDialog details{padding:10px 0}
-#historyDialog summary{font-weight:600;cursor:pointer}
-#historyDialog small{display:block}
-#historyDialog a{color:var(--accent)}
-.clinical-footer{padding:14px 22px;border-top:1px solid var(--line);background:var(--panel);display:flex;justify-content:space-between;align-items:center;font-size:11.5px;color:var(--muted);flex-wrap:wrap;gap:10px;margin-top:20px}
-.footer-link{background:none;border:none;color:var(--accent);font-size:11.5px;cursor:pointer;padding:0;text-decoration:underline;font-family:inherit}
-.footer-link:hover{color:var(--text)}
-.footer-modal{max-width:540px;width:100%;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 12px 36px rgba(0,0,0,0.18)}
-</style><style>
-.hdr,.hdr>div,.modal div[style*="display:flex"]{flex-wrap:wrap;gap:8px}
-.workspace,.workspace>*,.banner>div,.col,.card{min-width:0}
-.banner b,.card{overflow-wrap:anywhere}
-@media(max-width:950px){.workspace{grid-template-columns:minmax(0,1fr)}.banner{grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}.stage{min-height:clamp(260px,52vw,500px)}}
-@media(max-width:600px){.hdr{padding:12px}.banner{margin:8px 12px;padding:12px}.workspace{padding:8px 12px}.modal{padding:14px}.stage img{max-height:60dvh}.clinical-footer{padding:12px}}
-</style><script src="/v2/assets/operation-feedback.js"></script></head><body>
+<script src="/v2/assets/operation-feedback.js"></script><link rel="stylesheet" href="/static/doctor.css"><script src="/static/ui-dom.js"></script><link rel="stylesheet" href="/static/feedback.css"></head><body>
 <header class="hdr">
-  <div style="display:flex;align-items:center;gap:12px">
-    <img src="/logo.png" alt="CHAKRA Logo" style="height:32px;width:auto;object-fit:contain" onerror="this.style.display='none';document.getElementById('svgLogo').style.display='grid'">
-    <div id="svgLogo" style="color:var(--accent);display:none;place-items:center">
+  <div class="layout-2">
+    <img src="/logo.png" alt="CHAKRA Logo" data-action="this-style-display-none" class="layout-3">
+    <div id="svgLogo" class="layout-4">
       <svg width="24" height="24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="50" cy="50" r="44" stroke="currentColor" stroke-width="7" stroke-dasharray="6 3" opacity="0.85"/>
         <circle cx="50" cy="50" r="28" stroke="currentColor" stroke-width="6"/>
@@ -70,15 +13,15 @@ pre{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding
       </svg>
     </div>
     <div>
-      <div style="font-weight:700;font-size:16px;letter-spacing:.02em">CHAKRA AI</div>
-      <div style="font-size:10px;color:var(--muted);letter-spacing:.08em;font-weight:500">POLYP DETECTION & CLINICAL OS</div>
+      <div class="layout-5">CHAKRA AI</div>
+      <div class="layout-6">POLYP DETECTION & CLINICAL OS</div>
     </div>
   </div>
-  <div style="display:flex;align-items:center;gap:10px">
-    <input id="codeIn" placeholder="6-Digit Code" maxlength="6" style="width:120px;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--accent);font-family:monospace;text-align:center;font-size:13px">
-    <button class="btn ghost" style="width:auto" onclick="connect()">Pair HUD</button>
+  <div class="layout-7">
+    <input id="codeIn" placeholder="6-Digit Code" maxlength="6" class="layout-8">
+    <button class="layout-9 btn ghost" data-action="connect">Pair HUD</button>
     <button type="button" class="pill" id="openHistory" aria-haspopup="dialog">Patient history</button>
-    <button id="themeToggle" class="pill" onclick="toggleTheme()"><span id="themeIcon" style="display:grid;place-items:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></span> <span id="themeLabel">Light</span></button>
+    <button id="themeToggle" class="pill" data-action="toggle-theme"><span id="themeIcon" class="layout-10"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></span> <span id="themeLabel">Light</span></button>
     <span id="clock" class="chip">--:--:-- IST</span>
   </div>
 </header>
@@ -87,18 +30,18 @@ pre{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding
   <div><span class="lbl">Patient (Anonymized)</span><b id="pAnon">ABHA-HASH-DEMO</b></div>
   <div><span class="lbl">Procedure ID</span><b id="pId">--</b></div>
   <div><span class="lbl">Physician</span><b id="pDoc">DR-GOKUL-R</b></div>
-  <div><span class="lbl">Phone Scope Feed</span><b id="pPhone" style="color:var(--warn)">Waiting...</b></div>
-  <div><span class="lbl">Compute Telemetry</span><b id="pGpu" style="color:var(--accent)">Cloud Run L4 · Standby</b></div>
-  <div><span class="lbl">Patient Consent</span><b id="pConsent" style="color:var(--warn)">Awaiting Patient</b></div>
+  <div><span class="lbl">Phone Scope Feed</span><b id="pPhone" class="layout-11">Waiting...</b></div>
+  <div><span class="lbl">Compute Telemetry</span><b id="pGpu" class="layout-12">Cloud Run L4 · Standby</b></div>
+  <div><span class="lbl">Patient Consent</span><b id="pConsent" class="layout-13">Awaiting Patient</b></div>
 </div>
 
 <main class="workspace">
   <div class="stage">
     <div id="feedBadge" class="hudBadge">HD ENDOSCOPIC VIDEO FEED · STANDBY</div>
     <div id="standbyBox" class="standby">
-      <div style="font-size:19px;font-weight:700;margin-bottom:8px;color:#fff">Doctor Gate Locked (Standby)</div>
-      <div style="color:#94a3b8;font-size:13px;max-width:420px;margin:0 auto 20px;line-height:1.45">Live video overlay and L4 CADe bounding boxes remain paused until the endoscopist clicks Start Procedure.</div>
-      <button id="startBtn" class="btn start" style="max-width:260px;display:inline-flex;align-items:center;justify-content:center;gap:6px" onclick="startProc()" disabled><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>Start Procedure</span></button>
+      <div class="layout-14">Doctor Gate Locked (Standby)</div>
+      <div class="layout-15">Live video overlay and L4 CADe bounding boxes remain paused until the endoscopist clicks Start Procedure.</div>
+      <button id="startBtn" class="layout-16 btn start" disabled data-action="start-proc"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>Start Procedure</span></button>
     </div>
     <img id="hudImg" alt="Live HUD Feed">
     <div class="hudWarn">
@@ -112,34 +55,34 @@ pre{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding
       <h4>Quality Metrics (CAQ)</h4>
       <div class="kv"><span>Withdrawal Time</span><span id="wTime" class="val">00:00</span></div>
       <div class="kv"><span>Candidates Flagged</span><span id="lesionCnt" class="val cyan">0</span></div>
-      <div class="kv"><span>Bowel Prep (BBPS)</span><span id="bbpsTxt" class="val ok">8/9 (3-3-2)</span></div>
+      <fieldset id="measurements"><legend>Clinician measurements</legend><label>Right BBPS <input required type="number" min="0" max="3" id="measure-right"></label><label>Transverse BBPS <input required type="number" min="0" max="3" id="measure-transverse"></label><label>Left BBPS <input required type="number" min="0" max="3" id="measure-left"></label><label>Largest finding (mm, 0 if none) <input required type="number" min="0" step="any" id="measure-max_mm"></label></fieldset><div class="kv"><span>Bowel Prep (BBPS)</span><span id="bbpsTxt" class="val ok">Awaiting clinician entry</span></div>
     </div>
 
     <div class="card">
       <h4>Current Lesion Telemetry</h4>
       <div class="kv"><span>Confidence</span><span id="tConf" class="val cyan">--</span></div>
-      <div class="kv"><span>Pathology Status</span><span class="val" style="color:var(--warn)">PENDING</span></div>
+      <div class="kv"><span>Pathology Status</span><span class="layout-17 val">PENDING</span></div>
       <div class="kv"><span>Location (Est.)</span><span id="tLoc" class="val">Cecum / Ascending</span></div>
-      <div id="findingsList" style="margin-top:8px"></div>
+      <div id="findingsList" class="layout-18"></div>
     </div>
 
     <div class="card">
       <h4>Sterile Voice Copilot (Gemini 3.8 Flash)</h4>
-      <div style="display:flex;gap:6px">
-        <button id="micBtn" class="btn ghost" style="display:inline-flex;align-items:center;gap:5px" onclick="toggleVoice()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg><span>Dictate Note</span></button>
-        <button class="btn ghost" onclick="sendDemoVoice()">Sample Dictation</button>
+      <div class="layout-19">
+        <button id="micBtn" class="layout-20 btn ghost" data-action="toggle-voice"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg><span>Dictate Note</span></button>
+        <button class="btn ghost" data-action="send-demo-voice">Sample Dictation</button>
       </div>
-      <div id="voiceLog" style="font-size:11px;color:var(--muted);margin-top:8px">Say e.g. "BBPS 3 3 2, 7mm lesion in descending colon"</div>
+      <div id="voiceLog" class="layout-21">Say e.g. "BBPS 3 3 2, 7mm lesion in descending colon"</div>
     </div>
 
-    <button id="endBtn" class="btn end" onclick="endAndReport()" disabled>End Procedure & Generate Report</button>
+    <button id="endBtn" class="btn end" disabled data-action="end-and-report">End Procedure & Generate Report</button>
   </div>
 </main>
 <dialog id="historyDialog" aria-labelledby="historyTitle">
   <button id="closeHistory" class="pill" type="button" autofocus>Close history</button>
   <h2 id="historyTitle">Patient evidence map</h2>
   
-  <div id="historyGraph" aria-label="Synthetic patient history graph" style="background:#101521;border-radius:12px;overflow:auto;margin-top:12px"></div>
+  <div id="historyGraph" aria-label="Synthetic patient history graph" class="layout-22"></div>
   <p id="patient"></p>
   <button type="button" class="pill" id="refresh">Refresh history</button>
   <div id="visits" aria-live="polite"></div>
@@ -149,224 +92,74 @@ pre{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding
 <!-- End Procedure & Gemini 3.8 Flash Sign-Off Modal -->
 <div id="modalBg" class="modalBg">
   <div class="modal">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-      <div><h3 style="margin:0;font-size:18px">CHAKRA Clinical Report & HITL Sign-Off</h3><span style="font-size:12px;color:var(--muted)">Grounded via Vertex AI Gemini 3.8 Flash · Pathology Strictly Pending</span></div>
-      <button class="btn ghost" style="width:auto;padding:6px 12px;display:inline-flex;align-items:center;gap:4px" onclick="modalBg.style.display='none'"><span>Close</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <div class="layout-23">
+      <div><h3 class="layout-24">CHAKRA Clinical Report & HITL Sign-Off</h3><span class="layout-25">Grounded via Vertex AI Gemini 3.8 Flash · Pathology Strictly Pending</span></div>
+      <button class="layout-26 btn ghost" data-action="modal-bg-style-display-none"><span>Close</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
-    <div id="repBody" style="font-size:13px;line-height:1.55">Generating report...</div>
-    <div style="display:flex;gap:8px;margin:14px 0">
-      <button class="btn ghost" style="display:inline-flex;align-items:center;gap:6px" onclick="playTts('en')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg><span>Speak English Discharge (Gemini TTS)</span></button>
-      <button class="btn ghost" style="display:inline-flex;align-items:center;gap:6px" onclick="playTts('ta')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg><span>Speak Tamil Discharge (Gemini TTS)</span></button>
+    <div id="repBody" class="layout-27">Generating report...</div>
+    <div class="layout-28">
+      <button class="layout-29 btn ghost" data-action="play-tts-en"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg><span>Speak English Discharge (Gemini TTS)</span></button>
+      <button class="layout-30 btn ghost" data-action="play-tts-ta"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg><span>Speak Tamil Discharge (Gemini TTS)</span></button>
     </div>
-    <audio id="ttsPlayer" controls style="width:100%;display:none;margin-bottom:10px"></audio>
-    <div style="font-size:11px;color:var(--muted);margin-bottom:4px">NRCeS ABDM FHIR R4 Bundle & Live BigQuery Receipt:</div>
+    <audio id="ttsPlayer" controls class="layout-31"></audio>
+    <div class="layout-32">NRCeS ABDM FHIR R4 Bundle & Live BigQuery Receipt:</div>
     <pre id="fhirBox">{}</pre>
-    <label style="display:flex;align-items:center;gap:10px;margin:14px 0;padding:12px;background:var(--bg);border:1px solid var(--line);border-radius:12px;font-size:13px;cursor:pointer">
-      <input id="hitlChk" type="checkbox" style="width:18px;height:18px" onchange="signBtn.disabled=!this.checked">
+    <label class="layout-33">
+      <input id="hitlChk" type="checkbox" data-action="sign-btn-disabled-this-checked" class="layout-34">
       <span><b>Mandatory Physician HITL Attestation:</b> I verified the accepted keyframes, BBPS score, and confirm histopathology remains <b>PENDING</b>.</span>
     </label>
-    <button id="signBtn" class="btn start" disabled onclick="commitBigQuery()">Sign-Off & Commit to BigQuery Warehouse</button>
+    <button id="signBtn" class="btn start" disabled data-action="commit-big-query">Sign-Off & Commit to BigQuery Warehouse</button>
   </div>
 </div>
 
-<script>
-function openModal(id){ const el=document.getElementById(id); if(el) el.style.display='grid'; }
-function closeModal(id){ const el=document.getElementById(id); if(el) el.style.display='none'; }
-
-function initTheme(){
-  const saved=localStorage.getItem('chakra_theme')||'light';
-  if(saved==='dark'){ document.documentElement.classList.add('dark'); updateThemeIcon(true); }
-  else { document.documentElement.classList.remove('dark'); updateThemeIcon(false); }
-}
-function toggleTheme(){
-  const isDark=document.documentElement.classList.toggle('dark');
-  localStorage.setItem('chakra_theme',isDark?'dark':'light');
-  updateThemeIcon(isDark);
-}
-function updateThemeIcon(isDark){
-  const el=document.getElementById('themeIcon');
-  const lbl=document.getElementById('themeLabel');
-  if(el){
-    el.innerHTML = isDark
-      ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
-      : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
-  }
-  if(lbl) lbl.textContent=isDark?'Dark':'Light';
-}
-initTheme();
-
-let code='', ws=null, timer=null, sec=0, lastReport=null;
-const qp=new URLSearchParams(location.search);
-if(qp.get('code')) codeIn.value=qp.get('code');
-setInterval(()=>{ clock.textContent=new Date().toLocaleTimeString('en-IN',{timeZone:'Asia/Kolkata'})+' IST'; },1000);
-
-async function connect(){
-  code=codeIn.value.trim(); if(code.length!==6) return alert('Enter 6-digit code');
-  const roomResponse=await fetch('/api/v2/rooms/'+code);
-  if(!roomResponse.ok){
-    startBtn.disabled=true;
-    pId.textContent='Room unavailable · pair a current code';
-    return;
-  }
-  const r=await roomResponse.json();
-  pAnon.textContent=r.patient_anonymized_id; pId.textContent=r.procedure_id; pDoc.textContent=r.endoscopist_id;
-  if(r.patient_consent && r.patient_consent.verified){
-    pConsent.textContent=r.patient_consent.consent_id || 'DPDP Verified';
-    pConsent.style.color='#059669';
-  } else {
-    pConsent.textContent='Awaiting Patient';
-    pConsent.style.color='var(--warn)';
-  }
-  startBtn.disabled=false;
-  if(ws) ws.close();
-  const proto=location.protocol==='https:'?'wss:':'ws:';
-  ws=new WebSocket(`${proto}//${location.host}/ws/v2/${code}/doctor`);
-  ws.onmessage=e=>{
-    const m=JSON.parse(e.data);
-    if(m.type==='patient_consent_updated'){
-      const c = m.patient_consent;
-      pConsent.textContent = c.consent_id || 'DPDP Verified';
-      pConsent.style.color = '#059669';
-    }
-    if(m.type==='phone_status'||m.type==='standby_heartbeat'){
-      const on=m.connected||m.phone_connected;
-      pPhone.textContent=on?'Paired & Ready':'Disconnected'; pPhone.style.color=on?'#059669':'#d97706';
-    }
-    if(m.type==='hud_frame'){
-      hudImg.src='data:image/jpeg;base64,'+m.overlay_jpg_b64; hudImg.style.display='block'; standbyBox.style.display='none';
-      pGpu.textContent=`${m.device} · ${m.latency_ms} ms`;
-      feedBadge.textContent=`LIVE ${m.source.toUpperCase()} · ${m.latency_ms} ms`;
-      hudStatus.textContent='LIVE AI OVERLAY ACTIVE';
-      if(m.detections && m.detections.length){
-        tConf.textContent=(Math.max(...m.detections.map(x=>x.conf))*100).toFixed(1)+'%';
-      }
-    }
-    if(m.type==='findings_updated') renderFindings(m.findings);
-    if(m.type==='voice_parsed'){
-      const b=m.bbps_scores;
-      bbpsTxt.textContent=`${b.right+b.transverse+b.left}/9 (${b.right}-${b.transverse}-${b.left})`;
-      tLoc.textContent=m.suspected_location;
-      voiceLog.textContent='Gemini parsed: '+m.parsed.clinical_note;
-    }
-  };
-}
-async function startProc(){
-  await chakraFeedback.request('Start procedure',`/api/v2/rooms/${code}/doctor-start`,{method:'POST'});
-  standbyBox.style.display='none'; endBtn.disabled=false;
-  sec=0; if(timer) clearInterval(timer);
-  timer=setInterval(()=>{
-    sec++; const mm=String(Math.floor(sec/60)).padStart(2,'0'), ss=String(sec%60).padStart(2,'0');
-    wTime.textContent=`${mm}:${ss}`; wTime.style.color=sec>=360?'#059669':'#d97706';
-  },1000);
-}
-function renderFindings(list){
-  const active=list.filter(f=>f.status!=='dismissed');
-  lesionCnt.textContent=active.length;
-  findingsList.innerHTML=list.map(f=>`<div class="fnd">
-    <span><b>${f.id}</b> · ${(f.conf*100).toFixed(0)}% · ${f.status.toUpperCase()}</span>
-    <span style="display:flex;gap:4px">
-      <button onclick="rev('${f.id}','accepted')" style="background:#059669;color:#fff;border:0;border-radius:6px;padding:3px 8px;cursor:pointer;font-size:11px">Accept</button>
-      <button onclick="rev('${f.id}','dismissed')" style="background:#dc2626;color:#fff;border:0;border-radius:6px;padding:3px 8px;cursor:pointer;font-size:11px">Dismiss</button>
-    </span></div>`).join('');
-}
-async function rev(id,dec){
-  await chakraFeedback.request('Save finding review',`/api/v2/rooms/${code}/finding-review`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({finding_id:id,decision:dec})});
-}
-function toggleVoice(){
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR) return sendDemoVoice();
-  const rec=new SR(); rec.lang='en-IN';
-  micBtn.textContent='Listening...';
-  rec.onresult=async e=>{ micBtn.textContent='Dictate Note'; await postVoice(e.results[0][0].transcript); };
-  rec.onerror=()=>{ micBtn.textContent='Dictate Note'; sendDemoVoice(); };
-  rec.start();
-}
-async function sendDemoVoice(){ await postVoice('BBPS right 3 transverse 3 left 2, 7mm sessile candidate in cecum, cold snare planned'); }
-async function postVoice(text){
-  voiceLog.textContent='Sending to Gemini 3.8 Flash...';
-  await chakraFeedback.request('Save voice note',`/api/v2/rooms/${code}/voice-note`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({transcript:text})});
-}
-async function endAndReport(){
-  if(timer) clearInterval(timer);
-  modalBg.style.display='grid'; hitlChk.checked=false; signBtn.disabled=true;
-  repBody.innerHTML='Drafting structured report via Vertex AI Gemini 3.8 Flash & archiving evidence frame to GCS...';
-  const d=await (await chakraFeedback.request('Generate report',`/api/v2/rooms/${code}/end-report`,{method:'POST'})).json();
-  lastReport=d.report;
-  const n=lastReport.narrative;
-  const cBadge = lastReport.patient_consent && lastReport.patient_consent.verified 
-    ? `<span class="chip" style="background:#d1fae5;color:#065f46">DPDP Consent: ${lastReport.patient_consent.consent_id}</span>`
-    : `<span class="chip" style="background:#fef3c7;color:#92400e">DPDP Consent: Awaiting Patient</span>`;
-  repBody.innerHTML=`
-    <p><span class="chip">${lastReport.status}</span> <span class="chip">Pathology: ${lastReport.pathology_status}</span> ${cBadge} <span class="chip">Surveillance: ${lastReport.surveillance.years} yr</span></p>
-    <p><b>Clinical Summary:</b> ${n.findings_summary}</p>
-    <p><b>Patient Discharge (English):</b> ${n.patient_discharge_english}</p>
-    <p><b>Patient Discharge (Tamil):</b> ${n.patient_discharge_tamil}</p>
-    <p style="color:#d97706"><b>Red-Flag Precautions:</b> ${n.red_flag_precautions_english}</p>
-    <p style="font-size:11px;color:var(--muted)">GCS Evidence URI: <code>${lastReport.evidence_gcs_uri||'Pending capture'}</code></p>`;
-  fhirBox.textContent=JSON.stringify(lastReport.abdm_fhir_r4,null,2);
-}
-async function playTts(lang){
-  if(!lastReport) return;
-  const txt=lang==='ta'?lastReport.narrative.patient_discharge_tamil:lastReport.narrative.patient_discharge_english;
-  const d=await (await chakraFeedback.request('Prepare audio',`/api/v2/rooms/${code}/tts`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:txt})})).json();
-  if(d.audio_b64){ ttsPlayer.src='data:audio/wav;base64,'+d.audio_b64; ttsPlayer.style.display='block'; ttsPlayer.play(); }
-  else alert('TTS note: '+(d.error||'unavailable'));
-}
-async function commitBigQuery(){
-  signBtn.textContent='Committing to BigQuery...';
-  const d=await (await chakraFeedback.request('Sign off report',`/api/v2/rooms/${code}/signoff`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({hitl_attested:true})})).json();
-  signBtn.textContent='Signed Off & Logged to BigQuery'; signBtn.disabled=true;
-  fhirBox.textContent=JSON.stringify({status:d.report.status, bigquery:d.bigquery},null,2);
-}
-if(codeIn.value.length===6) connect();
-</script>
+<script src="/static/doctor.js"></script>
 
 <footer class="clinical-footer">
   <div>
     <span>CHAKRA Doctor HUD · Non-SaMD Clinical Documentation & Adjunctive CADe Interface</span>
     · <span>CDSCO Class B Scope</span>
   </div>
-  <div style="display:flex;gap:14px">
-    <button class="footer-link" onclick="openModal('privacyModal')">Privacy & DPDP Notice</button>
-    <button class="footer-link" onclick="openModal('termsModal')">Terms of Use (Non-SaMD Prototype)</button>
+  <div class="layout-35">
+    <button class="footer-link" data-action="open-modal-privacy-modal">Privacy & DPDP Notice</button>
+    <button class="footer-link" data-action="open-modal-terms-modal">Terms of Use (Non-SaMD Prototype)</button>
   </div>
 </footer>
 
 <!-- Privacy & DPDP Notice Modal -->
 <div id="privacyModal" class="modalBg">
   <div class="footer-modal">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;border-bottom:1px solid var(--line);padding-bottom:10px">
-      <h3 style="margin:0;font-size:16px">CHAKRA Privacy & DPDP Act 2023 Notice</h3>
-      <button class="btn ghost" style="width:auto;padding:4px 8px" onclick="closeModal('privacyModal')">
+    <div class="layout-36">
+      <h3 class="layout-37">CHAKRA Privacy & DPDP Act 2023 Notice</h3>
+      <button class="layout-38 btn ghost" data-action="close-modal-privacy-modal">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
-    <div style="font-size:12.5px;color:var(--text);line-height:1.55;display:flex;flex-direction:column;gap:10px">
-      <p style="margin:0"><b>Demo identifiers.</b> Hospital UHID and ABHA examples on the cohort map are fictional. Use only synthetic patient details in this demo.</p>
-      <p style="margin:0"><b>Encryption.</b> Browser connections use HTTPS. Google Cloud Storage encrypts stored objects at rest.</p>
-      <p style="margin:0"><b>Access.</b> The research cohort and its run summaries are available to demo viewers. Real patient use requires authenticated clinical roles and hospital-specific access checks.</p>
-      <p style="margin:0"><b>Gemini run guides.</b> The saved guides explain boxes and masks. Their generation used model descriptions and excluded patient identifiers, videos and clinical notes.</p>
+    <div class="layout-39">
+      <p class="layout-40"><b>Demo identifiers.</b> Hospital UHID and ABHA examples on the cohort map are fictional. Use only synthetic patient details in this demo.</p>
+      <p class="layout-41"><b>Encryption.</b> Browser connections use HTTPS. Google Cloud Storage encrypts stored objects at rest.</p>
+      <p class="layout-42"><b>Access.</b> The research cohort and its run summaries are available to demo viewers. Real patient use requires authenticated clinical roles and hospital-specific access checks.</p>
+      <p class="layout-43"><b>Gemini run guides.</b> The saved guides explain boxes and masks. Their generation used model descriptions and excluded patient identifiers, videos and clinical notes.</p>
     </div>
-    <button class="btn" style="width:100%;margin-top:16px" onclick="closeModal('privacyModal')">Acknowledge & Close</button>
+    <button class="layout-44 btn" data-action="action-15">Acknowledge & Close</button>
   </div>
 </div>
 
 <!-- Terms of Use Modal -->
 <div id="termsModal" class="modalBg">
   <div class="footer-modal">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;border-bottom:1px solid var(--line);padding-bottom:10px">
-      <h3 style="margin:0;font-size:16px">Terms of Use — Non-SaMD Research Prototype</h3>
-      <button class="btn ghost" style="width:auto;padding:4px 8px" onclick="closeModal('termsModal')">
+    <div class="layout-45">
+      <h3 class="layout-46">Terms of Use — Non-SaMD Research Prototype</h3>
+      <button class="layout-47 btn ghost" data-action="close-modal-terms-modal">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
-    <div style="font-size:12.5px;color:var(--text);line-height:1.55;display:flex;flex-direction:column;gap:10px">
-      <p style="margin:0"><b>1. CDSCO Class B Scope:</b> CHAKRA V2 is an investigational software prototype designed for clinical research and workflow augmentation. It does not replace clinician judgment.</p>
-      <p style="margin:0"><b>2. Non-Diagnostic CADe Positioning:</b> Real-time bounding box annotations generated by NVIDIA L4 workers represent visual prompts only. The system does not assert definitive histological diagnosis or optical biopsy classification.</p>
-      <p style="margin:0"><b>3. Histopathology Mandate:</b> All polyp detections remain provisionally labeled as PENDING_HISTOPATHOLOGY until formalin-fixed specimen evaluation is completed and signed off.</p>
-      <p style="margin:0"><b>4. Attested Sign-Off:</b> The attending gastroenterologist maintains sole legal and clinical accountability for all recorded Boston Bowel Prep Scale (BBPS) scores and surveillance intervals.</p>
+    <div class="layout-48">
+      <p class="layout-49"><b>1. CDSCO Class B Scope:</b> CHAKRA V2 is an investigational software prototype designed for clinical research and workflow augmentation. It does not replace clinician judgment.</p>
+      <p class="layout-50"><b>2. Non-Diagnostic CADe Positioning:</b> Real-time bounding box annotations generated by NVIDIA L4 workers represent visual prompts only. The system does not assert definitive histological diagnosis or optical biopsy classification.</p>
+      <p class="layout-51"><b>3. Histopathology Mandate:</b> All polyp detections remain provisionally labeled as PENDING_HISTOPATHOLOGY until formalin-fixed specimen evaluation is completed and signed off.</p>
+      <p class="layout-52"><b>4. Attested Sign-Off:</b> The attending gastroenterologist maintains sole legal and clinical accountability for all recorded Boston Bowel Prep Scale (BBPS) scores and surveillance intervals.</p>
     </div>
-    <button class="btn" style="width:100%;margin-top:16px" onclick="closeModal('termsModal')">Acknowledge & Close</button>
+    <button class="layout-53 btn" data-action="action-17">Acknowledge & Close</button>
   </div>
 </div>
-</body></html>
+<script src="/static/doctor-events.js"></script></body></html>

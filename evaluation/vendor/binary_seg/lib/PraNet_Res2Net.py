@@ -194,7 +194,7 @@ class PVT_PraNet(nn.Module):
         # ---- PVT Backbone ----
         self.backbone = pvt_v2_b2()  # [64, 128, 320, 512]
         path = './models/pvt_v2_b2.pth'
-        save_model = torch.load(path)
+        save_model = torch.load(path, map_location="cpu", weights_only=True)
         model_dict = self.backbone.state_dict()
         state_dict = {k: v for k, v in save_model.items() if k in model_dict.keys()}
         model_dict.update(state_dict)

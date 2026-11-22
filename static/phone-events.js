@@ -1,0 +1,13 @@
+document.querySelector('[data-action="this-style-display-none"]').addEventListener('error', function(event) { this.style.display='none';document.getElementById('svgLogo').style.display='block' });
+document.querySelector('[data-action="toggle-theme"]').addEventListener('click', function(event) { toggleTheme() });
+document.querySelector('[data-action="pair"]').addEventListener('click', function(event) { pair() });
+document.querySelector('[data-action="submit-patient-consent"]').addEventListener('click', function(event) { submitPatientConsent() });
+document.querySelector('[data-action="start-camera"]').addEventListener('click', function(event) { startCamera() });
+document.querySelector('[data-action="start-cloud-demo-video"]').addEventListener('click', function(event) { startCloudDemoVideo() });
+document.querySelector('[data-action="start-uploaded-video"]').addEventListener('change', function(event) { startUploadedVideo(this) });
+document.querySelector('[data-action="open-modal-privacy-modal"]').addEventListener('click', function(event) { openModal('privacyModal') });
+document.querySelector('[data-action="open-modal-terms-modal"]').addEventListener('click', function(event) { openModal('termsModal') });
+document.querySelector('[data-action="close-modal-privacy-modal"]').addEventListener('click', function(event) { closeModal('privacyModal') });
+document.querySelector('[data-action="action-10"]').addEventListener('click', function(event) { closeModal('privacyModal') });
+document.querySelector('[data-action="close-modal-terms-modal"]').addEventListener('click', function(event) { closeModal('termsModal') });
+document.querySelector('[data-action="action-12"]').addEventListener('click', function(event) { closeModal('termsModal') });

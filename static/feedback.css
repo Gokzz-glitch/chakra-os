@@ -1,0 +1,8 @@
+
+#chakra-feedback-settings{position:relative;display:inline-block;margin:4px;font:13px system-ui;color:var(--text,inherit);z-index:10}
+#chakra-feedback-settings summary{cursor:pointer;padding:7px 12px;border:1px solid var(--line,#8793a2);border-radius:8px;list-style:none}
+#chakra-feedback-settings .fb-options{position:absolute;right:0;top:100%;min-width:190px;padding:12px;border:1px solid #82909a;border-radius:8px;background:var(--panel,#fff);color:var(--text,#17202a)}
+#chakra-feedback-settings label{display:flex;align-items:center;gap:8px;margin:4px;padding:4px;font:inherit;color:inherit}
+#chakra-feedback-settings input{width:auto;margin:0}
+#chakra-feedback-status{position:fixed;bottom:max(14px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);max-width:90vw;width:max-content;padding:10px 16px;background:#202938;color:white;border-radius:10px;border-left:5px solid #a2c6ff;z-index:9999;font:14px/1.4 system-ui;pointer-events:none}
+#chakra-feedback-status[data-kind=success]{border-color:#65d399}#chakra-feedback-status[data-kind=error]{border-color:#ff9a83}

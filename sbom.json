@@ -1,0 +1,367 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "version": 1,
+  "metadata": {
+    "component": {
+      "type": "application",
+      "name": "chakra-os"
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "name": "annotated-doc",
+      "version": "0.0.7",
+      "purl": "pkg:pypi/annotated-doc@0.0.7"
+    },
+    {
+      "type": "library",
+      "name": "annotated-types",
+      "version": "0.8.0",
+      "purl": "pkg:pypi/annotated-types@0.8.0"
+    },
+    {
+      "type": "library",
+      "name": "anyio",
+      "version": "4.16.0",
+      "purl": "pkg:pypi/anyio@4.16.0"
+    },
+    {
+      "type": "library",
+      "name": "certifi",
+      "version": "2026.11.20",
+      "purl": "pkg:pypi/certifi@2026.11.20"
+    },
+    {
+      "type": "library",
+      "name": "cffi",
+      "version": "2.1.1",
+      "purl": "pkg:pypi/cffi@2.1.1"
+    },
+    {
+      "type": "library",
+      "name": "charset-normalizer",
+      "version": "3.5.2",
+      "purl": "pkg:pypi/charset-normalizer@3.5.2"
+    },
+    {
+      "type": "library",
+      "name": "click",
+      "version": "8.5.1",
+      "purl": "pkg:pypi/click@8.5.1"
+    },
+    {
+      "type": "library",
+      "name": "cryptography",
+      "version": "50.0.2",
+      "purl": "pkg:pypi/cryptography@50.0.2"
+    },
+    {
+      "type": "library",
+      "name": "distro",
+      "version": "1.9.0",
+      "purl": "pkg:pypi/distro@1.9.0"
+    },
+    {
+      "type": "library",
+      "name": "fastapi",
+      "version": "0.140.13",
+      "purl": "pkg:pypi/fastapi@0.140.13"
+    },
+    {
+      "type": "library",
+      "name": "google-api-core",
+      "version": "2.44.0",
+      "purl": "pkg:pypi/google-api-core@2.44.0"
+    },
+    {
+      "type": "library",
+      "name": "google-auth",
+      "version": "2.63.1",
+      "purl": "pkg:pypi/google-auth@2.63.1"
+    },
+    {
+      "type": "library",
+      "name": "google-cloud-bigquery",
+      "version": "3.47.0",
+      "purl": "pkg:pypi/google-cloud-bigquery@3.47.0"
+    },
+    {
+      "type": "library",
+      "name": "google-cloud-core",
+      "version": "2.8.0",
+      "purl": "pkg:pypi/google-cloud-core@2.8.0"
+    },
+    {
+      "type": "library",
+      "name": "google-cloud-storage",
+      "version": "3.17.1",
+      "purl": "pkg:pypi/google-cloud-storage@3.17.1"
+    },
+    {
+      "type": "library",
+      "name": "google-crc32c",
+      "version": "1.9.0",
+      "purl": "pkg:pypi/google-crc32c@1.9.0"
+    },
+    {
+      "type": "library",
+      "name": "google-genai",
+      "version": "2.33.0",
+      "purl": "pkg:pypi/google-genai@2.33.0"
+    },
+    {
+      "type": "library",
+      "name": "google-resumable-media",
+      "version": "2.11.0",
+      "purl": "pkg:pypi/google-resumable-media@2.11.0"
+    },
+    {
+      "type": "library",
+      "name": "googleapis-common-protos",
+      "version": "1.76.0",
+      "purl": "pkg:pypi/googleapis-common-protos@1.76.0"
+    },
+    {
+      "type": "library",
+      "name": "grpcio",
+      "version": "1.85.3",
+      "purl": "pkg:pypi/grpcio@1.85.3"
+    },
+    {
+      "type": "library",
+      "name": "grpcio-status",
+      "version": "1.85.3",
+      "purl": "pkg:pypi/grpcio-status@1.85.3"
+    },
+    {
+      "type": "library",
+      "name": "h11",
+      "version": "0.16.0",
+      "purl": "pkg:pypi/h11@0.16.0"
+    },
+    {
+      "type": "library",
+      "name": "httpcore",
+      "version": "1.0.9",
+      "purl": "pkg:pypi/httpcore@1.0.9"
+    },
+    {
+      "type": "library",
+      "name": "httptools",
+      "version": "0.9.0",
+      "purl": "pkg:pypi/httptools@0.9.0"
+    },
+    {
+      "type": "library",
+      "name": "httpx",
+      "version": "0.28.1",
+      "purl": "pkg:pypi/httpx@0.28.1"
+    },
+    {
+      "type": "library",
+      "name": "idna",
+      "version": "3.20",
+      "purl": "pkg:pypi/idna@3.20"
+    },
+    {
+      "type": "library",
+      "name": "iniconfig",
+      "version": "2.3.1",
+      "purl": "pkg:pypi/iniconfig@2.3.1"
+    },
+    {
+      "type": "library",
+      "name": "numpy",
+      "version": "1.26.4",
+      "purl": "pkg:pypi/numpy@1.26.4"
+    },
+    {
+      "type": "library",
+      "name": "opencv-python-headless",
+      "version": "4.11.0.86",
+      "purl": "pkg:pypi/opencv-python-headless@4.11.0.86"
+    },
+    {
+      "type": "library",
+      "name": "opentelemetry-api",
+      "version": "1.45.2",
+      "purl": "pkg:pypi/opentelemetry-api@1.45.2"
+    },
+    {
+      "type": "library",
+      "name": "packaging",
+      "version": "26.3",
+      "purl": "pkg:pypi/packaging@26.3"
+    },
+    {
+      "type": "library",
+      "name": "pluggy",
+      "version": "1.7.0",
+      "purl": "pkg:pypi/pluggy@1.7.0"
+    },
+    {
+      "type": "library",
+      "name": "proto-plus",
+      "version": "1.29.0",
+      "purl": "pkg:pypi/proto-plus@1.29.0"
+    },
+    {
+      "type": "library",
+      "name": "protobuf",
+      "version": "7.36.2",
+      "purl": "pkg:pypi/protobuf@7.36.2"
+    },
+    {
+      "type": "library",
+      "name": "pyasn1",
+      "version": "0.6.5",
+      "purl": "pkg:pypi/pyasn1@0.6.5"
+    },
+    {
+      "type": "library",
+      "name": "pyasn1-modules",
+      "version": "0.4.2",
+      "purl": "pkg:pypi/pyasn1-modules@0.4.2"
+    },
+    {
+      "type": "library",
+      "name": "pycparser",
+      "version": "3.12",
+      "purl": "pkg:pypi/pycparser@3.12"
+    },
+    {
+      "type": "library",
+      "name": "pydantic",
+      "version": "2.13.4",
+      "purl": "pkg:pypi/pydantic@2.13.4"
+    },
+    {
+      "type": "library",
+      "name": "pydantic-core",
+      "version": "2.46.4",
+      "purl": "pkg:pypi/pydantic-core@2.46.4"
+    },
+    {
+      "type": "library",
+      "name": "pygments",
+      "version": "2.21.0",
+      "purl": "pkg:pypi/pygments@2.21.0"
+    },
+    {
+      "type": "library",
+      "name": "pytest",
+      "version": "9.1.1",
+      "purl": "pkg:pypi/pytest@9.1.1"
+    },
+    {
+      "type": "library",
+      "name": "python-dateutil",
+      "version": "2.9.0.post0",
+      "purl": "pkg:pypi/python-dateutil@2.9.0.post0"
+    },
+    {
+      "type": "library",
+      "name": "python-dotenv",
+      "version": "1.2.4",
+      "purl": "pkg:pypi/python-dotenv@1.2.4"
+    },
+    {
+      "type": "library",
+      "name": "python-multipart",
+      "version": "0.0.32",
+      "purl": "pkg:pypi/python-multipart@0.0.32"
+    },
+    {
+      "type": "library",
+      "name": "pyyaml",
+      "version": "6.0.4",
+      "purl": "pkg:pypi/pyyaml@6.0.4"
+    },
+    {
+      "type": "library",
+      "name": "requests",
+      "version": "2.34.2",
+      "purl": "pkg:pypi/requests@2.34.2"
+    },
+    {
+      "type": "library",
+      "name": "six",
+      "version": "1.17.0",
+      "purl": "pkg:pypi/six@1.17.0"
+    },
+    {
+      "type": "library",
+      "name": "sniffio",
+      "version": "1.3.1",
+      "purl": "pkg:pypi/sniffio@1.3.1"
+    },
+    {
+      "type": "library",
+      "name": "starlette",
+      "version": "1.10.0",
+      "purl": "pkg:pypi/starlette@1.10.0"
+    },
+    {
+      "type": "library",
+      "name": "tenacity",
+      "version": "9.1.4",
+      "purl": "pkg:pypi/tenacity@9.1.4"
+    },
+    {
+      "type": "library",
+      "name": "typing-extensions",
+      "version": "4.16.0",
+      "purl": "pkg:pypi/typing-extensions@4.16.0"
+    },
+    {
+      "type": "library",
+      "name": "typing-inspection",
+      "version": "0.4.5",
+      "purl": "pkg:pypi/typing-inspection@0.4.5"
+    },
+    {
+      "type": "library",
+      "name": "urllib3",
+      "version": "2.8.0",
+      "purl": "pkg:pypi/urllib3@2.8.0"
+    },
+    {
+      "type": "library",
+      "name": "uvicorn",
+      "version": "0.51.0",
+      "purl": "pkg:pypi/uvicorn@0.51.0"
+    },
+    {
+      "type": "library",
+      "name": "uvloop",
+      "version": "0.23.0",
+      "purl": "pkg:pypi/uvloop@0.23.0"
+    },
+    {
+      "type": "library",
+      "name": "watchfiles",
+      "version": "1.3.0",
+      "purl": "pkg:pypi/watchfiles@1.3.0"
+    },
+    {
+      "type": "library",
+      "name": "websockets",
+      "version": "16.1.1",
+      "purl": "pkg:pypi/websockets@16.1.1"
+    },
+    {
+      "type": "library",
+      "name": "qrcodejs",
+      "version": "1.0.0",
+      "purl": "pkg:npm/qrcodejs@1.0.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "c541ef06327885a8415bca8df6071e14189b4855336def4f36db54bde8484f36"
+        }
+      ]
+    }
+  ]
+}

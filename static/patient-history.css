@@ -1,0 +1,5 @@
+
+:root{font:16px/1.55 "Segoe UI",sans-serif;color:#173533;background:#f5f7f4}main{max-width:900px;margin:auto;padding:24px}a{color:#076455}h1{margin-bottom:0}h2{font-size:1.15rem}article{border-left:3px solid #397765;padding-left:18px;margin:20px 0}details{background:white;border:1px solid #acbeb6;border-radius:6px;padding:12px;margin:.6rem 0}summary{cursor:pointer;font-weight:650}small{display:block}button{font:inherit}img{max-width:100%;max-height:320px}a:focus-visible,summary:focus-visible,button:focus-visible{outline:3px solid #b5561d}
+
+main{min-width:0;padding:clamp(12px,3vw,24px)}article{overflow-wrap:anywhere}button{min-height:36px}
+.layout-2{background:#101521;border-radius:12px;overflow:auto;margin-top:12px}
